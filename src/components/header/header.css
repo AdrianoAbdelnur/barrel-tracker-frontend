@@ -1,0 +1,28 @@
+.header_container {
+    
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+}
+
+.nav {
+    width: 100%;
+}
+
+.container {
+    margin: 0 !important;
+}
+
+.logo {
+    width: 3.5rem;
+    height: 3rem;
+    position: absolute;
+    left: 47%;
+}
+
+.me-auto {
+    position: absolute;
+    right: 2rem ;
+}

@@ -1,0 +1,17 @@
+.login_container {
+    background-color: blue;
+    background-image: url(./../../assets/img/barrels.jpg);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.form_container {
+    width: 50%;
+    border-radius: 1rem;
+    background-color: rgb(104, 98, 98);
+    padding: 1rem;
+    color: black;
+    margin: 1rem 0;
+}
