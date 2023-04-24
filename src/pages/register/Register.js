@@ -31,7 +31,7 @@ const Register = () => {
   const [lengthValidated, setLengthValidated]=useState(false);
 
   const [pwdConfirm, setPwdConfirm] = useState("")
-  const [pwdConfirmValidated, setPwdConfirmValidated] = useState(false)
+  const [validPwdConfirm, setValidPwdConfirm] = useState(false)
   const [pwdConfirmFocus, setPwdConfirmFocus] = useState(false)
   
   
@@ -49,8 +49,8 @@ const Register = () => {
   
   useEffect(() => {
     if (pwdConfirm === password) {
-      setPwdConfirmValidated(true)
-    } else setPwdConfirmValidated(false)
+      setValidPwdConfirm(true)
+    } else setValidPwdConfirm(false)
   }, [pwdConfirm, password])
   
 
@@ -274,19 +274,19 @@ const Register = () => {
               onFocus={() => setPwdConfirmFocus(true)}
               onBlur={() => setPwdConfirmFocus(false)}
             />
-            <div className={pwdConfirmValidated ? "validation" : "hide"}>
+            <div className={validPwdConfirm ? "validation" : "hide"}>
                 <Checked/>
           </div>
-            <div className={pwdConfirmValidated || !pwdConfirm ?  "hide" : "validation"}>
+            <div className={validPwdConfirm || !pwdConfirm ?  "hide" : "validation"}>
                 <X/>
             </div>
             </div>
             <div className={pwdConfirmFocus? "advert_container" : "hide"}>
                   <div className='advert_content'>
-                    <div className={pwdConfirmValidated? "icono" : "hide"}>
+                    <div className={validPwdConfirm? "icono" : "hide"}>
                       <Checked/>
                     </div>
-                    <div className={pwdConfirmValidated? "hide" : "icono"}>
+                    <div className={validPwdConfirm? "hide" : "icono"}>
                       <Alerticon/>
                     </div>
                     Must match the first password input field.
