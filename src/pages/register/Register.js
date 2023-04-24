@@ -308,9 +308,16 @@ const Register = () => {
               </div>
             </div>
         </Form.Group>
-        <Button className='mt-3' variant="primary" type="submit">
-          Submit
-        </Button>
+        <div className='w-100 d-flex justify-content-center'>
+          <Button 
+            className='mt-3 w-50' 
+            variant="primary" 
+            type="submit"
+            disabled={validName && validEmail && validPwd && validPwdConfirm ? false : true}
+            >
+            Submit
+          </Button>
+        </div>
       </Form>
 
     </div>
