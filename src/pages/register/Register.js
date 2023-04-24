@@ -7,6 +7,7 @@ import Alerticon from '../../assets/icons/Alerticon'
 import CheckedInput from '../../assets/icons/CheckedInput';
 import EyeOff from '../../assets/icons/EyeOff';
 import EyeCheck from '../../assets/icons/EyeCheck';
+import axios from 'axios';
 
 
   const USER_REGEX = /^[A-z][A-z0-9-_]{4,16}$/;
@@ -58,7 +59,7 @@ const Register = () => {
   }, [pwdConfirm, password])
   
 
-  const handleUserNameChange=(value)=>{
+  const handleUserNameChange = (value) => {
     setUserName(value);
     const letterInit = new RegExp('(^[a-zA-Z])');
     const specialUser = new RegExp('(?=.*[A-z0-9-_])');
@@ -67,7 +68,6 @@ const Register = () => {
     letterInit.test(value)? 
         setLetterInitValidated(true)
       : setLetterInitValidated(false);
-      console.log(letterInitValidated)
         
     specialUser.test(value)? 
         setSpecialUserValidated(true)
@@ -103,12 +103,29 @@ const Register = () => {
       : setLengthValidated(false)
   }
 
-  
+  const handlesubmit = async(e) => {
+    e.preventDefault();
+    const payload = {}
+    payload.name = userName;
+    payload.email = email;
+    payload.password = password
+      try {
+        await axios.post("http://localhost:4000/api/register", payload);
+        setUserName("");
+        setEmail("");
+        setPassword("");
+        setPwdConfirm("");
+        handleUserNameChange("");
+        handlePasswordChange("");
+      } catch (error) {
+        console.log(error)
+      }
+  }
 
 
   return (
     <div className='register_container'>
-      <Form className='form_container'>
+      <Form className='form_container' onSubmit={handlesubmit}>
         <h1>Register</h1>
         <Form.Group className="mb-2" controlId="formBasicName">
             <Form.Label>
@@ -122,11 +139,12 @@ const Register = () => {
               <Form.Control 
                 type="text" 
                 placeholder="User Name"
+                value={userName}
                 minLength="5"
                 maxLength="16"
                 required
                 aria-invalid= {validName? "false" : "true"}
-                id='userName'
+                controlid="userName"
                 autoComplete="off"
                 onChange={(e) => handleUserNameChange(e.target.value)}
                 onFocus={() => setUserFocus(true)}
@@ -176,7 +194,8 @@ const Register = () => {
             <Form.Control 
               placeholder="email"
               type="email" 
-              id='email'
+              value={email}
+              controlid='email'
               autoComplete='off'
               onChange={(e) => {setEmail(e.target.value)}}
               maxLength="24"
@@ -210,8 +229,9 @@ const Register = () => {
             <div className='input_container'>
               <Form.Control 
                 placeholder="Password" 
-                type={showPwd? "text" : "password"} 
-                id='pwd'
+                type={showPwd? "text" : "password"}
+                value={password} 
+                controlid='pwd'
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 minLength="5"
                 maxLength="16"
@@ -271,7 +291,8 @@ const Register = () => {
             <Form.Control 
               type={showPwd? "text" : "password"} 
               placeholder="Confirm Password"
-              id='pwdConfirm'
+              value={pwdConfirm}
+              controlid='pwdConfirm'
               autoComplete='off'
               onChange={(e) => setPwdConfirm(e.target.value)}
               minLength="5"
@@ -313,7 +334,7 @@ const Register = () => {
             type="submit"
             disabled={validName && validEmail && validPwd && validPwdConfirm ? false : true}
             >
-            Submit
+            Sign up
           </Button>
         </div>
       </Form>
