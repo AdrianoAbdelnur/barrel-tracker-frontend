@@ -5,6 +5,8 @@ import Checked from '../../assets/icons/Checked';
 import X from '../../assets/icons/X';
 import Alerticon from '../../assets/icons/Alerticon'
 import CheckedInput from '../../assets/icons/CheckedInput';
+import EyeOff from '../../assets/icons/EyeOff';
+import EyeCheck from '../../assets/icons/EyeCheck';
 
 
   const USER_REGEX = /^[A-z][A-z0-9-_]{4,16}$/;
@@ -34,6 +36,7 @@ const Register = () => {
   const [pwdConfirm, setPwdConfirm] = useState("")
   const [validPwdConfirm, setValidPwdConfirm] = useState(false)
   const [pwdConfirmFocus, setPwdConfirmFocus] = useState(false)
+  const [showPwd, setShowPwd] = useState(false)
   
   
   useEffect(() => {
@@ -209,7 +212,7 @@ const Register = () => {
             <div className='input_container'>
               <Form.Control 
                 placeholder="Password" 
-                type="password" 
+                type={showPwd? "text" : "password"} 
                 id='pwd'
                 onChange={(e) => handlePasswordChange(e.target.value)}
                 minLength="5"
@@ -221,8 +224,14 @@ const Register = () => {
                 onFocus={() => setPwdFocus(true)}
                 onBlur={() => setPwdFocus(false)}
                 />
+              <div className={showPwd? "hide" : "eye"} onClick={()=>setShowPwd(true)}>
+                <EyeOff/>
+              </div>
+              <div className={showPwd? "eye" : "hide"} onClick={()=>setShowPwd(false)}>
+                <EyeCheck/>
+              </div>
               <div className={validPwd ? "validation" : "hide"}>
-                  <CheckedInput/>
+                  <CheckedInput/> 
                 </div>
                 <div className={validPwd || !password ?  "hide" : "validation"}>
                   <X/>
@@ -262,7 +271,7 @@ const Register = () => {
           <Form.Label>Confirm Password</Form.Label>
           <div className='input_container'>
             <Form.Control 
-              type="password" 
+              type={showPwd? "text" : "password"} 
               placeholder="Confirm Password"
               id='pwdConfirm'
               autoComplete='off'
@@ -274,6 +283,12 @@ const Register = () => {
               onFocus={() => setPwdConfirmFocus(true)}
               onBlur={() => setPwdConfirmFocus(false)}
             />
+            <div className={showPwd? "hide" : "eye"} onClick={()=>setShowPwd(true)}>
+                <EyeOff/>
+              </div>
+              <div className={showPwd? "eye" : "hide"} onClick={()=>setShowPwd(false)}>
+                <EyeCheck/>
+            </div>
             <div className={validPwdConfirm && validPwd ? "validation" : "hide"}>
                 <CheckedInput/>
           </div>
