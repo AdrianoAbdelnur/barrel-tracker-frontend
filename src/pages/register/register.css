@@ -30,8 +30,14 @@
 
 .validation{
     position: absolute;
-    right: 5px;
+    right: .5rem;
     bottom: 2px;
+}
+
+.eye{
+    position: absolute;
+    right: 3rem;
+    bottom: 3px;
 }
 
 .icono {
