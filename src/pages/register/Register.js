@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import Checked from '../../assets/icons/Checked';
 import X from '../../assets/icons/X';
 import Alerticon from '../../assets/icons/Alerticon'
+import CheckedInput from '../../assets/icons/CheckedInput';
 
 
   const USER_REGEX = /^[A-z][A-z0-9-_]{4,16}$/;
@@ -131,7 +132,7 @@ const Register = () => {
                 onBlur={() => setUserFocus(false)}
               />
               <div className={validName ? "validation" : "hide"}>
-                  <Checked/>
+                  <CheckedInput/>
               </div>
               <div className={validName || !userName ?  "hide" : "validation"}>
                   <X/>
@@ -185,7 +186,7 @@ const Register = () => {
               onBlur={()=>{setEmailFocus(false)}}
               />
             <div className={validEmail ? "validation" : "hide"}>
-                  <Checked/>
+                  <CheckedInput/>
                 </div>
                 <div className={validEmail || !email ?  "hide" : "validation"}>
                   <X/>
@@ -221,7 +222,7 @@ const Register = () => {
                 onBlur={() => setPwdFocus(false)}
                 />
               <div className={validPwd ? "validation" : "hide"}>
-                  <Checked/>
+                  <CheckedInput/>
                 </div>
                 <div className={validPwd || !password ?  "hide" : "validation"}>
                   <X/>
@@ -260,7 +261,6 @@ const Register = () => {
         <Form.Group className="mb-2" controlId="formBasicConfirmPassword">
           <Form.Label>Confirm Password</Form.Label>
           <div className='input_container'>
-          
             <Form.Control 
               type="password" 
               placeholder="Confirm Password"
@@ -274,24 +274,24 @@ const Register = () => {
               onFocus={() => setPwdConfirmFocus(true)}
               onBlur={() => setPwdConfirmFocus(false)}
             />
-            <div className={validPwdConfirm ? "validation" : "hide"}>
-                <Checked/>
+            <div className={validPwdConfirm && validPwd ? "validation" : "hide"}>
+                <CheckedInput/>
           </div>
             <div className={validPwdConfirm || !pwdConfirm ?  "hide" : "validation"}>
                 <X/>
             </div>
             </div>
             <div className={pwdConfirmFocus? "advert_container" : "hide"}>
-                  <div className='advert_content'>
-                    <div className={validPwdConfirm? "icono" : "hide"}>
-                      <Checked/>
-                    </div>
-                    <div className={validPwdConfirm? "hide" : "icono"}>
-                      <Alerticon/>
-                    </div>
-                    Must match the first password input field.
-                  </div>
+              <div className='advert_content'>
+                <div className={validPwdConfirm? "icono" : "hide"}>
+                  <Checked/>
                 </div>
+                <div className={validPwdConfirm? "hide" : "icono"}>
+                  <Alerticon/>
+                </div>
+                Must match the first password input field.
+              </div>
+            </div>
         </Form.Group>
         <Button className='mt-3' variant="primary" type="submit">
           Submit
