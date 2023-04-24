@@ -101,11 +101,9 @@ const Register = () => {
     length.test(value)?
         setLengthValidated(true)
       : setLengthValidated(false)
-
-
-  
   }
 
+  
 
 
   return (
