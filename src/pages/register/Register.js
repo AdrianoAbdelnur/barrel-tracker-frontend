@@ -5,9 +5,10 @@ import Checked from '../../assets/icons/Checked';
 import X from '../../assets/icons/X';
 import Alerticon from '../../assets/icons/Alerticon'
 
+
   const USER_REGEX = /^[A-z][A-z0-9-_]{4,16}$/;
   const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,16}$/;
+  const PWD_REGEX = /^(?=.*[A-z])(?=.*[0-9]).{6,16}$/;
 
 const Register = () => {
 
@@ -20,7 +21,18 @@ const Register = () => {
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false); 
+  const [emailFocus, setEmailFocus] = useState(false);
+
+  const [password, setPassword] = useState('');
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+  const [letterValidated, setLetterValidated]=useState(false);
+  const [numberValidated, setNumberValidated]=useState(false);;
+  const [lengthValidated, setLengthValidated]=useState(false);
+
+  const [pwdConfirm, setPwdConfirm] = useState("")
+  const [pwdConfirmValidated, setPwdConfirmValidated] = useState(false)
+  const [pwdConfirmFocus, setPwdConfirmFocus] = useState(false)
   
   
   useEffect(() => {
@@ -30,25 +42,35 @@ const Register = () => {
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email))
   }, [email])
+
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(password))
+  }, [password])
+  
+  useEffect(() => {
+    if (pwdConfirm === password) {
+      setPwdConfirmValidated(true)
+    } else setPwdConfirmValidated(false)
+  }, [pwdConfirm, password])
   
 
   const handleUserNameChange=(value)=>{
     setUserName(value);
     const letterInit = new RegExp('(^[a-zA-Z])');
     const specialUser = new RegExp('(?=.*[A-z0-9-_])');
-    const lengthUser = new RegExp('(?=.{4,16})');
+    const lengthUser = new RegExp('(?=.{5,16})');
 
     letterInit.test(value)? 
         setLetterInitValidated(true)
       : setLetterInitValidated(false);
       console.log(letterInitValidated)
         
-    specialUser.test(value)
-      ? setSpecialUserValidated(true)
+    specialUser.test(value)? 
+        setSpecialUserValidated(true)
       : setSpecialUserValidated(false);
 
-    lengthUser.test(value)
-      ? setLengthUserValidated(true)
+    lengthUser.test(value)? 
+        setLengthUserValidated(true)
       : setLengthUserValidated(false);
   
     if (letterInitValidated && specialUserValidated && lengthUserValidated) {
@@ -56,8 +78,31 @@ const Register = () => {
     } else {
         setValidName(false)
     }
-  
   };
+
+  const handlePasswordChange = (value) => {
+    setPassword(value)
+    const letter = new RegExp('(?=.*[A-z])');
+    const number = new RegExp('(?=.*[0-9])');
+    const length = new RegExp('(?=.{6,16})');
+    
+    letter.test(value)?
+        setLetterValidated(true)
+      : setLetterValidated(false)
+
+    number.test(value)?
+        setNumberValidated(true)
+      : setNumberValidated(false)
+
+    length.test(value)?
+        setLengthValidated(true)
+      : setLengthValidated(false)
+
+
+  
+  }
+
+
 
   return (
     <div className='register_container'>
@@ -75,7 +120,6 @@ const Register = () => {
               <Form.Control 
                 type="text" 
                 placeholder="User Name"
-                value={userName} 
                 minLength="5"
                 maxLength="16"
                 required
@@ -128,12 +172,15 @@ const Register = () => {
           <Form.Label>Email address</Form.Label>
           <div className='input_container'>
             <Form.Control 
-              type="email" 
               placeholder="email"
-              aria-invalid= {validEmail? "false" : "true"}
-              required
+              type="email" 
               id='email'
+              autoComplete='off'
               onChange={(e) => {setEmail(e.target.value)}}
+              maxLength="24"
+              required
+              aria-invalid= {validEmail? "false" : "true"}
+              aria-describedby="emailnote"
               onFocus={()=>setEmailFocus(true)}
               onBlur={()=>{setEmailFocus(false)}}
               />
@@ -156,13 +203,95 @@ const Register = () => {
             </div>
           </div>
         </Form.Group>
-        <Form.Group className="mb-2" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Group className="mb-2" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <div className='input_container'>
+              <Form.Control 
+                placeholder="Password" 
+                type="password" 
+                id='pwd'
+                onChange={(e) => handlePasswordChange(e.target.value)}
+                minLength="5"
+                maxLength="16"
+                required
+                aria-invalid= {validPwd? "false" : "true"}
+                aria-describedby="pwdnote"
+                autoComplete="off"
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
+                />
+              <div className={validPwd ? "validation" : "hide"}>
+                  <Checked/>
+                </div>
+                <div className={validPwd || !password ?  "hide" : "validation"}>
+                  <X/>
+              </div>
+              </div>
+              <div className={pwdFocus? "advert_container" : "hide"}>
+                <div className='advert_content'>
+                  <div className={letterValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={letterValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    At least a letter 
+                </div>
+                <div className='advert_content'>
+                  <div className={numberValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={numberValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    At least a number 
+                </div>
+                <div className='advert_content'>
+                  <div className={lengthValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={lengthValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    At least 6 characters 
+                </div>
+              </div>
         </Form.Group>
         <Form.Group className="mb-2" controlId="formBasicConfirmPassword">
           <Form.Label>Confirm Password</Form.Label>
-          <Form.Control type="password" placeholder="Confirm Password" />
+          <div className='input_container'>
+          
+            <Form.Control 
+              type="password" 
+              placeholder="Confirm Password"
+              id='pwdConfirm'
+              autoComplete='off'
+              onChange={(e) => setPwdConfirm(e.target.value)}
+              minLength="5"
+              maxLength="16"
+              required
+              aria-describedby="pwdConfirmnote"
+              onFocus={() => setPwdConfirmFocus(true)}
+              onBlur={() => setPwdConfirmFocus(false)}
+            />
+            <div className={pwdConfirmValidated ? "validation" : "hide"}>
+                <Checked/>
+          </div>
+            <div className={pwdConfirmValidated || !pwdConfirm ?  "hide" : "validation"}>
+                <X/>
+            </div>
+            </div>
+            <div className={pwdConfirmFocus? "advert_container" : "hide"}>
+                  <div className='advert_content'>
+                    <div className={pwdConfirmValidated? "icono" : "hide"}>
+                      <Checked/>
+                    </div>
+                    <div className={pwdConfirmValidated? "hide" : "icono"}>
+                      <Alerticon/>
+                    </div>
+                    Must match the first password input field.
+                  </div>
+                </div>
         </Form.Group>
         <Button className='mt-3' variant="primary" type="submit">
           Submit
