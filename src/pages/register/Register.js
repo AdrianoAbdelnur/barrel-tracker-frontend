@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./register.css"
-import { Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form } from 'react-bootstrap'
 import Checked from '../../assets/icons/Checked';
 import X from '../../assets/icons/X';
 import Alerticon from '../../assets/icons/Alerticon'
@@ -15,6 +15,8 @@ import axios from 'axios';
   const PWD_REGEX = /^(?=.*[A-z])(?=.*[0-9]).{6,16}$/;
 
 const Register = () => {
+
+  const [error, setError] = useState("");
 
   const [userName, setUserName] = useState('');
   const [validName, setValidName] = useState(false);
@@ -53,10 +55,17 @@ const Register = () => {
   }, [password])
   
   useEffect(() => {
-    if (pwdConfirm === password) {
+    if (pwdConfirm === password && password.length > 5) {
       setValidPwdConfirm(true)
     } else setValidPwdConfirm(false)
   }, [pwdConfirm, password])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError("")
+    }, 3000);
+  }, [error])
+  
   
 
   const handleUserNameChange = (value) => {
@@ -118,7 +127,8 @@ const Register = () => {
         handleUserNameChange("");
         handlePasswordChange("");
       } catch (error) {
-        console.log(error)
+        console.log(error.response.data.message || error)
+        setError(error.response.data.message || error)
       }
   }
 
@@ -127,6 +137,9 @@ const Register = () => {
     <div className='register_container'>
       <Form className='form_container' onSubmit={handlesubmit}>
         <h1>Register</h1>
+        {
+          error && <Alert variant='danger'>{error}</Alert>
+        }
         <Form.Group className="mb-2" controlId="formBasicName">
             <Form.Label>
               <div>
