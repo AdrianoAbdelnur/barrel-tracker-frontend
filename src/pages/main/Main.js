@@ -44,6 +44,7 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' as={Link} to="/login">Information</Button>                  
+                    <Button variant='secondary' as={Link} to="/login">other</Button>                  
                 </ButtonGroup>
             </div>
         </div>
