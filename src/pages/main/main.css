@@ -1,0 +1,30 @@
+.main_container {
+    background-color: blue;
+    background-image: url(./../../assets/img/barrels.jpg);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.info_container{
+    background-color: red;
+    width: 20rem;
+    height: 20rem;
+    margin: 2rem;
+    border-radius: 1rem;
+    padding: .5rem;
+}
+
+.clientColor{
+    background-color: rgb(216, 212, 80);
+}
+
+.barrelColor{
+    background-color: rgb(202, 202, 173);
+}
+
+.productsColor{
+    background-color: rgb(114, 114, 184);
+}
