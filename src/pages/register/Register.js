@@ -119,7 +119,7 @@ const Register = () => {
     payload.email = email;
     payload.password = password
       try {
-        await axios.post("http://localhost:4000/api/register", payload);
+        await axios.post("http://localhost:4000/api/user/register", payload);
         setUserName("");
         setEmail("");
         setPassword("");
@@ -138,7 +138,7 @@ const Register = () => {
       <Form className='form_container' onSubmit={handlesubmit}>
         <h1>Register</h1>
         {
-          error && <Alert variant='danger'>{error}</Alert>
+          error.message && <Alert variant='danger'>{error.message}</Alert>
         }
         <Form.Group className="mb-2" controlId="formBasicName">
             <Form.Label>

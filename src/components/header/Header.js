@@ -15,7 +15,6 @@ const Header = () => {
       handleGetUser(token);
     }else {
       setLoggedUser({})
-      navigate('/login')
     }
   }, [navigate])
   
@@ -57,7 +56,7 @@ const Header = () => {
             loggedUser.name && 
               <div className='welcome'>
                 <Button variant='danger' onClick={handleLogout}>log out</Button>
-                <h5 className='welcomeText'>"Welcome "{loggedUser.name}</h5>
+                <h5 className='welcomeText'>"Welcome {loggedUser.name}"</h5>
               </div>
             } 
           </div>

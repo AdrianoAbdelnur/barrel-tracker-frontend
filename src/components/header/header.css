@@ -1,5 +1,4 @@
-.header_container {
-    
+.header_container { 
     background-color: blue;
     display: flex;
     justify-content: space-between;
