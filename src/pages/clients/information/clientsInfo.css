@@ -1,0 +1,19 @@
+.clientInfo_container {
+    flex: 1;
+    background-color: rgb(104, 98, 98);
+    width: 100vw;
+}
+
+.infoClientsTable{
+    background-color: white;
+    max-width: 90%;
+
+}
+
+@media (max-width: 750px) {
+    
+    .tableContent{
+        display: none;
+    }
+}
+

@@ -16,7 +16,7 @@ const Main = () => {
             <h3>Clients</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' onClick={()=>moveTo("/login")}>Information</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/clientInfo")}>Information</Button>
                     <Button variant='secondary'as={Link} to="/login">Sales</Button>
                     <Button variant='secondary'as={Link} to="/login">barrels per client</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/addclient")}>Add a new client</Button>

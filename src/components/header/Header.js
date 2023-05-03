@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Nav, Navbar} from 'react-bootstrap'
 import "./header.css"
 import logo from "./../../assets/img/barrel.png"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Header = () => {
@@ -15,7 +15,6 @@ const Header = () => {
       handleGetUser(token);
     }else {
       setLoggedUser({})
-      navigate('/login')
     }
   }, [navigate])
   
@@ -40,24 +39,28 @@ const Header = () => {
       <Navbar className='nav' bg="dark" expand="lg" variant='dark'>
       <Container className='container'>
         <Navbar.Brand href="/">Home</Navbar.Brand>
+        {
+          loggedUser.name && <Nav className="links">   
+            <Nav.Link href="/main">Main</Nav.Link>
+          </Nav> 
+          
+        }
         <img className="logo" src={logo} alt="" />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {
             !loggedUser.name &&
-            <Nav className="me-auto">
-                
+            <Nav className="me-auto">   
                   <Nav.Link href="/login">login</Nav.Link>
                   <Nav.Link href="/register">Register</Nav.Link>
-    
             </Nav>
           }
           <div>
             {
             loggedUser.name && 
-              <div className='welcome'>
+              <div className='welcome'> 
                 <Button variant='danger' onClick={handleLogout}>log out</Button>
-                <h5 className='welcomeText'>"Welcome "{loggedUser.name}</h5>
+                <h5 className='welcomeText'>"Welcome {loggedUser.name}"</h5>
               </div>
             } 
           </div>
