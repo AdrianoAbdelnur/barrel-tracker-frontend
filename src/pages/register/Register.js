@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./register.css"
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form} from 'react-bootstrap'
 import Checked from '../../assets/icons/Checked';
 import X from '../../assets/icons/X';
 import Alerticon from '../../assets/icons/Alerticon'
@@ -133,6 +133,8 @@ const Register = () => {
   }
 
 
+  
+
   return (
     <div className='register_container'>
       <Form className='form_container' onSubmit={handlesubmit}>
@@ -148,58 +150,57 @@ const Register = () => {
                 </div>
               </div>
             </Form.Label>
-            <div className='input_container'>
-              <Form.Control 
-                type="text" 
-                placeholder="User Name"
-                value={userName}
-                minLength="5"
-                maxLength="16"
-                required
-                aria-invalid= {validName? "false" : "true"}
-                controlid="userName"
-                autoComplete="off"
-                onChange={(e) => handleUserNameChange(e.target.value)}
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
-              />
-              <div className={validName ? "validation" : "hide"}>
-                  <CheckedInput/>
+              <div className='input_container'>
+                <Form.Control 
+                  type="text" 
+                  placeholder="User Name"
+                  value={userName}
+                  minLength="5"
+                  maxLength="16"
+                  required
+                  aria-invalid= {validName? "false" : "true"}
+                  controlid="userName"
+                  autoComplete="off"
+                  onChange={(e) => handleUserNameChange(e.target.value)}
+                  onFocus={() => setUserFocus(true)}
+                  onBlur={() => setUserFocus(false)}
+                  />
+                <div className={validName ? "validation" : "hide"}>
+                    <CheckedInput/>
+                </div>
+                <div className={validName || !userName ?  "hide" : "validation"}>
+                    <X/>
+                </div>
               </div>
-              <div className={validName || !userName ?  "hide" : "validation"}>
-                  <X/>
-              </div>
-            </div>
-            <div className={userFocus? "advert_container" : "hide"}>
-              <div className='advert_content'>
-                <div className={letterInitValidated? "icono" : "hide"}>
-                  <Checked/>
+              <div className={userFocus && !validName ? "advert_container" : "hide"}>
+                <div className='advert_content'>
+                  <div className={letterInitValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={letterInitValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    Must begin with a letter 
                 </div>
-                <div className={letterInitValidated? "hide" : "icono"}>
-                  <Alerticon/>
+                <div className='advert_content'>
+                  <div className={lengthUserValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={lengthUserValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    At least 5 characters
                 </div>
-                  Must begin with a letter 
-              </div>
-              <div className='advert_content'>
-                <div className={lengthUserValidated? "icono" : "hide"}>
-                  <Checked/>
-                </div>
-                <div className={lengthUserValidated? "hide" : "icono"}>
-                  <Alerticon/>
-                </div>
-                  At least 5 characters
-              </div>
-              <div className='advert_content'>
-                <div className={specialUserValidated? "icono" : "hide"}>
-                  <Checked/>
-                </div>
-                <div className={specialUserValidated? "hide" : "icono"}>
-                  <Alerticon/>
-                </div>
-                  Letters, numbers, underscores, hyphens allowed.Must begin with a letter 
-              </div>
-          </div>
-            
+                <div className='advert_content'>
+                  <div className={specialUserValidated? "icono" : "hide"}>
+                    <Checked/>
+                  </div>
+                  <div className={specialUserValidated? "hide" : "icono"}>
+                    <Alerticon/>
+                  </div>
+                    Letters, numbers, underscores, hyphens allowed.Must begin with a letter 
+                  </div>
+                </div>   
         </Form.Group>
         <Form.Group className="mb-2" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -225,7 +226,7 @@ const Register = () => {
                   <X/>
             </div>
           </div>
-          <div className={emailFocus? "advert_container" : "hide"}>
+          <div className={emailFocus && !validEmail ? "advert_container" : "hide"}>
           <div className='advert_content'>
             <div className={validEmail? "icono" : "hide"}>
               <Checked/>
@@ -268,7 +269,7 @@ const Register = () => {
                   <X/>
               </div>
               </div>
-              <div className={pwdFocus? "advert_container" : "hide"}>
+              <div className={pwdFocus && !validPwd ? "advert_container" : "hide"}>
                 <div className='advert_content'>
                   <div className={letterValidated? "icono" : "hide"}>
                     <Checked/>
@@ -328,7 +329,7 @@ const Register = () => {
                 <X/>
             </div>
             </div>
-            <div className={pwdConfirmFocus? "advert_container" : "hide"}>
+            <div className={pwdConfirmFocus && !validPwdConfirm ? "advert_container" : "hide"}>
               <div className='advert_content'>
                 <div className={validPwdConfirm? "icono" : "hide"}>
                   <Checked/>

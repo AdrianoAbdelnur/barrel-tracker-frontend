@@ -1,4 +1,6 @@
 .home_container {
     flex: 1;
-    background-color: rgb(79, 43, 176);
+    background-color: rgb(68, 0, 255);
+    background-image: url(./../../assets/img/barrels.jpg);
+    background-size: cover;
 }
