@@ -7,6 +7,7 @@ import Register from '../pages/register/Register';
 import Main from '../pages/main/Main';
 import AddClient from '../pages/clients/addNewClients/AddClient';
 import ClientsInfo from '../pages/clients/information/ClientsInfo';
+import Barrels from '../pages/barrels/Barrels';
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
                 <Route path="/main" element={<Main/>}/>
                 <Route path="/addclient" element={<AddClient/>}/>
                 <Route path="/clientInfo" element={<ClientsInfo/>}/>
+                <Route path="/barrels" element={<Barrels/>}/>
             </Routes>
         </Layout>
     </BrowserRouter>

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
+
 const ModalDetails = ({show, setShow, client}) => {
+  
   return (
     <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>

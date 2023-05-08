@@ -1,0 +1,23 @@
+.barrels_container {
+    background-color: blue;
+    background-image: url(./../../assets/img/barrels.jpg);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.statusButton {
+    height: 1.6rem;
+    padding: 0 3px !important;
+    margin: 1px;
+}
+
+.styles_container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    max-height: 8rem;
+    overflow:auto;
+}

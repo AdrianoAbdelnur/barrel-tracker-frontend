@@ -29,8 +29,6 @@ const Main = () => {
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' as={Link} to="/login">Information status</Button>
                     <Button variant='secondary' as={Link} to="/login">barrel per client</Button>
-                    <Button variant='secondary' as={Link} to="/login">Change barrel status</Button>
-                    <Button variant='secondary' as={Link} to="/login">Add a new barrel</Button>
                 </ButtonGroup>
             </div>
         </div>
