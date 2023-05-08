@@ -20,6 +20,7 @@ const Header = () => {
   
   const handleGetUser = async (token) => {
     try {
+      if (loggedUser.name) return;
       const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}})
       setLoggedUser(data)
     } catch (error) {
