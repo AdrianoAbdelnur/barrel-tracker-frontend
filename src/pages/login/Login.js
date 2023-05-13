@@ -1,16 +1,20 @@
 import { Alert, Button, Form } from 'react-bootstrap'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./../register/register.css"
 import axios from 'axios';
 import Checked from '../../assets/icons/Checked';
 import Alerticon from '../../assets/icons/Alerticon';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import AuthContext from '../../context/AuthProvider';
+import useAuth from '../../hooks/useAuth';
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /.{6,16}$/;
 
 
+
 export const Login = () => {
+  const {auth, setAuth} = useAuth();
   let navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [emailFocus, setEmailFocus] = useState(false)
@@ -41,11 +45,10 @@ export const Login = () => {
     try {
       e.preventDefault();
       const {data} = await axios.post("http://localhost:4000/api/user/login", {email, password});
-      console.log(data?.token)
       localStorage.setItem('jwtoken', data?.token);
       setEmail("");
       setPassword("");
-      navigate('/main')
+      window.location.replace('/main');
     } catch (error) {
       setError(error?.response?.data?.message);
     }

@@ -8,6 +8,8 @@ import Main from '../pages/main/Main';
 import AddClient from '../pages/clients/addNewClients/AddClient';
 import ClientsInfo from '../pages/clients/information/ClientsInfo';
 import Barrels from '../pages/barrels/Barrels';
+import RequireAuth from '../pages/requireAuth/RequireAuth';
+import Unauthorized from '../pages/unauthorized/Unauthorized';
 
 const Router = () => {
   return (
@@ -17,10 +19,15 @@ const Router = () => {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
-                <Route path="/main" element={<Main/>}/>
-                <Route path="/addclient" element={<AddClient/>}/>
-                <Route path="/clientInfo" element={<ClientsInfo/>}/>
-                <Route path="/barrels" element={<Barrels/>}/>
+                <Route path="/unauthorized" element={<Unauthorized/>}/>
+
+                <Route element={<RequireAuth />}>
+                  <Route path="/main" element={<Main/>}/>
+                  <Route path="/addclient" element={<AddClient/>}/>
+                  <Route path="/clientInfo" element={<ClientsInfo/>}/>
+                  <Route path="/barrels" element={<Barrels/>}/>
+                </Route>
+                <Route path="*" element={<div>404</div>} />
             </Routes>
         </Layout>
     </BrowserRouter>
