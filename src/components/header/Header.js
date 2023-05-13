@@ -7,16 +7,35 @@ import axios from 'axios'
 
 const Header = () => {
   const [loggedUser, setLoggedUser] = useState({})
+  const [token, setToken] = useState("")
   let navigate = useNavigate();
 
-  useEffect(() => {
+  /* useEffect(() => {
     const token = localStorage.getItem("jwtoken")
     if(token) {
       handleGetUser(token);
     }else {
       setLoggedUser({})
     }
-  }, [navigate])
+  }, [navigate]) */
+
+    useEffect(() => {
+      const token = localStorage.getItem("jwtoken");
+      if(token) {
+        handleGetUser(token);
+        setToken(token)
+      } else setToken(token)
+    }, []);
+
+  const getAuth = async(token) => {
+    try {
+      const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}}) 
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
+  
   
   const handleGetUser = async (token) => {
     try {
