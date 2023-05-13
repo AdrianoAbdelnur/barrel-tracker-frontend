@@ -10,14 +10,6 @@ const Header = () => {
   const [token, setToken] = useState("")
   let navigate = useNavigate();
 
-  /* useEffect(() => {
-    const token = localStorage.getItem("jwtoken")
-    if(token) {
-      handleGetUser(token);
-    }else {
-      setLoggedUser({})
-    }
-  }, [navigate]) */
 
     useEffect(() => {
       const token = localStorage.getItem("jwtoken");
@@ -26,22 +18,12 @@ const Header = () => {
         setToken(token)
       } else setToken(token)
     }, []);
-
-  const getAuth = async(token) => {
-    try {
-      const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}}) 
-    } catch (error) {
-      console.log(error)
-    }
-  
-  }
-  
-  
+    
   const handleGetUser = async (token) => {
     try {
       if (loggedUser.name) return;
       const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}})
-      setLoggedUser(data)
+      setLoggedUser(data.userFound)
     } catch (error) {
       console.log(error)
     }
