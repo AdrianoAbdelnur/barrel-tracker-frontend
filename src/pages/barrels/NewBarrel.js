@@ -11,7 +11,6 @@ const NewBarrel = ({show, setShow}) => {
   const [id, setId] = useState('');
   
   useEffect(() => {
-    setShow(show)
     setId(location.hash.substring(1))
   }, [])
 
@@ -30,14 +29,15 @@ const NewBarrel = ({show, setShow}) => {
         capacity: capacity
       }
       await axios.post("http://localhost:4000/api/barrel/addBarrel", payload)
+      navigate("/main")
     } catch (error) {
-      console(error)
+      console.log(error)
     }
   }
 
   const handleClose = () => {
-    setShow(false)
     navigate("/main")
+    setShow(false)
   }
  
 
