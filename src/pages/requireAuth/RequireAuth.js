@@ -27,7 +27,6 @@ const RequireAuth = () => {
         const token = localStorage.getItem("jwtoken")
         try {
           const { data } = await axios.get('http://localhost:4000/api/user/status', {headers: {Authorization : token}});
-          console.log(data)
           if (!data?.isLogged) setLoggedStatus({ isLogged: false });
           else setLoggedStatus({ isLogged: true, role: data.role });
         } catch (error) {
@@ -37,7 +36,6 @@ const RequireAuth = () => {
 
     return (
       <div>
-        {console.log(isLoading)}
         {isLoading?  <div>Loading!</div> : loggedStatus?.isLogged
                                               ? <Outlet/>
                                               : <Unauthorized/>

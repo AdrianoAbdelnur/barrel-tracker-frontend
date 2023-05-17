@@ -7,7 +7,6 @@ import axios from 'axios'
 
 const Header = () => {
   const [loggedUser, setLoggedUser] = useState({})
-  const [token, setToken] = useState("")
   let navigate = useNavigate();
 
 
@@ -15,16 +14,16 @@ const Header = () => {
       const token = localStorage.getItem("jwtoken");
       if(token) {
         handleGetUser(token);
-        setToken(token)
-      } else setToken(token)
+      }
     }, []);
     
   const handleGetUser = async (token) => {
     try {
       if (loggedUser.name) return;
       const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}})
-      setLoggedUser(data.userFound)
+      setLoggedUser(data?.userFound)
     } catch (error) {
+      navigate("login")
       console.log(error)
     }
   }
@@ -44,6 +43,10 @@ const Header = () => {
         {
           loggedUser.name && <Nav className="links">   
             <Nav.Link href="/main">Main</Nav.Link>
+            <div className='welcome'> 
+                <Button variant='danger' onClick={handleLogout}>log out</Button>
+                <h5 className='welcomeText'>"Welcome {loggedUser.name}"</h5>
+            </div>
           </Nav> 
           
         }
@@ -57,17 +60,6 @@ const Header = () => {
                   <Nav.Link href="/register">Register</Nav.Link>
             </Nav>
           }
-          <div>
-            {
-            loggedUser.name && 
-              <div className='welcome'> 
-                <Button variant='danger' onClick={handleLogout}>log out</Button>
-                <h5 className='welcomeText'>"Welcome {loggedUser.name}"</h5>
-              </div>
-            } 
-          </div>
-
-
         </Navbar.Collapse>
       </Container>
     </Navbar>

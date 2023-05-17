@@ -4,18 +4,23 @@ import { useNavigate } from 'react-router-dom'
 import "./barrels.css"
 import axios from 'axios'
 
-const Status = ({show, setShow, barrel}) => {
+const Status = ({show, setShow, barrel, setbarrel}) => {
   const navigate=useNavigate();
-  const [status, setStatus] = useState(barrel.status)
+  const [statusBarrel, setStatusBarrel] = useState(barrel.statusBarrel)
   const [style, setStyle] = useState(barrel.style)
+  const [bar, setBar] = useState(barrel.customer)
   const [popoverShow, setPopoverShow] = useState(false)
   const [customersData, setCustomersData] = useState({})
-  const [bar, setBar] = useState("")
 
- useEffect(() => {
-   setStatus(barrel.status)
-   setStyle(barrel.style)
- }, [barrel])
+  useEffect(() => {
+    setStatusBarrel(barrel.statusBarrel)
+    setStyle(barrel.style)
+    setBar(barrel.customer)
+    if(barrel.statusBarrel == "full in factory") {
+      handleGetCustomers();
+    }
+  }, [barrel])
+  
  
 
   const handleClose = () => {
@@ -24,34 +29,46 @@ const Status = ({show, setShow, barrel}) => {
   }
 
   const changeStatus = (data) => {
-    if (status === "empty in factory") {
-      setStatus("full in factory")
+    if (statusBarrel === "empty in factory") {
+      setStatusBarrel("full in factory")
       setStyle(data)
       setPopoverShow(false)
-      handleGetCustomers();
-    }
-    if (status === "full in factory") {
-      setStatus("Delivered to the bar")
-      setBar(data.customer.barName)
-      console.log(data.customer.barName)
-    }
-    if (status === "Delivered to the bar" ) {
-      setStatus("empty in factory")
+    }else if (statusBarrel === "full in factory") {
+      setStatusBarrel("Delivered to customer")
+      setBar(data.customer._id)
+    }else if (statusBarrel === "Delivered to customer" ) {
+      setStatusBarrel("empty in factory")
       setStyle("none style")
-      setBar("")
       setPopoverShow(false)
     }
   }
-
+  
   const handleGetCustomers = async() =>{
     try {
         const {data} = await axios("http://localhost:4000/api/client/getClients")
+        console.log(data)
         setCustomersData(data.clientsList)
     } catch (error) {
         console.log(error)
     }
 }
 
+  const handleBarrelStatus = async() =>{
+    const payload = 
+      {
+        statusBarrel: statusBarrel,
+        style: style, 
+        customer: bar
+      }
+      try {
+      console.log(payload)
+      const {data} = axios.put("http://localhost:4000/api/barrel/status/"+ barrel.id, payload )
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+    setShow(false)
+  }
   return (
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -61,7 +78,7 @@ const Status = ({show, setShow, barrel}) => {
           <ul>
             <li>Barrel id : <b>{barrel.id}</b></li>
             <li>capacity: <b>{barrel.capacity} liters</b></li>
-            <li>status: <b>{status} </b>
+            <li>status: <b>{statusBarrel} </b>
             
             <OverlayTrigger
               show={popoverShow}
@@ -70,7 +87,7 @@ const Status = ({show, setShow, barrel}) => {
               overlay={
                 <Popover id={`popover-positioned-bottom`}>
                   {
-                    status === "empty in factory" && <div>
+                    statusBarrel === "empty in factory" && <div>
                     <Popover.Header as="h3">Select a style</Popover.Header>
                   <Popover.Body className='styles_container'>
                     <Button className='statusButton' onClick={()=>changeStatus("Golden")}>Golden</Button>
@@ -82,7 +99,7 @@ const Status = ({show, setShow, barrel}) => {
                     </div>
                   }
                   {
-                    status === "full in factory" && <div>
+                    statusBarrel === "full in factory" && <div>
                     <Popover.Header as="h3">Select a bar</Popover.Header>
                   <Popover.Body className='styles_container'>
                     {
@@ -101,19 +118,15 @@ const Status = ({show, setShow, barrel}) => {
               }
             >
 
-              {status === "Delivered to the bar"?
+              {statusBarrel === "Delivered to customer"?
               <Button variant="secondary" className='statusButton' onClick={()=>changeStatus("")}>Change Status</Button>
               :
               <Button variant="secondary" className='statusButton' onClick={()=>popoverShow? setPopoverShow(false):setPopoverShow(true)}>Change Status</Button>
             }
               </OverlayTrigger>
-            
-            
-            
-            
             </li> 
-            {style !== "none style" && <li>style: <b>{style}</b></li>}
-            {bar  && <li>bar: <b>{bar}</b></li>}
+              {style !== "none style" && <li>style: <b>{style}</b></li>}
+              {statusBarrel === "Delivered to customer"  && <li>bar: <b>{bar}</b></li>}
           </ul>
 
         </Modal.Body>
@@ -121,7 +134,7 @@ const Status = ({show, setShow, barrel}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleBarrelStatus}>
             Save changes
           </Button>
         </Modal.Footer>
