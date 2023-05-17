@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useLocation} from 'react-router-dom';
 import NewBarrel from './NewBarrel';
-import Status from './Status';
 import "./barrels.css"
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -11,19 +10,25 @@ const Barrels = () => {
     const [newBarrelModal, setNewBarrelModal] = useState(false)
     const [barrel, setBarrel] = useState({})
     const location = useLocation();
+    const [barrelId, setBarrelId] = useState("")
     
     const [nextStatus, setNextStatus] = useState()
     const [newStatusBarrel, setNewStatusBarrel] = useState("")
     const [popoverShow, setPopoverShow] = useState(false)
     const [customersData, setCustomersData] = useState([])
     const [filteredCustomers, setFilteredCustomers] = useState([])
-    const [customerName, setCustomerName] = useState()
 
 
     useEffect(() => {
-        const id = location.hash.substring(1);
-        lookForBarrel(id);
+        setBarrelId(location.hash.substring(1));
     }, [])
+
+    useEffect(() => {
+        if(barrelId){
+            getBarrel(barrelId)
+        }
+    }, [barrelId])
+    
     
     useEffect(() => {
         nextstat();
@@ -46,17 +51,19 @@ const Barrels = () => {
     }
 
 
-    const lookForBarrel= async(id) => {
+    const getBarrel = async(id) => {
         try {
-            const {data} = await axios.get("http://localhost:4000/api/barrel/getBarrels");
-            const barrelFound = data.barrelsFound.find(e => e.id === id);
-            if(barrelFound) {
-                setBarrel(barrelFound)
+            const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
+            if(data.barrelFound){
+                setBarrel(data.barrelFound)
             } else setNewBarrelModal(true)
         } catch (error) {
             console.log(error)
         }
     }
+
+   
+    
 
     const changeStatus = (data) => {
         if(barrel.statusBarrel==="empty in factory"){
@@ -66,14 +73,12 @@ const Barrels = () => {
             })
             setPopoverShow(false)
         } else if(barrel.statusBarrel === "full in factory") {
-            setCustomerName(data.customer.barName)
             setNewStatusBarrel({
                 statusBarrel: "delivered to customer",
                 customer: data.customer._id, 
             })
             setPopoverShow(false)
         } else if(barrel.statusBarrel === "delivered to customer"){
-            setCustomerName("")
             setNewStatusBarrel({
                 statusBarrel: "empty in factory",
                 style: "none style"
@@ -105,7 +110,6 @@ const Barrels = () => {
         const customersFound = customersData.filter((customer) => 
         (customer?.barName?.toLowerCase()?.includes(e.target.value.toLocaleLowerCase())))
         setFilteredCustomers(customersFound)
-        console.log(customersFound)
     }
 
 
@@ -114,12 +118,13 @@ const Barrels = () => {
      {
         barrel.id && <div className='status_barrel_container'>
             <h3>Status barrel</h3>
+            
             <ul>
                 <li>barrel id : <b>{barrel.id}</b></li>
                 <li>capacity: <b>{barrel.capacity} liters</b></li>
                 <li>status: <b>{barrel.statusBarrel} </b> </li>
                 {barrel.style !== "none style" && <li>style: <b>{barrel.style}</b></li>}
-                {customerName  && <li>customer: <b>{customerName}</b></li>}
+                {(barrel.statusBarrel === "delivered to customer")  && <li>customer: <b>{barrel?.customer?.barName}</b></li>}
             </ul>
             <OverlayTrigger
                     show={popoverShow}
@@ -180,12 +185,6 @@ const Barrels = () => {
         show={newBarrelModal}
         setShow={setNewBarrelModal}
     />
-    {/* <Status
-        show={statusModal}
-        setShow={setStatusModal}
-        barrel={barrel} 
-        setBarrel={setBarrel}
-    /> */}
    
     </div>
   )
