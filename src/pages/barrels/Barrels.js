@@ -42,28 +42,6 @@ const Barrels = () => {
             handleBarrelStatus(newStatusBarrel)
         }
     }, [newStatusBarrel])
-    
-
-    const nextstat = () => {
-        if(barrel.statusBarrel === "empty in factory") setNextStatus("full in factory") 
-        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer") 
-        if(barrel.statusBarrel === "delivered to customer") setNextStatus("empty in factory") 
-    }
-
-
-    const getBarrel = async(id) => {
-        try {
-            const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
-            if(data.barrelFound){
-                setBarrel(data.barrelFound)
-            } else setNewBarrelModal(true)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-   
-    
 
     const changeStatus = (data) => {
         if(barrel.statusBarrel==="empty in factory"){
@@ -86,6 +64,17 @@ const Barrels = () => {
         }
     }
 
+    const getBarrel = async(id) => {
+        try {
+            const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
+            if(data.barrelFound){
+                setBarrel(data.barrelFound)
+            } else setNewBarrelModal(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleBarrelStatus = async(newStatusBarrel) =>{
             try {
                 const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ barrel.id, newStatusBarrel )
@@ -94,7 +83,6 @@ const Barrels = () => {
                 console.log(error)
             }
     }
-
 
     const handleGetCustomers = async() =>{
         try {
@@ -112,6 +100,11 @@ const Barrels = () => {
         setFilteredCustomers(customersFound)
     }
 
+    const nextstat = () => {
+        if(barrel.statusBarrel === "empty in factory") setNextStatus("full in factory") 
+        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer") 
+        if(barrel.statusBarrel === "delivered to customer") setNextStatus("empty in factory") 
+    }
 
   return (
     <div className='barrels_container'>
@@ -166,8 +159,7 @@ const Barrels = () => {
                                 </Popover.Body>
                                 </div>
                             }
-                            </Popover>
-                    
+                            </Popover>      
                     }
                     >
                     {
@@ -180,12 +172,10 @@ const Barrels = () => {
         </div>
     }
     
-    
     <NewBarrel
         show={newBarrelModal}
         setShow={setNewBarrelModal}
     />
-   
     </div>
   )
 }
