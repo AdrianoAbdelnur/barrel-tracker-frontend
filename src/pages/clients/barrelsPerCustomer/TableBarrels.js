@@ -3,44 +3,45 @@ import { Button, Table } from 'react-bootstrap'
 import DetailsModal from './DetailsModal'
 import "./barrelsPerCustomer.css"
 
-const TableBarrels = ({customersData, setCustomersData, barrels}) => {
+const TableBarrels = ({customersData, barrels}) => {
     const [detailsModalShow, setDetailsModalShow] = useState(false)
     const [customerDetails, setCustomerDetails] = useState({})
+    const [newCustomers, setNewCustomers] = useState(customersData)
 
     useEffect(() => {
       crossInfo()
     }, [])
+
+    useEffect(() => {
+      console.log(customersData)
+    }, [customersData])
     
+    
+
         const crossInfo = () => {
             var newCustomers = []
+            console.log(customersData)
             newCustomers = customersData.map((customer)=>{
-                const barrelsPerCustomer = customerBarrels(customer)
+                const barrelsPerCustomer =  barrels.filter((barrel)=> barrel?.customer?._id === customer._id)  
+                console.log(barrelsPerCustomer)
                 return{
                     ...customer,
                     barrels: barrelsPerCustomer
                 }
                 })
-                setCustomersData(newCustomers)
+                console.log(newCustomers)
+                setNewCustomers(newCustomers)
         }
-        const customerBarrels = (customer) => {
-            const barrelsInCustomer= [];
-            barrels.map((barrel)=>{
-                if (barrel?.customer?.barName === customer.barName) {
-                barrelsInCustomer.push(barrel)
-                }
-            })  
-            return barrelsInCustomer
-            }
-           
+
+
 const handleModal = (customer) => {
     setCustomerDetails(customer)
     setDetailsModalShow(true)
 } 
-
-
   return (
         <div className='barrelsPerCust_Container'>
-            {
+            {console.log(customersData)}
+            {newCustomers[0]?.barrels?.length?
             <Table striped bordered hover size="sm" className='detailsTable'>
             <thead>
                 <tr>
@@ -55,24 +56,26 @@ const handleModal = (customer) => {
                 </tr>
             </thead>
             <tbody>
+                
             {
-                customersData.map((customer, index)=> {        
+                newCustomers.map((customer, index)=> {        
                     return(
                     <tr key={customer.barName+index}>
                         <td>{index+1}</td>
                         <td>{customer.barName}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel.capacity === 50).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel.capacity === 30).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel.capacity === 20).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel.capacity === 10).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel.capacity === 5).length}</td>
+                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 50).length}</td>
+                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 30).length}</td>
+                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 20).length}</td>
+                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 10).length}</td>
+                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 5).length}</td>
                         <td><Button onClick={()=>handleModal(customer)}>details</Button></td>
                     </tr>
                     )
                 })
             }
             </tbody>
-            </Table>
+            </Table>:
+            <>loading...</>
         }
         <DetailsModal
         show ={detailsModalShow}
