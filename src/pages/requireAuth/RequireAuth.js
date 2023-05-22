@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, Outlet, json, useLocation } from 'react-router-dom';
 import Unauthorized from '../unauthorized/Unauthorized';
 import useAuth from '../../hooks/useAuth';
+import "./requireAuth.css"
 
 const RequireAuth = () => {
     const { setAuth } = useAuth();
@@ -35,7 +36,7 @@ const RequireAuth = () => {
     }
 
     return (
-      <div>
+      <div className='requireAuth_container'>
         {isLoading?  <div>Loading!</div> : loggedStatus?.isLogged
                                               ? <Outlet/>
                                               : <Unauthorized/>

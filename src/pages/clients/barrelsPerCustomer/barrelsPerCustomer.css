@@ -1,0 +1,26 @@
+.barrelsPerCust_Container {
+    background-color: blue;
+    background-image: url(./../../../assets/img/barrels.jpg);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.detailsTable{
+    background-color: aliceblue;
+    height: fit-content;
+    margin: 2rem;
+}
+
+.barrelDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.detailsTable {
+    max-width: 100%;
+    overflow: scroll;
+}

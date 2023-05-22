@@ -1,14 +1,8 @@
-.barrels_container {
-    background-color: blue;
-    background-image: url(./../../assets/img/barrels.jpg);
-    background-size: cover;
-    flex: 1;
+ .barrels_container {
     width: 100%;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
-}
-
+ }
 .statusButton {
     height: 1.6rem;
     padding: 0 3px !important;
@@ -28,7 +22,7 @@
 }
 
 .status_barrel_container {
-    width: 75%;
+    width: 60vw;
     min-width: 340px;
     border-radius: 1rem;
     background-color: rgb(104, 98, 98);
@@ -37,7 +31,6 @@
     margin: 1rem 0;
     display: flex;
     flex-direction: column;
-    height: 100vh;
 }
 
 .changeStatusButton {

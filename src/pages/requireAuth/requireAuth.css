@@ -1,0 +1,9 @@
+.requireAuth_container {
+    background-color: blue;
+    background-image: url(./../../assets/img/barrels.jpg);
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
