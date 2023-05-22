@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import "./barrelsPerCustomer.css"
 import axios from 'axios'
-import { Button, Table } from 'react-bootstrap'
-import DetailsModal from './DetailsModal'
 import TableBarrels from './TableBarrels'
 
 
 const BarrelsPerCustomer = () => {
   const [customersData, setCustomersData] = useState([])
   const [barrels, setBarrels] = useState([])
-  const [flag, setFlag] = useState(false)
   
   
 useEffect(() => {
