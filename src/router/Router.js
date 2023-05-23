@@ -12,6 +12,7 @@ import RequireAuth from '../pages/requireAuth/RequireAuth';
 import Unauthorized from '../pages/unauthorized/Unauthorized';
 import BarrelsPerCustomer from '../pages/clients/barrelsPerCustomer/BarrelsPerCustomer';
 import AddStyle from '../pages/stylesBeer/AddStyle';
+import StylesBeer from '../pages/stylesBeer/StylesBeer';
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
                   <Route path="/barrels" element={<Barrels/>}/>
                   <Route path="/barrelsPerCustomer" element={<BarrelsPerCustomer/>}/>
                   <Route path="/addStyle" element={<AddStyle/>}/>
+                  <Route path="/styles" element={<StylesBeer/>}/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>
