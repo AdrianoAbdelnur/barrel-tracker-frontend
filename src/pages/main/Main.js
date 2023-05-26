@@ -37,8 +37,8 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/styles")}>Styles</Button>
-                    <Button variant='secondary' as={Link} to="/login">Prices</Button>
-                    <Button variant='secondary'  onClick={()=>moveTo("/addStyle")}>Add new style</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/prices")}>Prices</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/addStyle")}>Add new style</Button>
                 </ButtonGroup>
             </div>
         </div>

@@ -1,6 +1,6 @@
-.addStyle_container {
+.prices_container{
     background-color: blue;
-    background-image: url(./../../assets/img/barrels.jpg);
+    background-image: url(./../../../assets/img/barrels.jpg);
     background-size: cover;
     flex: 1;
     display: flex;
@@ -9,7 +9,7 @@
 }
 
 
-.form_container_addstyle {
+.form_container_prices{
     width: 60%;
     min-width: 340px;
     border-radius: 1rem;
@@ -21,4 +21,3 @@
     flex-direction: column;
     height: fit-content;
 }
-

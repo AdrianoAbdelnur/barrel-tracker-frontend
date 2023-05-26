@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./stylesBeer.css"
 import axios from 'axios'
+import { Col, Row } from 'react-bootstrap'
 
 const StylesBeer = () => {
     const [styles, setStyles] = useState([])
@@ -26,14 +27,16 @@ const StylesBeer = () => {
         <ul>
             {
                 styles.length?
-                    styles.map((style)=> {
+                    styles.map((style, index)=> {
                         return(
-                            <li>{style.name}</li>
+                            <li key={style.name + index}>
+                                <Row>
+                                    <Col xs={6} lg={3}>Style: <b>{style.name}</b></Col>    
+                                    <Col>-Price / liter : <b>{style.price? "$" + style.price: "no price yet"}</b></Col>    
+                                </Row>          
+                            </li>
                         )
                     })
-                    
-                    
-                    
                     :<>loading</>
             }
         </ul>
