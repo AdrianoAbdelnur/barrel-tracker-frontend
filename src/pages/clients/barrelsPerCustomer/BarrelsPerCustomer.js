@@ -8,11 +8,10 @@ const BarrelsPerCustomer = () => {
   const [customersData, setCustomersData] = useState([])
   const [barrels, setBarrels] = useState([])
   
-  
-useEffect(() => {
-  if(customersData.length === 0) handleGetCustomers();
-  if(barrels.length === 0) handleGetBarrels();
-}, [])
+  useEffect(() => {
+    handleGetCustomers();
+    handleGetBarrels();
+  }, [])
 
 
 const handleGetBarrels = async() => {

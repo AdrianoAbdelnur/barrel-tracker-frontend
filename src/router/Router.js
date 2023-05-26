@@ -11,6 +11,9 @@ import Barrels from '../pages/barrels/Barrels';
 import RequireAuth from '../pages/requireAuth/RequireAuth';
 import Unauthorized from '../pages/unauthorized/Unauthorized';
 import BarrelsPerCustomer from '../pages/clients/barrelsPerCustomer/BarrelsPerCustomer';
+import AddStyle from '../pages/stylesBeer/addStyle/AddStyle';
+import StylesBeer from '../pages/stylesBeer/styleBeer/StylesBeer';
+import Prices from '../pages/stylesBeer/prices/Prices';
 
 const Router = () => {
   return (
@@ -28,6 +31,9 @@ const Router = () => {
                   <Route path="/clientInfo" element={<ClientsInfo/>}/>
                   <Route path="/barrels" element={<Barrels/>}/>
                   <Route path="/barrelsPerCustomer" element={<BarrelsPerCustomer/>}/>
+                  <Route path="/addStyle" element={<AddStyle/>}/>
+                  <Route path="/styles" element={<StylesBeer/>}/>
+                  <Route path="/prices" element={<Prices/>}/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>
