@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'react-bootstrap'
+import { Button, OverlayTrigger, Table, Tooltip } from 'react-bootstrap'
 import DetailsModal from './DetailsModal'
 import "./barrelsPerCustomer.css"
 
@@ -9,50 +9,49 @@ const TableBarrels = ({customersData, barrels}) => {
     const [newCustomers, setNewCustomers] = useState(customersData)
 
     useEffect(() => {
-      crossInfo()
+        crossInfo()
+        // eslint-disable-next-line
     }, [])
 
-    useEffect(() => {
-      console.log(customersData)
-    }, [customersData])
-    
-    
 
         const crossInfo = () => {
             var newCustomers = []
-            console.log(customersData)
             newCustomers = customersData.map((customer)=>{
-                const barrelsPerCustomer =  barrels.filter((barrel)=> barrel?.customer?._id === customer._id)  
-                console.log(barrelsPerCustomer)
+                const barrelsPerCustomer =  barrels.filter((barrel)=> barrel?.customer?._id === customer._id && barrel?.statusBarrel === 'delivered to customer')  
                 return{
                     ...customer,
                     barrels: barrelsPerCustomer
                 }
                 })
-                console.log(newCustomers)
                 setNewCustomers(newCustomers)
         }
 
 
-const handleModal = (customer) => {
-    setCustomerDetails(customer)
-    setDetailsModalShow(true)
-} 
+        const handleModal = (customer) => {
+            setCustomerDetails(customer)
+            setDetailsModalShow(true)
+        } 
+
+        const expiredBarrels = (barrels, capacity) => {
+            const barrelsCapacity = barrels.filter((barrel)=> barrel?.capacity === capacity)
+            const barrelFound = barrelsCapacity?.find((barrel)=> new Date()>new Date(new Date(barrel.statusDate).getTime()+1209600000))
+            if(barrelFound) return true
+        }   
+
   return (
         <div className='barrelsPerCust_Container'>
-            {console.log(customersData)}
             {newCustomers[0]?.barrels?.length?
             <Table striped bordered hover size="sm" className='detailsTable'>
             <thead>
                 <tr>
                 <th>#</th>
                 <th>Customer</th>
-                <th>50 liters</th>
-                <th>30 liters</th>
-                <th>20 liters</th>
-                <th>10 liters</th>
-                <th>5 liters  </th>
-                <th>details</th>
+                <th className='text-center'>50 liters</th>
+                <th className='text-center'>30 liters</th>
+                <th className='text-center'>20 liters</th>
+                <th className='text-center'>10 liters</th>
+                <th className='text-center'>5 liters  </th>
+                <th className='text-center'>details</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,12 +62,87 @@ const handleModal = (customer) => {
                     <tr key={customer.barName+index}>
                         <td>{index+1}</td>
                         <td>{customer.barName}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 50).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 30).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 20).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 10).length}</td>
-                        <td>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 5).length}</td>
-                        <td><Button onClick={()=>handleModal(customer)}>details</Button></td>
+                        <td className={ expiredBarrels(customer?.barrels, 50)? 'expired': 'inTime'}>
+                            {expiredBarrels(customer?.barrels, 50)?
+                            <OverlayTrigger
+                                key={customer.barName+"50"}
+                                placement={'bottom'}
+                                overlay={
+                                    <Tooltip id={customer.barName+"50"}>
+                                        there are barrels with more than two weeks in the bar 
+                                    </Tooltip>
+                                }
+                                >
+                                <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 50 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            </OverlayTrigger>    
+                            : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 50 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            }
+                        </td>
+                        <td className={ expiredBarrels(customer?.barrels, 30)? 'expired': 'inTime'}>
+                        {expiredBarrels(customer?.barrels, 30)?
+                            <OverlayTrigger
+                                key={customer.barName+"30"}
+                                placement={'bottom'}
+                                overlay={
+                                    <Tooltip id={customer.barName+"30"}>
+                                        there are barrels with more than two weeks in the bar 
+                                    </Tooltip>
+                                }
+                                >
+                                <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 30 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            </OverlayTrigger>    
+                            : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 30 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            }
+                            </td>
+                        <td className={ expiredBarrels(customer?.barrels, 20)? 'expired': 'inTime'}>
+                            {expiredBarrels(customer?.barrels, 20)?
+                                <OverlayTrigger
+                                    key={customer.barName+"20"}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Tooltip id={customer.barName+"20"}>
+                                            there are barrels with more than two weeks in the bar 
+                                        </Tooltip>
+                                    }
+                                    >
+                                    <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 20 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                                </OverlayTrigger>    
+                                : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 20 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            }
+                            </td>
+                        <td className={ expiredBarrels(customer?.barrels, 10)? 'expired': 'inTime'}>
+                            {expiredBarrels(customer?.barrels, 10)?
+                                <OverlayTrigger
+                                    key={customer.barName+"10"}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Tooltip id={customer.barName+"10"}>
+                                            there are barrels with more than two weeks in the bar 
+                                        </Tooltip>
+                                    }
+                                    >
+                                    <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 10 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                                </OverlayTrigger>    
+                                : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 10 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            }
+                            </td>
+                        <td className={ expiredBarrels(customer?.barrels, 5)? 'expired': 'inTime'}>
+                            {expiredBarrels(customer?.barrels, 50)?
+                                <OverlayTrigger
+                                    key={customer.barName+"5"}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Tooltip id={customer.barName+"5"}>
+                                            there are barrels with more than two weeks in the bar 
+                                        </Tooltip>
+                                    }
+                                    >
+                                    <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 5 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                                </OverlayTrigger>    
+                                : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 5 && barrel?.statusBarrel === 'delivered to customer').length}</div>
+                            }
+                            </td>
+                        <td className='text-center'><Button onClick={()=>handleModal(customer)}>details</Button></td>
                     </tr>
                     )
                 })

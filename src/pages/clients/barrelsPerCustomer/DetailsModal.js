@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal, Table } from 'react-bootstrap'
 import "./barrelsPerCustomer.css"
 
-const DetailsModal = ({show, setShow, customer}) => {
+const DetailsModal = ({show, setShow, customer}) => {   
     return (
         <Modal show={show} onHide={()=>setShow(false)}>
             <Modal.Header closeButton>
@@ -16,16 +16,24 @@ const DetailsModal = ({show, setShow, customer}) => {
                     <th>id</th>
                     <th>capacity</th>
                     <th>style</th>
+                    <th>Delivery date</th>
                     </tr>
                 </thead>
                 <tbody>
                 {customer?.barrels?.map((barrel, index)=>{
-                    return(
-                        <tr key={barrel.id}>
+                        return(
+                            <tr key={barrel.id} className={new Date()>new Date(new Date(barrel.statusDate).getTime()+1209600000)? 'bg-danger' : 'hola'}>
                             <td>{index+1}</td>
                             <td>{barrel.id}</td>
                             <td>{barrel.capacity}</td>
                             <td>{barrel.style}</td>
+                            <td>{new Date(barrel.statusDate).toLocaleDateString('en-us', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            })
+                        }
+                            </td>
                         </tr>
                     )
                 })}
