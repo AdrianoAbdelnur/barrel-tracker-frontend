@@ -13,7 +13,6 @@ const TableBarrels = ({customersData, barrels}) => {
         // eslint-disable-next-line
     }, [])
 
-
         const crossInfo = () => {
             var newCustomers = []
             newCustomers = customersData.map((customer)=>{
@@ -142,7 +141,7 @@ const TableBarrels = ({customersData, barrels}) => {
                                 : <div className='w-100 h-100'>{customer?.barrels?.filter((barrel)=> barrel?.capacity === 5 && barrel?.statusBarrel === 'delivered to customer').length}</div>
                             }
                             </td>
-                        <td className='text-center'><Button onClick={()=>handleModal(customer)}>details</Button></td>
+                        <td className='text-center'><Button onClick={()=>handleModal(customer)} disabled={customer?.barrels?.length? false : true }>details</Button></td>
                     </tr>
                     )
                 })
