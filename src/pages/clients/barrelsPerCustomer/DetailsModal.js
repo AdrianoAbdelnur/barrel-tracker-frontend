@@ -28,11 +28,11 @@ const DetailsModal = ({show, setShow, customer}) => {
                             <td>{barrel.capacity}</td>
                             <td>{barrel.style}</td>
                             <td>{new Date(barrel.statusDate).toLocaleDateString('en-us', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            })
-                        }
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric'
+                                    })
+                                }
                             </td>
                         </tr>
                     )

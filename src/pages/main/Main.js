@@ -27,7 +27,7 @@ const Main = () => {
             <h3>Barrels</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' as={Link} to="/login">Information status</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/statusInformation")}>Information status</Button>
                     <Button variant='secondary' as={Link} to="/login">barrel per client</Button>
                 </ButtonGroup>
             </div>
@@ -46,7 +46,7 @@ const Main = () => {
             <h3>Results</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' as={Link} to="/login">Information</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/statusInformation")}>Information</Button>                  
                     <Button variant='secondary' as={Link} to="/login">other</Button>                  
                 </ButtonGroup>
             </div>
