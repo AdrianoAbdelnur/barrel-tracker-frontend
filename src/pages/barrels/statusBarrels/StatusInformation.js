@@ -60,7 +60,7 @@ const StatusInformation = () => {
                                         {barrel.statusBarrel === 'delivered to customer' && <div><b>Customer: </b> {barrel.customer.barName}</div>}
                                     </td>
                                     <td className='ButtonCel'>
-                                        <Button variant='primary' className='buttonChange' onClick={()=>handleModal(barrel.id)}>Change</Button>
+                                        <Button variant='primary' className='buttonChange' onClick={()=>handleModal(barrel.id)} disabled={barrel.statusBarrel === 'empty in factory'}>Change</Button>
                                     </td>
                                 </tr>
                             )
