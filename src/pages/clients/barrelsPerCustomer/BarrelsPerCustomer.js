@@ -33,15 +33,14 @@ const handleGetCustomers = async() =>{
 }
 
 
-
   return (
-    (barrels.length  && customersData.length)? 
-      <TableBarrels
-        customersData={customersData}
-        setCustomersData={setCustomersData}
-        barrels={barrels}
-      /> :
-      <>loading...</>
+      (barrels.length && customersData.length)?
+        <TableBarrels
+          customersData={customersData}
+          barrels={barrels}
+        />
+        :
+        <>loadind...</> 
    )
   }
 

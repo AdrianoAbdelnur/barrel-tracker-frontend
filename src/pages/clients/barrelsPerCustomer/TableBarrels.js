@@ -10,6 +10,8 @@ const TableBarrels = ({customersData, barrels}) => {
 
     useEffect(() => {
         crossInfo()
+        console.log(customersData)
+        console.log(barrels)
         // eslint-disable-next-line
     }, [])
 
@@ -32,14 +34,13 @@ const TableBarrels = ({customersData, barrels}) => {
         } 
 
         const expiredBarrels = (barrels, capacity) => {
-            const barrelsCapacity = barrels.filter((barrel)=> barrel?.capacity === capacity)
+            const barrelsCapacity = barrels?.filter((barrel)=> barrel?.capacity === capacity)
             const barrelFound = barrelsCapacity?.find((barrel)=> new Date()>new Date(new Date(barrel.statusDate).getTime()+1209600000))
             if(barrelFound) return true
         }   
 
   return (
         <div className='barrelsPerCust_Container'>
-            {newCustomers[0]?.barrels?.length?
             <Table striped bordered hover size="sm" className='detailsTable'>
             <thead>
                 <tr>
@@ -147,9 +148,7 @@ const TableBarrels = ({customersData, barrels}) => {
                 })
             }
             </tbody>
-            </Table>:
-            <>loading...</>
-        }
+            </Table>
         <DetailsModal
         show ={detailsModalShow}
         setShow={setDetailsModalShow}
