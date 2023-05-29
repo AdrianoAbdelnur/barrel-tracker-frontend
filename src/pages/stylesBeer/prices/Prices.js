@@ -78,7 +78,6 @@ const Prices = () => {
             <Button variant="primary" type="submit">
                 Update prices
             </Button>
-            <Button onClick={()=>setStyles([{"_id": "646cc672cf4ab43fdd06798a" , "price":"200"}])}></Button>
         </Form>
     </div>
   )
