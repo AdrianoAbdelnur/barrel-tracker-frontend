@@ -9,7 +9,6 @@ const ConfirmationModal = ({show, setShow, id, barrels, setBarrels}) => {
             const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ id, 
             {
                 statusBarrel: "empty in factory",
-                style: "none style"
             } 
             )
             const newBarrels = barrels.map(barrel=> {
