@@ -29,7 +29,6 @@ const StatusInformation = () => {
 
   return (
     <div className='statusInformation_Container'>
-        <h3 className='mt-5 m-5 mb-0'>Clients Information</h3>
         <div className='d-flex justify-content-center w-100'>
             <Table striped bordered hover size="sm" className='detailsTable'>
                 <thead>
@@ -66,8 +65,6 @@ const StatusInformation = () => {
                             )
                         })
                     }
-
-                    
                 </tbody>
             </Table>
         </div>
