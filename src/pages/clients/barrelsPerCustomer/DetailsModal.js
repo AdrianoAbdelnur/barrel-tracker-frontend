@@ -24,9 +24,9 @@ const DetailsModal = ({show, setShow, customer}) => {
                         return(
                             <tr key={barrel.id} className={new Date()>new Date(new Date(barrel.statusDate).getTime()+1209600000)? 'bg-danger' : 'hola'}>
                             <td>{index+1}</td>
-                            <td>{barrel.id}</td>
-                            <td>{barrel.capacity}</td>
-                            <td>{barrel.style}</td>
+                            <td>{barrel?.id}</td>
+                            <td>{barrel?.capacity}</td>
+                            <td>{barrel?.style?.name}</td>
                             <td>{new Date(barrel.statusDate).toLocaleDateString('en-us', {
                                         year: 'numeric',
                                         month: 'short',

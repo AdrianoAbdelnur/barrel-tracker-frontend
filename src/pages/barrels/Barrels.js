@@ -17,6 +17,7 @@ const Barrels = () => {
     const [popoverShow, setPopoverShow] = useState(false)
     const [customersData, setCustomersData] = useState([])
     const [filteredCustomers, setFilteredCustomers] = useState([])
+    const [styles, setStyles] = useState([])
 
 
     useEffect(() => {
@@ -32,6 +33,9 @@ const Barrels = () => {
     
     useEffect(() => {
         nextstat();
+        if (barrel.statusBarrel === "empty in factory" || barrel.statusBarrel === "delivered to customer") {
+            handleGetStyles()
+        }
         if(barrel.statusBarrel === "full in factory") {
             handleGetCustomers()
         }
@@ -47,7 +51,7 @@ const Barrels = () => {
         if(barrel.statusBarrel==="empty in factory"){
             setNewStatusBarrel({
                 statusBarrel: "full in factory",
-                style: data, 
+                style: data.style._id, 
             })
             setPopoverShow(false)
         } else if(barrel.statusBarrel === "full in factory") {
@@ -59,7 +63,6 @@ const Barrels = () => {
         } else if(barrel.statusBarrel === "delivered to customer"){
             setNewStatusBarrel({
                 statusBarrel: "empty in factory",
-                style: "none style"
             })
         }
     }
@@ -67,6 +70,7 @@ const Barrels = () => {
     const getBarrel = async(id) => {
         try {
             const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
+            console.log(data.barrelFound)
             if(data.barrelFound){
                 setBarrel(data.barrelFound)
             } else setNewBarrelModal(true)
@@ -79,6 +83,7 @@ const Barrels = () => {
             try {
                 const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ barrel.id, newStatusBarrel )
                 setBarrel(data.upDatedBarrel)
+                console.log(data.upDatedBarrel)
             } catch (error) {
                 console.log(error)
             }
@@ -89,6 +94,15 @@ const Barrels = () => {
             const {data} = await axios("http://localhost:4000/api/client/getClients")
             setCustomersData(data.clientsList)
             setFilteredCustomers(data.clientsList)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetStyles = async() => {
+        try {
+            const {data} = await axios("http://localhost:4000/api/styles/getStyles")
+            setStyles(data.stylesFound)
         } catch (error) {
             console.log(error)
         }
@@ -111,13 +125,13 @@ const Barrels = () => {
      {
         barrel.id && <div className='status_barrel_container'>
             <h3>Status barrel</h3>
-            
             <ul>
                 <li>barrel id : <b>{barrel.id}</b></li>
                 <li>capacity: <b>{barrel.capacity} liters</b></li>
                 <li>status: <b>{barrel.statusBarrel} </b> </li>
-                {barrel.style !== "none style" && <li>style: <b>{barrel.style}</b></li>}
+                {barrel.statusBarrel !== "empty in factory" && <li>style: <b>{barrel.style.name}</b></li>}
                 {(barrel.statusBarrel === "delivered to customer")  && <li>customer: <b>{barrel?.customer?.barName}</b></li>}
+                {(barrel.statusBarrel === "delivered to customer")  && <li>price: <b>$ {barrel?.style?.price} </b><Button>Change price</Button></li>}
             </ul>
             <OverlayTrigger
                     show={popoverShow}
@@ -129,11 +143,21 @@ const Barrels = () => {
                                 (barrel.statusBarrel === "empty in factory") && <div>
                                     <Popover.Header as="h3">Select a style</Popover.Header>
                                     <Popover.Body className='styles_container'>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Golden")}>Golden</Button>
+                                        {
+                                        styles.length?
+                                        (styles.map((style, index)=>{
+                                            return(
+                                            <Button key={index} variant='outline-secondary' className='statusButton' onClick={()=>changeStatus({style})}>{style.name}</Button>
+                                            )
+                                            }))
+                                            :
+                                            (<div>there are no matches with the search</div>)
+                                        }
+                                    {/* <Button className='statusButton'onClick={()=>changeStatus("Golden")}>Golden</Button>
                                     <Button className='statusButton'onClick={()=>changeStatus("Scottish")}>Scottish</Button>
                                     <Button className='statusButton'onClick={()=>changeStatus("Honey")}>Honey</Button>
                                     <Button className='statusButton'onClick={()=>changeStatus("IPA")}>IPA</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Porter")}>Porter</Button>
+                                    <Button className='statusButton'onClick={()=>changeStatus("Porter")}>Porter</Button> */}
                                     </Popover.Body>
                                     </div>
                             }

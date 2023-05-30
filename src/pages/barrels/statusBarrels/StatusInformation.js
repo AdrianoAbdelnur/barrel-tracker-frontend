@@ -47,15 +47,15 @@ const StatusInformation = () => {
                                     <td>{index}</td>
                                     <td>{barrel.id}</td>
                                     <td>
-                                        <div><b>Barrel status: </b> {barrel.statusBarrel}</div>
-                                        <div><b>change date: </b> {new Date(barrel.statusDate).toLocaleDateString('en-us', {
+                                        <div><b>Barrel status: </b> {barrel?.statusBarrel}</div>
+                                        <div><b>change date: </b> {new Date(barrel?.statusDate).toLocaleDateString('en-us', {
                                             year: 'numeric',
                                             month: 'short',
                                             day: 'numeric'
                                         })
                                     }
                                         </div>
-                                        {barrel.style !== 'none style' && <div><b>Style: </b> {barrel.style}</div>}
+                                        {barrel.statusBarrel !== "empty in factory" && <div><b>Style: </b> {barrel?.style?.name}</div>}
                                         {barrel.statusBarrel === 'delivered to customer' && <div><b>Customer: </b> {barrel.customer.barName}</div>}
                                     </td>
                                     <td className='ButtonCel'>
