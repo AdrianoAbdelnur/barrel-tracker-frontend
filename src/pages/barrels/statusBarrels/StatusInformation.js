@@ -29,7 +29,6 @@ const StatusInformation = () => {
 
   return (
     <div className='statusInformation_Container'>
-        <h3 className='mt-5 m-5 mb-0'>Clients Information</h3>
         <div className='d-flex justify-content-center w-100'>
             <Table striped bordered hover size="sm" className='detailsTable'>
                 <thead>
@@ -60,14 +59,12 @@ const StatusInformation = () => {
                                         {barrel.statusBarrel === 'delivered to customer' && <div><b>Customer: </b> {barrel.customer.barName}</div>}
                                     </td>
                                     <td className='ButtonCel'>
-                                        <Button variant='primary' className='buttonChange' onClick={()=>handleModal(barrel.id)}>Change</Button>
+                                        <Button variant='primary' className='buttonChange' onClick={()=>handleModal(barrel.id)} disabled={barrel.statusBarrel === 'empty in factory'}>Change</Button>
                                     </td>
                                 </tr>
                             )
                         })
                     }
-
-                    
                 </tbody>
             </Table>
         </div>
