@@ -18,6 +18,7 @@ const Barrels = () => {
     const [customersData, setCustomersData] = useState([])
     const [filteredCustomers, setFilteredCustomers] = useState([])
     const [styles, setStyles] = useState([])
+    const [confirmSale, setconfirmSale] = useState(false)
 
 
     useEffect(() => {
@@ -116,7 +117,7 @@ const Barrels = () => {
 
     const nextstat = () => {
         if(barrel.statusBarrel === "empty in factory") setNextStatus("full in factory") 
-        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer") 
+        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer")  
         if(barrel.statusBarrel === "delivered to customer") setNextStatus("empty in factory") 
     }
 
@@ -153,11 +154,6 @@ const Barrels = () => {
                                             :
                                             (<div>there are no matches with the search</div>)
                                         }
-                                    {/* <Button className='statusButton'onClick={()=>changeStatus("Golden")}>Golden</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Scottish")}>Scottish</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Honey")}>Honey</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("IPA")}>IPA</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Porter")}>Porter</Button> */}
                                     </Popover.Body>
                                     </div>
                             }
