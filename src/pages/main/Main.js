@@ -46,6 +46,7 @@ const Main = () => {
             <h3>Results</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
+                    <Button variant='secondary' onClick={()=>moveTo("/sales")}>Sales</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/statusInformation")}>Information</Button>                  
                     <Button variant='secondary' as={Link} to="/login">other</Button>                  
                 </ButtonGroup>

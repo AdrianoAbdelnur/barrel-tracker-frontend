@@ -15,6 +15,7 @@ import AddStyle from '../pages/stylesBeer/addStyle/AddStyle';
 import StylesBeer from '../pages/stylesBeer/styleBeer/StylesBeer';
 import Prices from '../pages/stylesBeer/prices/Prices';
 import StatusInformation from '../pages/barrels/statusBarrels/StatusInformation';
+import Sales from '../pages/results/sales/Sales';
 
 const Router = () => {
   return (
@@ -36,6 +37,7 @@ const Router = () => {
                   <Route path="/styles" element={<StylesBeer/>}/>
                   <Route path="/prices" element={<Prices/>}/>
                   <Route path="/statusInformation" element={<StatusInformation/>}/>
+                  <Route path="/sales" element={<Sales/>}/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>
