@@ -14,8 +14,7 @@ const Sales = () => {
     const handleGetSales = async() => {
         try {
             const {data} = await axios("http://localhost:4000/api/sale/getSales")
-            console.log(data.salesFound)
-            setSales(data.salesFound)
+            setSales(data.salesFound.reverse())
         } catch (error) {
             console.log(error)
         }
