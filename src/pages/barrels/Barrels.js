@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useLocation} from 'react-router-dom';
 import NewBarrel from './NewBarrel';
+import PriceChange from './PriceChange';
 import "./barrels.css"
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -18,10 +19,14 @@ const Barrels = () => {
     const [customersData, setCustomersData] = useState([])
     const [filteredCustomers, setFilteredCustomers] = useState([])
     const [styles, setStyles] = useState([])
+    const [confirmSale, setConfirmSale] = useState(false)
+    const [priceModal, setPriceModal] = useState(false)
+    const [price, setPrice] = useState(0)
 
 
     useEffect(() => {
         setBarrelId(location.hash.substring(1));
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -35,31 +40,37 @@ const Barrels = () => {
         nextstat();
         if (barrel.statusBarrel === "empty in factory" || barrel.statusBarrel === "delivered to customer") {
             handleGetStyles()
-        }
-        if(barrel.statusBarrel === "full in factory") {
+        }else if(barrel.statusBarrel === "full in factory") {
             handleGetCustomers()
+            setPrice(barrel.style.price)
+        }else if(barrel.statusBarrel === "delivered to customer"){
+            setPrice(barrel.style.price)
         }
+        // eslint-disable-next-line
     }, [barrel])
     
     useEffect(() => {
         if (newStatusBarrel) {
             handleBarrelStatus(newStatusBarrel)
         }
+        // eslint-disable-next-line
     }, [newStatusBarrel])
 
     const changeStatus = (data) => {
         if(barrel.statusBarrel==="empty in factory"){
             setNewStatusBarrel({
                 statusBarrel: "full in factory",
-                style: data.style._id, 
+                style: data.style._id
             })
             setPopoverShow(false)
         } else if(barrel.statusBarrel === "full in factory") {
-            setNewStatusBarrel({
+            setBarrel({
+                ...barrel,
                 statusBarrel: "delivered to customer",
-                customer: data.customer._id, 
+                customer: data.customer, 
             })
             setPopoverShow(false)
+            setConfirmSale(false)
         } else if(barrel.statusBarrel === "delivered to customer"){
             setNewStatusBarrel({
                 statusBarrel: "empty in factory",
@@ -70,8 +81,10 @@ const Barrels = () => {
     const getBarrel = async(id) => {
         try {
             const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
-            console.log(data.barrelFound)
             if(data.barrelFound){
+                if (data?.barrelFound?.statusBarrel === "delivered to customer") {
+                    setConfirmSale(true)
+                }
                 setBarrel(data.barrelFound)
             } else setNewBarrelModal(true)
         } catch (error) {
@@ -83,7 +96,6 @@ const Barrels = () => {
             try {
                 const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ barrel.id, newStatusBarrel )
                 setBarrel(data.upDatedBarrel)
-                console.log(data.upDatedBarrel)
             } catch (error) {
                 console.log(error)
             }
@@ -116,8 +128,31 @@ const Barrels = () => {
 
     const nextstat = () => {
         if(barrel.statusBarrel === "empty in factory") setNextStatus("full in factory") 
-        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer") 
+        if(barrel.statusBarrel === "full in factory") setNextStatus("delivered to customer")  
         if(barrel.statusBarrel === "delivered to customer") setNextStatus("empty in factory") 
+    }
+
+    const confirmationSale = () => {
+        handleNewSale()
+        setNewStatusBarrel({
+            statusBarrel: "delivered to customer",
+            customer: barrel.customer._id 
+        })
+        setConfirmSale(true)
+    }
+
+    const handleNewSale = async() => {
+        try {
+            const paylodad = {
+                style: barrel.style._id,
+                volume: barrel.capacity,
+                price: price * barrel.capacity,
+                customer: barrel.customer
+            }
+            await axios.post("http://localhost:4000/api/sale/newSale", paylodad)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
@@ -131,7 +166,9 @@ const Barrels = () => {
                 <li>status: <b>{barrel.statusBarrel} </b> </li>
                 {barrel.statusBarrel !== "empty in factory" && <li>style: <b>{barrel.style.name}</b></li>}
                 {(barrel.statusBarrel === "delivered to customer")  && <li>customer: <b>{barrel?.customer?.barName}</b></li>}
-                {(barrel.statusBarrel === "delivered to customer")  && <li>price: <b>$ {barrel?.style?.price} </b><Button>Change price</Button></li>}
+                {(barrel.statusBarrel === "delivered to customer" && !confirmSale )  && <li>  
+                    price: <b>$ {price} per liter</b> <Button variant='primary' className='changePriceButton' onClick={()=>setPriceModal(true)}>Change price</Button>
+                </li>}
             </ul>
             <OverlayTrigger
                     show={popoverShow}
@@ -151,13 +188,8 @@ const Barrels = () => {
                                             )
                                             }))
                                             :
-                                            (<div>there are no matches with the search</div>)
+                                            (<div>there are no styles in your database</div>)
                                         }
-                                    {/* <Button className='statusButton'onClick={()=>changeStatus("Golden")}>Golden</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Scottish")}>Scottish</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Honey")}>Honey</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("IPA")}>IPA</Button>
-                                    <Button className='statusButton'onClick={()=>changeStatus("Porter")}>Porter</Button> */}
                                     </Popover.Body>
                                     </div>
                             }
@@ -188,19 +220,28 @@ const Barrels = () => {
                     >
                     {
                         barrel.statusBarrel === "delivered to customer"?
-                        <Button className='changeStatusButton' variant="secondary" onClick={()=>changeStatus()}>Change status to <b>{nextStatus}</b></Button>
-                        :
-                        <Button className='changeStatusButton' variant="secondary" onClick={()=>setPopoverShow(!popoverShow)}>Change status to <b>{nextStatus}</b></Button>
+                            !confirmSale? <Button className='changeStatusButton' variant='danger' onClick={confirmationSale}>Confirm Sale</Button>:
+                            <Button className='changeStatusButton' variant="secondary" onClick={()=>changeStatus()}>Change status to <b>{nextStatus}</b></Button>
+                            :
+                            <Button className='changeStatusButton' variant="secondary" onClick={()=>setPopoverShow(!popoverShow)}>Change status to <b>{nextStatus}</b></Button>
                     }
                 </OverlayTrigger>
         </div>
     }
+    <PriceChange
+        show={priceModal}
+        setShow={setPriceModal}
+        barrel={barrel}
+        setPrice={setPrice}
+        price={price}
+    />
     
     <NewBarrel
         show={newBarrelModal}
         setShow={setNewBarrelModal}
     />
     </div>
+
   )
 }
 

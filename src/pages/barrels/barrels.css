@@ -36,3 +36,14 @@
 .changeStatusButton {
     max-width: 30rem;
 }
+
+.priceNumber{
+    flex: 1 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.changePriceButton {
+    margin-left: 2rem
+}

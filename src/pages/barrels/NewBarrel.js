@@ -12,6 +12,7 @@ const NewBarrel = ({show, setShow}) => {
   
   useEffect(() => {
     setId(location.hash.substring(1))
+    // eslint-disable-next-line
   }, [])
 
   
