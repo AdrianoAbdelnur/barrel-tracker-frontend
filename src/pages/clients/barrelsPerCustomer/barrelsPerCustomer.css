@@ -12,6 +12,8 @@
     background-color: aliceblue;
     height: fit-content;
     margin: 2rem;
+    width: 100%;
+    overflow: scroll;
 }
 
 .barrelDetails {
@@ -20,10 +22,6 @@
     justify-content: space-around;
 }
 
-.detailsTable {
-    width: 100%;
-    overflow: scroll;
-}
 
 .expired {
     background-color: rgb(255, 97, 97) !important;
