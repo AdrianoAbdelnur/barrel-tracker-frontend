@@ -6,10 +6,11 @@ import { Table } from 'react-bootstrap'
 const Sales = () => {
     const [sales, setSales] = useState([])
 
+
     useEffect(() => {
         handleGetSales();
     }, [])
-    
+
 
     const handleGetSales = async() => {
         try {
@@ -19,6 +20,8 @@ const Sales = () => {
             console.log(error)
         }
     }
+
+
   return (
     <div className='sales_container'>
         <Table striped bordered hover size="sm" className='salesTable'>
@@ -35,7 +38,6 @@ const Sales = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    
                 {
                     sales.map((sale, index)=> {        
                         return(
@@ -48,12 +50,12 @@ const Sales = () => {
                                     })
                                 }
                             </td>
-                            <td>{sale.style.name}</td>
-                            <td>{sale.volume} liters</td>
-                            <td>{sale.customer.barName}</td>
-                            <td>{sale.price}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{sale?.style.name}</td>
+                            <td>{sale?.volume} liters</td>
+                            <td>{sale?.customer.barName}</td>
+                            <td>{sale?.price}</td>
+                            <td>{sale?.paid}</td>
+                            <td>{sale.paidComplete? <>Complete</>:<>Pending: {sale.price-sale.paid}</>}</td>
                             
                         </tr>
                         )

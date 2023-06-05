@@ -23,6 +23,8 @@ const Barrels = () => {
     const [priceModal, setPriceModal] = useState(false)
     const [price, setPrice] = useState(0)
 
+    const [saleId, setSaleId] = useState();
+
 
     useEffect(() => {
         setBarrelId(location.hash.substring(1));
@@ -55,6 +57,13 @@ const Barrels = () => {
         }
         // eslint-disable-next-line
     }, [newStatusBarrel])
+
+    useEffect(() => {
+      if(saleId) {
+            handleGetPaysNotAssigned()
+      }
+    }, [saleId])
+    
 
     const changeStatus = (data) => {
         if(barrel.statusBarrel==="empty in factory"){
@@ -149,11 +158,77 @@ const Barrels = () => {
                 price: price * barrel.capacity,
                 customer: barrel.customer
             }
-            await axios.post("http://localhost:4000/api/sale/newSale", paylodad)
+            const {data} = await axios.post("http://localhost:4000/api/sale/newSale", paylodad)
+            setSaleId(data.newSale._id)
         } catch (error) {
             console.log(error)
         }
     }
+
+    const handleGetPaysNotAssigned = async() => {
+        try {
+            const {data} = await axios("http://localhost:4000/api/pay/getPaysNotAssigned/" + barrel.customer._id)  
+            if(data.paysList.length) {
+                paysOperation(data.paysList);
+            } else handleNewSale()
+            } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const paysOperation = (pays)=> {
+        let salePaid = 0
+        for (const pay of pays) {
+            let paid = 0
+            if (pay.noAssignedPay > 0) {
+                    paid = pay.noAssignedPay;
+                } else  {
+                    paid = pay.pay;
+                }    
+                if (paid > (price * barrel.capacity)) {
+                    const payload = {
+                        paid: price * barrel.capacity,
+                        paidComplete: true
+                    }
+                    updateSale(saleId, payload)
+                    paid = paid - price * barrel.capacity
+                    updatePay(pay._id, {noAssignedPay: paid})
+                } else if (paid < price * barrel.capacity) {    
+                    const payload= {
+                        paid: paid + salePaid
+                    }
+                    salePaid = salePaid + paid
+                    updateSale(saleId, payload)
+                    updatePay(pay._id, {assigned: true})
+                } else if (paid === (price * barrel.capacity)) {
+                    const payload= {
+                        paid: price * barrel.capacity,
+                        paidComplete: true
+                    }
+                    paid= 0
+                    updateSale(saleId, payload)
+                    updatePay(pay._id, {assigned: true})
+                }
+        }
+    }
+
+    const updateSale = async(id, paylodad) => {
+        try {
+            const {data} = await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const updatePay = async(id, payload) => {
+        try {
+            const {data} = await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
+        } catch (error) {
+            console.log(error)
+        }
+    } 
+    
 
   return (
     <div className='barrels_container'>

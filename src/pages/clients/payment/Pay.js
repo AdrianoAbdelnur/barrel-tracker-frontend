@@ -11,9 +11,11 @@ const Pay = () => {
     const [customerData, setCustomerData] = useState({})
     const [trueCustomer, setTrueCustomer] = useState(false)
     const [message, setMessage] = useState("")
+    const [pay, setPay] = useState({})
+    const [sales, setSales] = useState([])
 
     useEffect(() => {
-      handleGetCustomers();
+        handleGetCustomers();
     }, [])
     
     useEffect(() => {
@@ -21,6 +23,11 @@ const Pay = () => {
             setMessage("")
         }, 3000);
     }, [message])
+
+    useEffect(() => {
+        payOperation();
+    }, [sales])
+    
     
     
     const handleGetCustomers = async() =>{
@@ -49,11 +56,13 @@ const Pay = () => {
         e.preventDefault()
         try {
             const paylodad = {
-                customer:customerData._id, 
+                customer: customerData._id, 
                 pay: e.target[1].value
             }
             const {data} = await axios.post("http://localhost:4000/api/pay/newPay", paylodad)
             setMessage(data.message)
+            setPay(data.newPay)
+            handleGetSales();
             setCustomerName("")
             e.target[1].value=""
             e.target[2].checked=false
@@ -61,6 +70,69 @@ const Pay = () => {
             console.log(error)
         }
     }
+
+
+
+    const handleGetSales = async() => {
+        try {
+            const {data} = await axios("http://localhost:4000/api/sale/getSales")
+            setSales(data.salesFound.reverse())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const payOperation = ()=> {
+            let paid = pay.pay;
+            const salesFiltered = sales.filter(sale=> sale.customer._id === pay.customer && sale.paidComplete === false)
+            for (const sale of salesFiltered.reverse()) {
+                    if (paid > (sale.price - sale?.paid)) {
+                        const payload = {
+                            paid: sale.price,
+                            paidComplete: true
+                        }
+                        updateSale(sale._id, payload)
+                        paid = paid - sale.price + sale?.paid
+                    } else if (paid < (sale.price - sale?.paid)) {    
+                        const payload= {
+                            paid: paid + sale.paid
+                        }
+                        updateSale(sale._id, payload)
+                        paid = 0
+                        updatePay(pay._id, {assigned: true})
+                    } else if (paid === (sale.price-sale?.paid)) {
+                        const payload= {
+                            paid: sale.price,
+                            paidComplete: true
+                        }
+                        paid= 0
+                        updateSale(sale._id, payload)
+                        updatePay(pay._id, {assigned: true})
+                    }
+                }
+                if (paid > 0) {
+                    updatePay(pay._id, {noAssignedPay: paid})
+                }
+    }
+
+    const updateSale = async(id, paylodad) => {
+        try {
+            const {data} = await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updatePay = async(id, payload) => {
+        try {
+            const {data} = await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
+        } catch (error) {
+            console.log(error)
+        }
+    } 
+
+
 
   return (
     <div className='pay_container'>
