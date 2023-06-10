@@ -63,8 +63,6 @@ const Sales = () => {
                 }
                 </tbody>
             </Table>
-
-
     </div>
   )
 }

@@ -43,7 +43,7 @@ const AddClient = () => {
   return (
     <div className='addClients_container'>
         <Form className='form_container_client' onSubmit={handelAddClient}>
-        <h1>New client</h1>
+        <h2>New client</h2>
         {
             error && <Alert variant='danger'>{error}</Alert>
         }
