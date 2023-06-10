@@ -35,6 +35,10 @@
     background-color: rgb(148, 216, 44);
 }
 
+.costsColor{
+    background-color: rgb(193, 30, 30);
+}
+
 .buttons_container {
     width: 100%;
     height: 100%;

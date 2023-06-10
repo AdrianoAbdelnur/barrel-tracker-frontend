@@ -17,6 +17,8 @@ import Prices from '../pages/stylesBeer/prices/Prices';
 import StatusInformation from '../pages/barrels/statusBarrels/StatusInformation';
 import Sales from '../pages/results/sales/Sales';
 import Pay from '../pages/clients/payment/Pay';
+import AddCost from '../pages/costs/addCost/AddCost';
+import CostsDetails from '../pages/costs/costDetails/CostsDetails';
 
 const Router = () => {
   return (
@@ -40,6 +42,8 @@ const Router = () => {
                   <Route path="/statusInformation" element={<StatusInformation/>}/>
                   <Route path="/sales" element={<Sales/>}/>
                   <Route path="/pay" element={<Pay/>}/>
+                  <Route path="/addCost" element={<AddCost/>}/>
+                  <Route path="/costDetails" element={<CostsDetails/>}/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>

@@ -42,17 +42,26 @@ const Main = () => {
                 </ButtonGroup>
             </div>
         </div>
-        <div className='info_container resultsColor'>
-            <h3>Results</h3>
+        <div className='info_container costsColor'>
+            <h3>Sales and Costs</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' onClick={()=>moveTo("/sales")}>Sales</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/statusInformation")}>Information</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/sales")}>Sales details</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/costDetails")}>Costs details</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/addCost")}>Add a new Cost</Button>                  
                     <Button variant='secondary' as={Link} to="/login">other</Button>                  
                 </ButtonGroup>
             </div>
         </div>
-
+        <div className='info_container resultsColor'>
+            <h3>Results</h3>
+            <div className='buttons_container'>
+                <ButtonGroup vertical className='w-75'>
+                    <Button variant='secondary' onClick={()=>moveTo("/")}>Information</Button>                  
+                    <Button variant='secondary' as={Link} to="/login">other</Button>                  
+                </ButtonGroup>
+            </div>
+        </div>
     </div>
   )
 }
