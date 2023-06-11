@@ -19,6 +19,7 @@ import Sales from '../pages/results/sales/Sales';
 import Pay from '../pages/clients/payment/Pay';
 import AddCost from '../pages/costs/addCost/AddCost';
 import CostsDetails from '../pages/costs/costDetails/CostsDetails';
+import AddSupplier from '../pages/others/suppliers/AddSupplier';
 
 const Router = () => {
   return (
@@ -44,6 +45,7 @@ const Router = () => {
                   <Route path="/pay" element={<Pay/>}/>
                   <Route path="/addCost" element={<AddCost/>}/>
                   <Route path="/costDetails" element={<CostsDetails/>}/>
+                  <Route path="/suppliers" element={<AddSupplier/>}/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>

@@ -53,6 +53,15 @@ const Main = () => {
                 </ButtonGroup>
             </div>
         </div>
+        <div className='info_container othersColor'>
+            <h3>Others</h3>
+            <div className='buttons_container'>
+                <ButtonGroup vertical className='w-75'>
+                    <Button variant='secondary' onClick={()=>moveTo("/suppliers")}>Add Suppliers</Button>                  
+                    <Button variant='secondary' as={Link} to="/login">other</Button>                  
+                </ButtonGroup>
+            </div>
+        </div>
         <div className='info_container resultsColor'>
             <h3>Results</h3>
             <div className='buttons_container'>
