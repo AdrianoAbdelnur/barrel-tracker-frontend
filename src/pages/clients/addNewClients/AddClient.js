@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const AddClient = () => {
     let navigate = useNavigate();
     const [error, setError] = useState("")
-    const [clientData, setClientData] = useState("")
+    const [clientData, setClientData] = useState()
 
     useEffect(() => {
       setTimeout(() => {
@@ -21,6 +21,7 @@ const AddClient = () => {
             navigate("/main")
         }
       }, 3000);
+      // eslint-disable-next-line
     }, [clientData])
     
     
