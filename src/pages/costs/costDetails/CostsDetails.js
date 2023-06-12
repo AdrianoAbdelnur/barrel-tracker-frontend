@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Button, Form, InputGroup, Table } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
-import { addDays, format, isAfter, isBefore } from 'date-fns';
+import { addDays, format, isAfter, isBefore, isWithinInterval } from 'date-fns';
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./costsDetails.css"
@@ -56,7 +56,10 @@ const CostsDetails = () => {
     const costsFilter = () => {
         let costsDateFound = []
         if (endDate) {
-            costsDateFound = costs.filter((cost) => isAfter(new Date(cost.date) , startDate) && isBefore(new Date(cost.date), addDays(endDate, 1)))
+            costsDateFound = costs.filter((cost) => isWithinInterval(new Date(cost.date), {
+                start: startDate,
+                end: endDate
+              })) /* isAfter(new Date(cost.date) , startDate) && isBefore(new Date(cost.date), addDays(endDate, 1))) */
         } else costsDateFound = costs
         const  costsFound = costsDateFound.filter((cost) => 
         (cost?.item.toLowerCase()?.includes(keyword.toLocaleLowerCase()))||
