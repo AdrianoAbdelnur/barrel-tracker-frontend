@@ -26,13 +26,14 @@
 
 .table_container {
     width: 100%;
-
+    display: flex;
 }
 
 .costsTable{
     background-color: aliceblue;
     height: fit-content;
     overflow: scroll;
+    margin: 0 2rem;
 }
 
 .dayPicker {
@@ -65,10 +66,19 @@
 }
 
 .btn_filters {
-    width: 20rem;
+    width: 15rem;
 }
 
 .totalCost {
     background-color: rgb(216, 229, 240);
     font-size: x-large;
+    height: 2.5rem;
+}
+
+.showedPeriod {
+    background-color: rgb(216, 229, 240) !important;
+}
+
+.periodOptions {
+    height: 3rem;
 }
