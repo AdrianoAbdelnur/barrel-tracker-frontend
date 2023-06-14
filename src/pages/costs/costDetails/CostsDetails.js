@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Button, ButtonGroup, Dropdown, DropdownButton, Form, InputGroup, Table } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
-import { format, isWithinInterval, lastDayOfMonth, startOfMonth, subMonths } from 'date-fns';
+import { addDays, format, isWithinInterval, startOfMonth, subMonths } from 'date-fns';
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./costsDetails.css"
@@ -24,23 +24,23 @@ const CostsDetails = () => {
         let endDate = "";
         if (showedPeriod === "Current month costs") {
             startDate = startOfMonth(new Date())
-            endDate = lastDayOfMonth(new Date())
+            endDate = addDays(new Date() , 1)
         }
         if (showedPeriod === "Last month") {
             startDate= subMonths(new Date(), 1)
-            endDate = lastDayOfMonth(new Date())
+            endDate = addDays(new Date() , 1)
         }
         if (showedPeriod === "Lasts 3 month") {
             startDate= subMonths(startOfMonth(new Date()), 2)
-            endDate = lastDayOfMonth(new Date())
+            endDate = addDays(new Date() , 1)
         }
         if (showedPeriod === "Last year") {
             startDate= subMonths(startOfMonth(new Date()), 12)
-            endDate = lastDayOfMonth(new Date())
+            endDate = addDays(new Date() , 1)
         }
         if (showedPeriod === "All costs") {
             startDate= null
-            endDate = lastDayOfMonth(new Date())
+            endDate = addDays(new Date() , 1)
         }
         setFirstDate(startDate)
         handleGetCost(startDate, endDate)
@@ -85,7 +85,7 @@ const CostsDetails = () => {
         if (endDate) {
             costsDateFound = costs.filter((cost) => isWithinInterval(new Date(cost.date), {
                 start: startDate,
-                end: endDate
+                end: addDays(endDate, 1)
             })) 
         } else costsDateFound = costs
         const  costsFound = costsDateFound.filter((cost) => 
@@ -114,8 +114,7 @@ const CostsDetails = () => {
                 <Dropdown.Item eventKey="LastYear" active={showedPeriod === "Last year"? true:false} onClick={()=>setShowedPeriod("Last year")}>Last year</Dropdown.Item>
                 <Dropdown.Item eventKey="All" active={showedPeriod === "All costs"? true:false} onClick={()=>setShowedPeriod("All costs")}>All costs</Dropdown.Item>
             </DropdownButton>
-       
-            <div className='totalCost'>Sum of displayed costs: $ <b>{totalCost}</b></div>
+            <div className='totalCost'>Sum of displayed: $ <b>{totalCost}</b></div>
         </div>
         { showFilters &&
             <div className='input_container'>
