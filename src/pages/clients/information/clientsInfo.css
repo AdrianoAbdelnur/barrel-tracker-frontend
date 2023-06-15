@@ -1,11 +1,13 @@
 .clientInfo_container {
     flex: 1;
     width: 100vw;
+    
 }
 
 .infoClientsTable{
-    background-color: white;
+    background-color: aliceblue;
     max-width: 90%;
+    margin: 2rem;
 }
 
 @media (max-width: 750px) {

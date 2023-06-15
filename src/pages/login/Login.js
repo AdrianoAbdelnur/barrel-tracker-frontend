@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import AuthContext from '../../context/AuthProvider';
 import useAuth from '../../hooks/useAuth';
+import EyeOff from '../../assets/icons/EyeOff';
+import EyeCheck from '../../assets/icons/EyeCheck';
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /.{6,16}$/;
 
@@ -23,6 +25,7 @@ export const Login = () => {
   const [password, setPassword] = useState("")
   const [pwdFocus, setPwdFocus] = useState(false)
   const [validPwd, setValidPwd] = useState(false)
+  const [showPwd, setShowPwd] = useState(true)
 
   const [error, setError] = useState("")
 
@@ -91,15 +94,23 @@ export const Login = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Password"
-              autoComplete='off'
-              onChange={(e)=>setPassword(e.target.value)}
-              maxLength="24"
-              onFocus={()=>setPwdFocus(true)}
-              onBlur={()=>setPwdFocus(false)} 
-            />
+            <div className='input_container_register'>
+              <Form.Control 
+                type={showPwd? "text" : "password"} 
+                placeholder="Password"
+                autoComplete='off'
+                onChange={(e)=>setPassword(e.target.value)}
+                maxLength="24"
+                onFocus={()=>setPwdFocus(true)}
+                onBlur={()=>setPwdFocus(false)} 
+                />
+              <div className={showPwd? "hide" : "eye"} onClick={()=>setShowPwd(true)}>
+                  <EyeOff/>
+                </div>
+                <div className={showPwd? "eye" : "hide"} onClick={()=>setShowPwd(false)}>
+                  <EyeCheck/>
+              </div>
+            </div>
             <div className={pwdFocus && !validPwd? "advert_container" : "hide"}>
             <div className='advert_content'>
                 <div className={validPwd? "hide" : "icono"}>

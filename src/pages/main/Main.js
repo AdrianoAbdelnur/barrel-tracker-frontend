@@ -16,9 +16,9 @@ const Main = () => {
             <h3>Customers</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' onClick={()=>moveTo("/clientInfo")}>Information</Button>
-                    <Button variant='secondary' onClick={()=>moveTo("/barrelsPerCustomer")}>barrels per client</Button>
-                    <Button variant='secondary' onClick={()=>moveTo("/addclient")}>Add a new client</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/clientInfo")}>Customers information</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/barrelsPerCustomer")}>barrels per customer</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/addclient")}>Add a new customer</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/pay")}>New Pay</Button>
                 </ButtonGroup>
             </div>

@@ -150,7 +150,7 @@ const Register = () => {
                 </div>
               </div>
             </Form.Label>
-              <div className='input_container'>
+              <div className='input_container_register'>
                 <Form.Control 
                   type="text" 
                   placeholder="User Name"
@@ -204,7 +204,7 @@ const Register = () => {
         </Form.Group>
         <Form.Group className="mb-2" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <div className='input_container'>
+          <div className='input_container_register'>
             <Form.Control 
               placeholder="email"
               type="email" 
@@ -240,7 +240,7 @@ const Register = () => {
         </Form.Group>
           <Form.Group className="mb-2" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <div className='input_container'>
+            <div className='input_container_register'>
               <Form.Control 
                 placeholder="Password" 
                 type={showPwd? "text" : "password"}
@@ -301,7 +301,7 @@ const Register = () => {
         </Form.Group>
         <Form.Group className="mb-2" controlId="formBasicConfirmPassword">
           <Form.Label>Confirm Password</Form.Label>
-          <div className='input_container'>
+          <div className='input_container_register'>
             <Form.Control 
               type={showPwd? "text" : "password"} 
               placeholder="Confirm Password"
