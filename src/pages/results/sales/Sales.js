@@ -155,7 +155,6 @@ const Sales = () => {
             </div>
         }
         <div className='table_container'>
-
             <Table striped bordered hover size="sm" className='salesTable'>
                 <thead>
                     <tr>

@@ -1,17 +1,11 @@
 .statusInformation_Container{
-    background-color: blue;
-    background-image: url(./../../../assets/img/barrels.jpg);
-    background-size: cover;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
+    width: 100vw;
 }
 
 .detailsTable {
     background-color: aliceblue;
-    height: fit-content;
+    max-width: 90%;
     margin: 2rem;
 }
 

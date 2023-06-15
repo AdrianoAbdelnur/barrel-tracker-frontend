@@ -1,7 +1,4 @@
 .costDetails_container {
-    background-color: blue;
-    background-image: url(./../../../assets/img/barrels.jpg);
-    background-size: cover;
     flex: 1;
     width: 100%;
     display: flex;

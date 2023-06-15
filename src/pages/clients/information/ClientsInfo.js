@@ -31,7 +31,6 @@ const ClientsInfo = () => {
 
     return (
     <div className='clientInfo_container'>
-        <h3>Clients Information</h3>
         <div className='d-flex justify-content-center w-100'>
             <Table striped bordered hover className='infoClientsTable' >
                 <thead>
