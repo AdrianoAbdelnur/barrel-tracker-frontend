@@ -1,5 +1,5 @@
 .register_container {
-    background-color: blue;
+    background-color: rgb(190, 190, 203);
     background-image: url(./../../assets/img/barrels.jpg);
     background-size: cover;
     flex: 1;
@@ -62,4 +62,8 @@
     font-size: small;
     display: flex;
     align-items: center;
+}
+
+.buttonSubmit {
+    background-color: #29AEA9 !important;
 }
