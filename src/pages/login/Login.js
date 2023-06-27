@@ -25,7 +25,7 @@ export const Login = () => {
   const [password, setPassword] = useState("")
   const [pwdFocus, setPwdFocus] = useState(false)
   const [validPwd, setValidPwd] = useState(false)
-  const [showPwd, setShowPwd] = useState(true)
+  const [showPwd, setShowPwd] = useState(false)
 
   const [error, setError] = useState("")
 
@@ -120,7 +120,7 @@ export const Login = () => {
               </div>
             </div>
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={validEmail&&validPwd? false : true}>
+          <Button className='buttonSubmit' type="submit" disabled={validEmail&&validPwd? false : true}>
             Submit
           </Button>
         </Form>

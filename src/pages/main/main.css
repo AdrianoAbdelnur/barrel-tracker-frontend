@@ -20,27 +20,38 @@
 }
 
 .clientColor{
-    background-color: rgb(216, 212, 80);
+    background-color: #29AEA9;
+    /* background-color: rgb(216, 212, 80); */
 }
 
 .barrelColor{
-    background-color: rgb(202, 202, 173);
+    background-color: #29AEA9;
+
+  /*   background-color: rgb(202, 202, 173); */
 }
 
 .productsColor{
-    background-color: rgb(114, 114, 184);
+    background-color: #29AEA9;
+
+    /* background-color: rgb(114, 114, 184); */
 }
 
 .resultsColor{
-    background-color: rgb(148, 216, 44);
+    background-color: #29AEA9;
+
+   /*  background-color: rgb(148, 216, 44); */
 }
 
 .costsColor{
-    background-color: rgb(193, 30, 30);
+    background-color: #29AEA9;
+
+    /* background-color: rgb(193, 30, 30); */
 }
 
 .othersColor{
-    background-color: rgb(46, 167, 139);
+    background-color: #29AEA9;
+
+    /* background-color: rgb(46, 167, 139); */
 }
 
 .buttons_container {

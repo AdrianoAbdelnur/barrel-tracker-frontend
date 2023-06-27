@@ -1,0 +1,7 @@
+.ingredientModal_container {
+    display: flex;
+}
+
+.ingredientModal_container .modal-content {
+    background-color: rgb(69, 69, 69) !important;
+}

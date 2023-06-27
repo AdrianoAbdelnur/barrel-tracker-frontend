@@ -39,6 +39,7 @@ const Main = () => {
                     <Button variant='secondary' onClick={()=>moveTo("/styles")}>Styles</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/prices")}>Prices</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/addStyle")}>Add new style</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/recipes")}>Recipes</Button>
                 </ButtonGroup>
             </div>
         </div>
