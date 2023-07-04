@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const AddIngredientModal = ({show, setShow, ingredient, ingredientType, setNewIngredient }) => {
     const [i, setI] = useState("")
+    
     useEffect(() => {
       if (show) {
         setI(ingredient)

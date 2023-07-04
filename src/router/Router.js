@@ -20,7 +20,7 @@ import Pay from '../pages/clients/payment/Pay';
 import AddCost from '../pages/costs/addCost/AddCost';
 import CostsDetails from '../pages/costs/costDetails/CostsDetails';
 import AddSupplier from '../pages/others/suppliers/AddSupplier';
-import Recipes from '../pages/products/recipes/Recipes';
+
 
 const Router = () => {
   return (
@@ -47,7 +47,7 @@ const Router = () => {
                   <Route path="/addCost" element={<AddCost/>}/>
                   <Route path="/costDetails" element={<CostsDetails/>}/>
                   <Route path="/suppliers" element={<AddSupplier/>}/>
-                  <Route path="/recipes" element={<Recipes/>}/>
+                  <Route path="/recipes"/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
             </Routes>

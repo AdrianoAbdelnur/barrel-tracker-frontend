@@ -73,3 +73,10 @@
 .autocompleteList button:hover {
     background-color: gray;
 }
+
+.deleteLink {
+    color: rgb(174, 26, 26);
+}
+.deleteLink:hover {
+    color: rgb(255, 0, 0);
+}
