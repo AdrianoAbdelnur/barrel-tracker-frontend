@@ -1,8 +1,8 @@
 .barrelsPerCust_Container {
     flex: 1;
-    display: flex;
-    justify-content: center;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .detailsTable{
