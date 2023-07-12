@@ -11,6 +11,7 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
     const [quantity, setQuantity] = useState(0)
     const [showInput, setShowInput] = useState(false)
     const [showAddIngredientModal, setShowAddIngredientModal] = useState(false)
+    const [units, setUnits] = useState("")
 
 
     useEffect(() => {
@@ -23,7 +24,10 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
         // eslint-disable-next-line
     }, [ingredientsData])
     
-
+    useEffect(() => {
+        console.log(ingredients)
+    }, [ingredients])
+    
     
     const changeInput =(data) => {
         setIngredient(data)
@@ -41,11 +45,11 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
    const addingredient = ()=> {
        if (filteredIngredients[0]?.name === ingredient){
             if(ingredient !== "" && quantity !== 0) {
-                console.log(quantity)
-                setIngredients([...ingredients , {id:filteredIngredients[0]._id, item :ingredient, quantity: quantity}])
+                setIngredients([...ingredients , {id:filteredIngredients[0]._id, item :ingredient, quantity: quantity, units :filteredIngredients[0].units}])
                 setShowInput(false)
             }
             setIngredient("")
+            setUnits("")
             setQuantity(0)
         }else {
             setShowAddIngredientModal(true)
@@ -53,11 +57,13 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
     } 
 
     const itemSelect = (data)=> {
-        setIngredient(data)
+        setIngredient(data.name)
+        setUnits(data.units)
     }
 
     const cancelAddIngredient = () => {
         setIngredient("")
+        setUnits("")
         setShowInput(false)
     }
 
@@ -66,8 +72,8 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
     }
 
   return (
-    <div><h5>{ingredientType.toUpperCase()}S</h5>
-        
+    <div>
+        <h5>{ingredientType.toUpperCase()}S</h5>
         {
             ingredients?.length?
             <ul>
@@ -81,7 +87,7 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
                             <li key={index}>
                                 <Row>   
                                     <Col xs={3}>{ingredient.item}</Col>  
-                                    <Col xs={3}>{ingredient.quantity} Kg</Col> 
+                                    <Col xs={3}>{ingredient.quantity} {ingredient.units}</Col> 
                                     {
                                         !hasRecipe &&
                                         <Col >
@@ -110,7 +116,7 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
         <Container>
             <Row>
                 <Col xs={6}>Type of {ingredientType}</Col>
-                <Col xs={3}>Quantity (Kg)</Col>
+                <Col xs={3}>Quantity {units? `(${units})`: ""}</Col>
                 <Col></Col>
             </Row>
             <Row>
@@ -129,7 +135,7 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
                             {   
                                 ingredient.length !== 0 && ingredient !== filteredIngredients[0]?.name &&
                                 filteredIngredients.map((ingredient, index) => {
-                                        return <li key={index+ingredient}><button onClick={()=>itemSelect(ingredient.name)}>{ingredient.name}</button></li>
+                                        return <li key={index+ingredient}><button onClick={()=>itemSelect(ingredient)}>{ingredient.name}</button></li>
                                 })
                             }        
                         </ul>

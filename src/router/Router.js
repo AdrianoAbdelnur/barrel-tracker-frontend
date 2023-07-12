@@ -20,6 +20,7 @@ import Pay from '../pages/clients/payment/Pay';
 import AddCost from '../pages/costs/addCost/AddCost';
 import CostsDetails from '../pages/costs/costDetails/CostsDetails';
 import AddSupplier from '../pages/others/suppliers/AddSupplier';
+import IngredientsPrices from '../pages/products/ingredients/IngredientsPrices';
 
 
 const Router = () => {
@@ -47,6 +48,7 @@ const Router = () => {
                   <Route path="/addCost" element={<AddCost/>}/>
                   <Route path="/costDetails" element={<CostsDetails/>}/>
                   <Route path="/suppliers" element={<AddSupplier/>}/>
+                  <Route path="/IngredientsPrices" element={<IngredientsPrices/>}/>
                   <Route path="/recipes"/>
                 </Route>
                 <Route path="*" element={<div>404</div>} />

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import "./stylesBeer.css"
 import axios from 'axios'
-import { Col, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Button, Col, Row } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import HandleRecipeModal from '../../products/recipes/HandleRecipeModal'
 
 const StylesBeer = () => {
+    let navigate = useNavigate();
+
     const [styles, setStyles] = useState([])
     const [showHandleRecipeModal, setShowHandleRecipeModal] = useState(false)
     const [style, setStyle] = useState([])
-
+    
     useEffect(() => {
         getStyles()
     }, [])
@@ -18,9 +20,11 @@ const StylesBeer = () => {
     useEffect(() => {
         getStyles()
     }, [showHandleRecipeModal])
-        
     
-
+    const moveTo = (place) => {
+        navigate(place)
+    }
+    
     const getStyles = async() => {
         try {
             const {data} = await axios("http://localhost:4000/api/styles/getStyles")
@@ -73,6 +77,9 @@ const StylesBeer = () => {
                     })
                     :<>loading</>
             }
+            <div className='pricesButton_container'>
+                <Button className='pricesButton' variant='primary' onClick={()=>moveTo("/prices")}>Modify Prices</Button>
+            </div>
         </ul>
         <HandleRecipeModal
             show={showHandleRecipeModal}    

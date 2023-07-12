@@ -14,13 +14,16 @@ const AddIngredientModal = ({show, setShow, ingredient, ingredientType, setNewIn
     }, [show])
     
     const handleClose = () => setShow(false);
+    
     const handleAddIngredient = async(e)=>{
-      e.preventDefault();
-    const payload = {
+      e.preventDefault(); 
+      const payload = {
         name: e.target[0].value,
-        ingredientType: e.target[1].value,
+        ingredientType: ingredientType,
+        units: e.target[1].value,
         price: e.target[2].value
       }
+      console.log(payload)
      try {
         const {data}= await axios.post("http://localhost:4000/api/ingredient/newIngredient", payload)
         setNewIngredient(data.message)
@@ -46,14 +49,34 @@ const AddIngredientModal = ({show, setShow, ingredient, ingredientType, setNewIn
                 onChange={(e)=>setI(e.target.value)}
                 required/>
             </Form.Group>
-            <Form.Select aria-label="Default select example">
-              <option value={ingredientType}>{ingredientType}</option>
-              <option value="Malt">Malt</option>
-              <option value="Hop">Hop</option>
-              <option value="Yeast">Yeast</option>
-              <option value="Yeast">Other</option>
-              <option value="Yeast">Cleaning Product</option>
-            </Form.Select>
+            <h5>Type of ingredient: {ingredientType}</h5>
+            { (ingredientType === "Other" || ingredientType === "Cleaning") &&
+              <div>
+                <Form.Label>units</Form.Label>
+                <Form.Select aria-label="units">
+                  <option value="Kg">Kg</option>
+                  <option value="g">g</option>
+                  <option value="units">units</option>
+                  <option value="Liters">Liters</option>
+                </Form.Select>
+              </div>
+            }
+            { ingredientType === "Malt" &&
+            <div>
+              <Form.Label>units</Form.Label>
+              <Form.Select aria-label="units">
+                <option value="Kg">Kg</option>
+              </Form.Select>
+            </div>
+            }
+            { (ingredientType === "Hop"|| ingredientType=== "Yeast" )&&
+            <div>
+              <Form.Label>units</Form.Label>
+              <Form.Select aria-label="units">
+                <option value="g">g</option>
+              </Form.Select>
+            </div>
+            }
             <Form.Group className="mb-3" controlId="price">
               <Form.Label>Price</Form.Label>
               <Form.Control type="number" placeholder="Enter price" required />
