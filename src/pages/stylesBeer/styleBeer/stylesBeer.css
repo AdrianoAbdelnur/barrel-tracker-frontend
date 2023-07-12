@@ -10,3 +10,13 @@
     flex-direction: column;
     height: fit-content;
 }
+
+.pricesButton_container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pricesButton {
+    margin: 2rem;
+}

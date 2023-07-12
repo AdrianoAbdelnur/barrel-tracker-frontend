@@ -46,12 +46,11 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
     
     useEffect(() => {
         if (recipe?.name) {
-            console.log(recipe.malts[0].item.name)
-            setMalts(recipe?.malts?.map(malt=> {return {id: malt.item._id, item: malt.item.name, quantity: malt.quantity}}))
-            setHops(recipe?.hops?.map(hop=> {return {id: hop.item._id, item: hop.item.name, quantity: hop.quantity}}))
-            setYeasts(recipe?.yeasts?.map(yeast=> {return {id: yeast.item._id, item: yeast.item.name, quantity: yeast.quantity}}))
-            setOthers(recipe?.others?.map(other=> {return {id: other.item._id, item: other.item.name, quantity: other.quantity}}))
-            setCleanings(recipe?.cleanings?.map(cleaning=> {return {id: cleaning.item._id, item: cleaning.item.name, quantity: cleaning.quantity}})) 
+            setMalts(recipe?.malts?.map(malt=> {return {id: malt.item._id, item: malt.item.name, quantity: malt.quantity, units: malt.item.units}}))
+            setHops(recipe?.hops?.map(hop=> {return {id: hop.item._id, item: hop.item.name, quantity: hop.quantity, units: hop.item.units}}))
+            setYeasts(recipe?.yeasts?.map(yeast=> {return {id: yeast.item._id, item: yeast.item.name, quantity: yeast.quantity, units: yeast.item.units }}))
+            setOthers(recipe?.others?.map(other=> {return {id: other.item._id, item: other.item.name, quantity: other.quantity, units: other.item.units}}))
+            setCleanings(recipe?.cleanings?.map(cleaning=> {return {id: cleaning.item._id, item: cleaning.item.name, quantity: cleaning.quantity, units: cleaning.item.units}})) 
         }
     }, [recipe])
     
@@ -80,16 +79,16 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const handleAddRecipe = async() => {
         try {
+            console.log(malts)
             const payload = {
                 name: style.name,
-                malts: malts.map(malt => {return {quantity: malt.quantity, item: malt.id}}),
-                hops: hops.map(hop => {return {quantity: hop.quantity, item: hop.id}}),
-                yeasts:yeasts.map(yeast => {return {quantity:yeast.quantity, item:yeast.id}}),
-                others: others.map(other => {return {quantity:other.quantity, item:other.id}}),
-                cleanings: cleanings.map(cleaning => {return {quantity:cleaning.quantity, item:cleaning.id}})
+                malts: malts.map(malt => {return {quantity: malt.quantity, item: malt.id, units: malt.units}}),
+                hops: hops.map(hop => {return {quantity: hop.quantity, item: hop.id, units: hop.units}}),
+                yeasts:yeasts.map(yeast => {return {quantity:yeast.quantity, item:yeast.id, units: yeast.units}}),
+                others: others.map(other => {return {quantity:other.quantity, item:other.id, units: other.units}}),
+                cleanings: cleanings.map(cleaning => {return {quantity:cleaning.quantity, item:cleaning.id, units: cleaning.units}})
             }
             const {data} =await axios.post("http://localhost:4000/api/recipe/newRecipe", payload)   
-            console.log(data)
             if (data?.newRecipe?.name) {
                     updateStyle(data.newRecipe.name)
                 }
@@ -131,6 +130,7 @@ return (
             </Modal.Header>
             <Modal.Body>
                 <h5>Recipe name: <b>{style.name}</b></h5>
+                {console.log(malts)}
                 <IngredientHandler
                     ingredientType={"Malt"}
                     ingredients={malts}
