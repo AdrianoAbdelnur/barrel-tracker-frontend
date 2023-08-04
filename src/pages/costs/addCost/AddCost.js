@@ -35,7 +35,7 @@ const AddCost = () => {
   return (
     <div className='addCost_container'>
         <Form className="form_container_cost" onSubmit={handleSubmit}>
-            <h2>New client</h2>
+            <h2>New Spent</h2>
             {
                 error && <Alert variant='danger'>{error}</Alert>
             }

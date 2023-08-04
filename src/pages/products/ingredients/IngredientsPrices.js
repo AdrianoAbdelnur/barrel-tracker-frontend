@@ -4,7 +4,6 @@ import { Button, Col, Form, Row } from 'react-bootstrap'
 import './ingredientsPrices.css'
 
 const IngredientsPrices = () => {
-    const [ingredients, setIngredients] = useState([])
     const [malts, setMalts] = useState([])
     const [hops, setHops] = useState([])
     const [yeasts, setYeasts] = useState([])
@@ -24,7 +23,6 @@ const IngredientsPrices = () => {
     const getIngredients = async() => {
         try {
             const {data} = await axios("http://localhost:4000/api/ingredient/getIngredients")
-            setIngredients(data.ingredientsList)
             setMalts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Malt"))
             setHops(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Hop"))
             setYeasts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Yeast"))
