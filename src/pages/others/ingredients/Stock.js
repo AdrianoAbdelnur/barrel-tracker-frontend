@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
-import './ingredientsPrices.css'
 
-const IngredientsPrices = () => {
+
+const Stock = () => {
     const [malts, setMalts] = useState([])
     const [hops, setHops] = useState([])
     const [yeasts, setYeasts] = useState([])
@@ -162,8 +162,7 @@ const IngredientsPrices = () => {
             </Button>
         </Form>
     </div>
-   
-  )
+    )
 }
 
-export default IngredientsPrices
+export default Stock
