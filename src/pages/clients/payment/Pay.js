@@ -26,6 +26,7 @@ const Pay = () => {
 
     useEffect(() => {
         payOperation();
+        // eslint-disable-next-line
     }, [sales])
     
     
@@ -118,7 +119,7 @@ const Pay = () => {
 
     const updateSale = async(id, paylodad) => {
         try {
-            const {data} = await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
+            await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
         } catch (error) {
             console.log(error)
         }
@@ -126,7 +127,7 @@ const Pay = () => {
 
     const updatePay = async(id, payload) => {
         try {
-            const {data} = await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
+            await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
         } catch (error) {
             console.log(error)
         }

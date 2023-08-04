@@ -1,5 +1,4 @@
 import './App.css';
-import useAuth from './hooks/useAuth';
 import Router from './router/Router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

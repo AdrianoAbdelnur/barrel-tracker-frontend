@@ -59,9 +59,10 @@ const Barrels = () => {
     }, [newStatusBarrel])
 
     useEffect(() => {
-      if(saleId) {
+        if(saleId) {
             handleGetPaysNotAssigned()
-      }
+        }
+      // eslint-disable-next-line
     }, [saleId])
     
 
@@ -214,7 +215,7 @@ const Barrels = () => {
 
     const updateSale = async(id, paylodad) => {
         try {
-            const {data} = await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
+            await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
         } catch (error) {
             console.log(error)
         }
@@ -223,7 +224,7 @@ const Barrels = () => {
 
     const updatePay = async(id, payload) => {
         try {
-            const {data} = await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
+             await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
         } catch (error) {
             console.log(error)
         }

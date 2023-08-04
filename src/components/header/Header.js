@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Container, Nav, Navbar} from 'react-bootstrap'
 import "./header.css"
 import logo from "./../../assets/img/barrel.png"
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Header = () => {
@@ -15,6 +15,7 @@ const Header = () => {
       if(token) {
         handleGetUser(token);
       }
+      // eslint-disable-next-line
     }, []);
     
   const handleGetUser = async (token) => {
