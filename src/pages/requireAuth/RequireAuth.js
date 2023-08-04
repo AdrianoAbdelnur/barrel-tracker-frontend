@@ -19,6 +19,7 @@ const RequireAuth = () => {
         setAuth(loggedStatus);
         setIsLoading(false)
       }
+      // eslint-disable-next-line
     }, [loggedStatus]);
     
 
