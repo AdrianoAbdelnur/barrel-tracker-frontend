@@ -28,7 +28,7 @@ export const Login = () => {
 
   const Navigate= useNavigate();
   const location= useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname+location.state?.from?.hash || '/';
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email))
@@ -57,8 +57,6 @@ export const Login = () => {
       setError(error?.response?.data?.message);
     }
   };
-
-
 
   return (
     <div className='register_container'>
