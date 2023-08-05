@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './suppliers.css'
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { useNavigate } from 'react-router-dom'
 
 const AddSupplier = () => {
@@ -36,7 +36,7 @@ const AddSupplier = () => {
         }
         
          try {
-            const {data} = await axios.post('http://localhost:4000/api/supplier/addSupplier', supplierData)
+            const {data} = await axios.post('/supplier/addSupplier', supplierData)
             setSupplierData(data)
         } catch (error) {
             setError(error?.response?.data?.message)

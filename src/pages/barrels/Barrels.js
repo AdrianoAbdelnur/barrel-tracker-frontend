@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './../../api/axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useLocation} from 'react-router-dom';
@@ -90,7 +90,7 @@ const Barrels = () => {
 
     const getBarrel = async(id) => {
         try {
-            const {data} = await axios("http://localhost:4000/api/barrel//getABarrel/"+ id);
+            const {data} = await axios("/barrel//getABarrel/"+ id);
             if(data.barrelFound){
                 if (data?.barrelFound?.statusBarrel === "delivered to customer") {
                     setConfirmSale(true)
@@ -104,7 +104,7 @@ const Barrels = () => {
 
     const handleBarrelStatus = async(newStatusBarrel) =>{
             try {
-                const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ barrel.id, newStatusBarrel )
+                const {data} = await axios.put("/barrel/status/"+ barrel.id, newStatusBarrel )
                 setBarrel(data.upDatedBarrel)
             } catch (error) {
                 console.log(error)
@@ -113,7 +113,7 @@ const Barrels = () => {
 
     const handleGetCustomers = async() =>{
         try {
-            const {data} = await axios("http://localhost:4000/api/client/getClients")
+            const {data} = await axios("/client/getClients")
             setCustomersData(data.clientsList)
             setFilteredCustomers(data.clientsList)
         } catch (error) {
@@ -123,7 +123,7 @@ const Barrels = () => {
 
     const handleGetStyles = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/styles/getStyles")
+            const {data} = await axios("/styles/getStyles")
             setStyles(data.stylesFound)
         } catch (error) {
             console.log(error)
@@ -159,7 +159,7 @@ const Barrels = () => {
                 price: price * barrel.capacity,
                 customer: barrel.customer
             }
-            const {data} = await axios.post("http://localhost:4000/api/sale/newSale", paylodad)
+            const {data} = await axios.post("/sale/newSale", paylodad)
             setSaleId(data.newSale._id)
         } catch (error) {
             console.log(error)
@@ -168,7 +168,7 @@ const Barrels = () => {
 
     const handleGetPaysNotAssigned = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/pay/getPaysNotAssigned/" + barrel.customer._id)  
+            const {data} = await axios("/pay/getPaysNotAssigned/" + barrel.customer._id)  
             if(data.paysList.length) {
                 paysOperation(data.paysList);
             } else handleNewSale()
@@ -215,7 +215,7 @@ const Barrels = () => {
 
     const updateSale = async(id, paylodad) => {
         try {
-            await axios.put("http://localhost:4000/api/sale/updatePay/"+id, paylodad)
+            await axios.put("/sale/updatePay/"+id, paylodad)
         } catch (error) {
             console.log(error)
         }
@@ -224,7 +224,7 @@ const Barrels = () => {
 
     const updatePay = async(id, payload) => {
         try {
-             await axios.put("http://localhost:4000/api/pay/updatePay/"+id, payload)
+             await axios.put("/pay/updatePay/"+id, payload)
         } catch (error) {
             console.log(error)
         }

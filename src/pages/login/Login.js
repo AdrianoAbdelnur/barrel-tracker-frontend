@@ -1,7 +1,7 @@
 import { Alert, Button, Form } from 'react-bootstrap'
 import React, { useState } from 'react'
 import "./../register/register.css"
-import axios from 'axios';
+import axios from './../../api/axios';
 import Checked from '../../assets/icons/Checked';
 import Alerticon from '../../assets/icons/Alerticon';
 import { useEffect } from 'react';
@@ -43,7 +43,7 @@ export const Login = () => {
   const handleLogin = async(e) => {    
     try {
       e.preventDefault();
-      const {data} = await axios.post("http://localhost:4000/api/user/login", {email, password});
+      const {data} = await axios.post("/user/login", {email, password});
       localStorage.setItem('jwtoken', data?.token);
       setEmail("");
       setPassword("");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./stylesBeer.css"
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { Button, Col, Row } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import HandleRecipeModal from '../../products/recipes/HandleRecipeModal'
@@ -27,7 +27,7 @@ const StylesBeer = () => {
     
     const getStyles = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/styles/getStyles")
+            const {data} = await axios("/styles/getStyles")
             setStyles(data.stylesFound)
         } catch (error) {
             console.log(error)

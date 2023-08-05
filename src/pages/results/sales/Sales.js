@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./sales.css"
-import axios from 'axios'
+import axios from './../../../api/axios'
 import DatePicker from "react-datepicker";
 import { Button, ButtonGroup, Dropdown, DropdownButton, Form, InputGroup, Table } from 'react-bootstrap'
 import { addDays, isWithinInterval, startOfMonth, subMonths } from 'date-fns'
@@ -74,7 +74,7 @@ const Sales = () => {
 
     const handleGetSales = async(startDate, endDate) => {
         try {
-            const {data} = await axios("http://localhost:4000/api/sale/getSales", {params : {startDate, endDate}})
+            const {data} = await axios("/sale/getSales", {params : {startDate, endDate}})
             setSales(data.filteredSales.reverse())
             setFilteredSales(data.filteredSales.reverse())
         } catch (error) {

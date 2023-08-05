@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './../../api/axios';
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom';
 import Unauthorized from '../unauthorized/Unauthorized';
@@ -27,7 +27,7 @@ const RequireAuth = () => {
     const getAuth = async() => {
         const token = localStorage.getItem("jwtoken")
         try {
-          const { data } = await axios.get('http://localhost:4000/api/user/status', {headers: {Authorization : token}});
+          const { data } = await axios.get('/user/status', {headers: {Authorization : token}});
           if (!data?.isLogged) setLoggedStatus({ isLogged: false });
           else setLoggedStatus({ isLogged: true, role: data.role });
         } catch (error) {

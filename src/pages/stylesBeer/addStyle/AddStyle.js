@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./addStyle.css"
 import { Alert, Button, Form } from 'react-bootstrap'
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { useNavigate } from 'react-router-dom'
 
 const AddStyle = () => {
@@ -25,8 +25,8 @@ const AddStyle = () => {
         try {
             e.preventDefault();
             if (price) {
-                await axios.post("http://localhost:4000/api/styles/addNewStyle", { name : style, price: price})
-            } else await axios.post("http://localhost:4000/api/styles/addNewStyle", { name : style})
+                await axios.post("/styles/addNewStyle", { name : style, price: price})
+            } else await axios.post("/styles/addNewStyle", { name : style})
             setMessage(true) 
         } catch (error) {
             console.log(error)

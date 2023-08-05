@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -29,7 +29,7 @@ const ProductsCosts = () => {
     
     const getCosts = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/productsCosts/getCosts")
+            const {data} = await axios("/productsCosts/getCosts")
             setFixed(data.costsList.filter(cost=>cost.type==="fixed"))
             setVariables(data.costsList.filter(cost=>cost.type==="variable"))
         } catch (error) {
@@ -40,7 +40,7 @@ const ProductsCosts = () => {
     const updateCosts = async() => {
         try {
             for (let i = 0; i < costs.length; i++) {
-                await axios.patch("http://localhost:4000/api/productsCosts/updateCost", costs[i])
+                await axios.patch("/productsCosts/updateCost", costs[i])
             }
             getCosts()
         } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./barrelsPerCustomer.css"
-import axios from 'axios'
+import axios from './../../../api/axios'
 import TableBarrels from './TableBarrels'
 
 
@@ -16,7 +16,7 @@ const BarrelsPerCustomer = () => {
 
 const handleGetBarrels = async() => {
   try {
-    const {data} = await axios("http://localhost:4000/api/barrel/getBarrels")
+    const {data} = await axios("/barrel/getBarrels")
     setBarrels(data.barrelsFound)
   } catch (error) {
       console.log(error)
@@ -25,7 +25,7 @@ const handleGetBarrels = async() => {
 
 const handleGetCustomers = async() =>{
   try {
-      const {data} = await axios("http://localhost:4000/api/client/getClients")
+      const {data} = await axios("/client/getClients")
       setCustomersData(data.clientsList)
   } catch (error) {
       console.log(error)

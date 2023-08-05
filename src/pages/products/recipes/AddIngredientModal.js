@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import './addIngredientModal.css'
-import axios from 'axios';
+import axios from './../../../api/axios';
 
 const AddIngredientModal = ({show, setShow, ingredient, ingredientType, setNewIngredient }) => {
     const [i, setI] = useState("")
@@ -25,7 +25,7 @@ const AddIngredientModal = ({show, setShow, ingredient, ingredientType, setNewIn
       }
       console.log(payload)
      try {
-        const {data}= await axios.post("http://localhost:4000/api/ingredient/newIngredient", payload)
+        const {data}= await axios.post("/ingredient/newIngredient", payload)
         setNewIngredient(data.message)
       } catch (error) {
         console.log(error)

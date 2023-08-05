@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './../../../api/axios'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
@@ -6,7 +6,7 @@ const ConfirmationModal = ({show, setShow, id, barrels, setBarrels}) => {
 
     const handleBarrelStatus = async() =>{
         try {
-            const {data} = await axios.put("http://localhost:4000/api/barrel/status/"+ id, 
+            const {data} = await axios.put("/barrel/status/"+ id, 
             {
                 statusBarrel: "empty in factory",
             } 
