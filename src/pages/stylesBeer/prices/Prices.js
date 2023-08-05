@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
 import './prices.css'
 
@@ -19,7 +19,7 @@ const Prices = () => {
     
     const getStyles = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/styles/getStyles")
+            const {data} = await axios("/styles/getStyles")
             setStyles(data.stylesFound)
             console.log(data.stylesFound)
         } catch (error) {
@@ -30,7 +30,7 @@ const Prices = () => {
     const updatePrices = async() => {
         try {
             for (let i = 0; i < prices.length; i++) {
-                await axios.patch("http://localhost:4000/api/styles/updatePrices", prices[i])
+                await axios.patch("/styles/updatePrices", prices[i])
             }
             getStyles()
         } catch (error) {

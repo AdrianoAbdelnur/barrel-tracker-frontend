@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Modal } from 'react-bootstrap'
 import IngredientHandler from './IngredientHandler'
@@ -58,7 +58,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const handleGetIngredients = async() =>{
         try {
-            const {data} = await axios("http://localhost:4000/api/ingredient/getIngredients")
+            const {data} = await axios("/ingredient/getIngredients")
             setIngredientsData(data.ingredientsList)
         } catch (error) {
             console.log(error)
@@ -79,7 +79,6 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const handleAddRecipe = async() => {
         try {
-            console.log(malts)
             const payload = {
                 name: style.name,
                 malts: malts.map(malt => {return {quantity: malt.quantity, item: malt.id, units: malt.units}}),
@@ -88,7 +87,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
                 others: others.map(other => {return {quantity:other.quantity, item:other.id, units: other.units}}),
                 cleanings: cleanings.map(cleaning => {return {quantity:cleaning.quantity, item:cleaning.id, units: cleaning.units}})
             }
-            const {data} =await axios.post("http://localhost:4000/api/recipe/newRecipe", payload)   
+            const {data} =await axios.post("/recipe/newRecipe", payload)   
             if (data?.newRecipe?.name) {
                     updateStyle(data.newRecipe.name)
                 }
@@ -104,9 +103,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const updateStyle = async(name) => {
         try { 
-            console.log(name)
-            const {data} =await axios.patch("http://localhost:4000/api/styles/updateRecipe", {name, hasRecipe: true})
-            console.log(data)
+            await axios.patch("/styles/updateRecipe", {name, hasRecipe: true})
         } catch (error) {
             console.log(error)
         }
@@ -114,7 +111,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const handleGetRecipe = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/recipe/getRecipe/"+style.name)
+            const {data} = await axios("/recipe/getRecipe/"+style.name)
             setRecipe(data.recipeFound)
         } catch (error) {
             console.log(error)
@@ -130,7 +127,6 @@ return (
             </Modal.Header>
             <Modal.Body>
                 <h5>Recipe name: <b>{style.name}</b></h5>
-                {console.log(malts)}
                 <IngredientHandler
                     ingredientType={"Malt"}
                     ingredients={malts}

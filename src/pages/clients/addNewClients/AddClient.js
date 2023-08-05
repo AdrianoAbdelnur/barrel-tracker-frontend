@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
 import './addClient.css'
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { useNavigate } from 'react-router-dom'
 
 const AddClient = () => {
@@ -35,7 +35,7 @@ const AddClient = () => {
             }
         }
         try {
-            const {data} = await axios.post('http://localhost:4000/api/client/addClient', clientData)
+            const {data} = await axios.post('/client/addClient', clientData)
             setClientData(data)
         } catch (error) {
             setError(error?.response?.data?.message)

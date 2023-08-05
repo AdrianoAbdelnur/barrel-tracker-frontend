@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import "./statusInformation.css"
-import axios from 'axios'
+import axios from './../../../api/axios'
 import ConfirmationModal from './ConfirmationModal'
 
 const StatusInformation = () => {
@@ -15,7 +15,7 @@ const StatusInformation = () => {
 
     const getbarrels = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/barrel/getBarrels")
+            const {data} = await axios("/barrel/getBarrels")
             setBarrels(data.barrelsFound)
         } catch (error) {
             console.log(error)

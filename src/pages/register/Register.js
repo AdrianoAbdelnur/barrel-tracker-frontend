@@ -7,7 +7,7 @@ import Alerticon from '../../assets/icons/Alerticon'
 import CheckedInput from '../../assets/icons/CheckedInput';
 import EyeOff from '../../assets/icons/EyeOff';
 import EyeCheck from '../../assets/icons/EyeCheck';
-import axios from 'axios';
+import axios from './../../api/axios';
 
 
   const USER_REGEX = /^[A-z][A-z0-9-_]{4,16}$/;
@@ -119,7 +119,7 @@ const Register = () => {
     payload.email = email;
     payload.password = password
       try {
-        await axios.post("http://localhost:4000/api/user/register", payload);
+        await axios.post("/user/register", payload);
         setUserName("");
         setEmail("");
         setPassword("");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./clientsInfo.css"
 import { Table } from 'react-bootstrap'
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { Link } from 'react-router-dom'
 import ModalDetails from '../../../components/clientsDetails/ModalDetails'
 
@@ -17,7 +17,7 @@ const ClientsInfo = () => {
 
     const handleGetClient = async() =>{
         try {
-            const {data} = await axios("http://localhost:4000/api/client/getClients")
+            const {data} = await axios("/client/getClients")
             setClientsData(data.clientsList)
         } catch (error) {
             console.log(error)

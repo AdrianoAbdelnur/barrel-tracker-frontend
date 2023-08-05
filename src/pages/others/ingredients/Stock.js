@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 
@@ -22,7 +22,7 @@ const Stock = () => {
     
     const getIngredients = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/ingredient/getIngredients")
+            const {data} = await axios("/ingredient/getIngredients")
             setMalts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Malt"))
             setHops(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Hop"))
             setYeasts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Yeast"))
@@ -38,7 +38,7 @@ const Stock = () => {
         try {
             console.log(prices)
             for (let i = 0; i < prices.length; i++) {
-                await axios.patch("http://localhost:4000/api/ingredient/updatePrices", prices[i])
+                await axios.patch("/ingredient/updatePrices", prices[i])
             }
             getIngredients()
         } catch (error) {

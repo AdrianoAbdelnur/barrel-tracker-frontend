@@ -3,7 +3,8 @@ import { Button, Container, Nav, Navbar} from 'react-bootstrap'
 import "./header.css"
 import logo from "./../../assets/img/barrel.png"
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../../api/axios'
+
 
 const Header = () => {
   const [loggedUser, setLoggedUser] = useState({})
@@ -21,7 +22,7 @@ const Header = () => {
   const handleGetUser = async (token) => {
     try {
       if (loggedUser.name) return;
-      const {data} = await axios.get("http://localhost:4000/api/user/userData", {headers: {Authorization: token}})
+      const {data} = await axios.get("/user/userData", {headers: {Authorization: token}})
       setLoggedUser(data?.userFound)
     } catch (error) {
       navigate("login")

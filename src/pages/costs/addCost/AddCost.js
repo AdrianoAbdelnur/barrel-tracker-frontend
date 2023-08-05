@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import "./addCost.css"
-import axios from 'axios'
+import axios from './../../../api/axios'
+
 
 const AddCost = () => {
     const [error, setError] = useState("")
@@ -26,7 +27,7 @@ const AddCost = () => {
             }
         }
         try {
-            const {data} = await axios.post('http://localhost:4000/api/cost/addNewCost', costData)
+            const {data} = await axios.post('/cost/addNewCost', costData)
             setMessage(data.message)
         } catch (error) {
             setError(error?.response?.data?.message)

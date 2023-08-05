@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './../../../api/axios';
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 
@@ -16,7 +16,7 @@ const AddCostModal = ({show, setShow, setNewCost}) => {
         }
         console.log(payload)
        try {
-          const {data}= await axios.post("http://localhost:4000/api/productsCosts/addNewCost", payload)
+          const {data}= await axios.post("/productsCosts/addNewCost", payload)
           setNewCost(data.message)
         } catch (error) {
           console.log(error)

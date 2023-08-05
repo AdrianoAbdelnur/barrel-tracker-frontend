@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from './../../../api/axios'
 import { Button, ButtonGroup, Dropdown, DropdownButton, Form, InputGroup, Table } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import { addDays, format, isWithinInterval, startOfMonth, subMonths } from 'date-fns';
@@ -71,7 +71,7 @@ const CostsDetails = () => {
 
     const handleGetCost = async(startDate, endDate) => {
         try {
-            const {data} = await axios("http://localhost:4000/api/cost/getCosts", 
+            const {data} = await axios("/cost/getCosts", 
             {params : {startDate, endDate}})
             setCosts(data.filteredCosts.reverse())
             setFilteredCosts(data.filteredCosts.reverse())

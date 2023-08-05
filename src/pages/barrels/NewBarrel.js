@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, FormSelect, Modal } from 'react-bootstrap'
 import "./barrels.css"
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from './../../api/axios';
 
 const NewBarrel = ({show, setShow}) => {
   let navigate = useNavigate();
@@ -29,7 +29,7 @@ const NewBarrel = ({show, setShow}) => {
         id: id,
         capacity: capacity
       }
-      await axios.post("http://localhost:4000/api/barrel/addBarrel", payload)
+      await axios.post("/barrel/addBarrel", payload)
       navigate("/main")
     } catch (error) {
       console.log(error)

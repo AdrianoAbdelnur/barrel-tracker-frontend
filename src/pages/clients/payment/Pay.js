@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./pay.css"
 import { Alert, Button, Form, OverlayTrigger, Popover } from 'react-bootstrap'
-import axios from 'axios'
+import axios from './../../../api/axios'
 
 const Pay = () => {
     const [customersData, setCustomersData] = useState([])
@@ -33,7 +33,7 @@ const Pay = () => {
     
     const handleGetCustomers = async() =>{
         try {
-            const {data} = await axios("http://localhost:4000/api/client/getClients")
+            const {data} = await axios("/client/getClients")
             setCustomersData(data.clientsList)
             setFilteredCustomers(data.clientsList)
         } catch (error) {
@@ -60,7 +60,7 @@ const Pay = () => {
                 customer: customerData._id, 
                 pay: e.target[1].value
             }
-            const {data} = await axios.post("http://localhost:4000/api/pay/newPay", paylodad)
+            const {data} = await axios.post("/pay/newPay", paylodad)
             setMessage(data.message)
             setPay(data.newPay)
             handleGetSales();
@@ -76,7 +76,7 @@ const Pay = () => {
 
     const handleGetSales = async() => {
         try {
-            const {data} = await axios("http://localhost:4000/api/sale/getSales")
+            const {data} = await axios("/sale/getSales")
             setSales(data.salesFound.reverse())
         } catch (error) {
             console.log(error)
