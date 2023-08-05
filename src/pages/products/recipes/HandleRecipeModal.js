@@ -79,7 +79,6 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const handleAddRecipe = async() => {
         try {
-            console.log(malts)
             const payload = {
                 name: style.name,
                 malts: malts.map(malt => {return {quantity: malt.quantity, item: malt.id, units: malt.units}}),
@@ -104,9 +103,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const updateStyle = async(name) => {
         try { 
-            console.log(name)
             const {data} =await axios.patch("/styles/updateRecipe", {name, hasRecipe: true})
-            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -130,7 +127,6 @@ return (
             </Modal.Header>
             <Modal.Body>
                 <h5>Recipe name: <b>{style.name}</b></h5>
-                {console.log(malts)}
                 <IngredientHandler
                     ingredientType={"Malt"}
                     ingredients={malts}
