@@ -103,7 +103,7 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
 
     const updateStyle = async(name) => {
         try { 
-            const {data} =await axios.patch("/styles/updateRecipe", {name, hasRecipe: true})
+            await axios.patch("/styles/updateRecipe", {name, hasRecipe: true})
         } catch (error) {
             console.log(error)
         }

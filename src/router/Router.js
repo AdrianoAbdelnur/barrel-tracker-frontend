@@ -34,12 +34,15 @@ const Router = () => {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/unauthorized" element={<Unauthorized/>}/>
+                
+                <Route element={<RequireAuth allowedRoles={['delivery', 'admin']} />}>
+                  <Route path="/barrels" element={<Barrels/>}/>
+                </Route>
 
-                <Route element={<RequireAuth />}>
+                <Route element={<RequireAuth allowedRoles={['admin']} />}>
                   <Route path="/main" element={<Main/>}/>
                   <Route path="/addclient" element={<AddClient/>}/>
                   <Route path="/clientInfo" element={<ClientsInfo/>}/>
-                  <Route path="/barrels" element={<Barrels/>}/>
                   <Route path="/barrelsPerCustomer" element={<BarrelsPerCustomer/>}/>
                   <Route path="/addStyle" element={<AddStyle/>}/>
                   <Route path="/styles" element={<StylesBeer/>}/>
@@ -54,6 +57,7 @@ const Router = () => {
                   <Route path="/productsCosts" element={<ProductsCosts/>}/>
                   <Route path="/stock" element={<Stock/>}/>
                 </Route>
+
                 <Route path="*" element={<div>404</div>} />
             </Routes>
         </Layout>
