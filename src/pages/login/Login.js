@@ -7,6 +7,7 @@ import Alerticon from '../../assets/icons/Alerticon';
 import { useEffect } from 'react';
 import EyeOff from '../../assets/icons/EyeOff';
 import EyeCheck from '../../assets/icons/EyeCheck';
+import { useLocation, useNavigate } from 'react-router-dom';
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /.{6,16}$/;
 
@@ -24,6 +25,10 @@ export const Login = () => {
   const [showPwd, setShowPwd] = useState(false)
 
   const [error, setError] = useState("")
+
+  const Navigate= useNavigate();
+  const location= useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email))
@@ -47,7 +52,7 @@ export const Login = () => {
       localStorage.setItem('jwtoken', data?.token);
       setEmail("");
       setPassword("");
-      window.location.replace('/main');
+      Navigate(from, {replace: true});
     } catch (error) {
       setError(error?.response?.data?.message);
     }
