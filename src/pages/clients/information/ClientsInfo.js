@@ -17,7 +17,7 @@ const ClientsInfo = () => {
 
     const handleGetClient = async() =>{
         try {
-            const {data} = await axios("¿/client/getClients")
+            const {data} = await axios("/client/getClients")
             setClientsData(data.clientsList)
         } catch (error) {
             console.log(error)
