@@ -22,6 +22,7 @@ const Sales = () => {
     const [newPrice, setNewPrice] = useState(0)
     const [saleId, setSaleId] = useState("")
     const [price, setPrice] = useState(0)
+    const [priceModify, setPriceModify] = useState(false)
 
     const [showedPeriod, setShowedPeriod] = useState("Current month costs")
 
@@ -51,7 +52,7 @@ const Sales = () => {
         }
         setFirstDate(startDate)
         handleGetSales(startDate, endDate)
-    }, [showedPeriod])
+    }, [showedPeriod, priceModify])
 
     useEffect(() => {
         salesFilter()
@@ -89,7 +90,6 @@ const Sales = () => {
     const handleGetSales = async(startDate, endDate) => {
         try {
             const {data} = await axios("/sale/getSales", {params : {startDate, endDate}})
-            console.log(data.filteredSales.reverse())
             setSales(data.filteredSales.reverse())
             setFilteredSales(data.filteredSales.reverse())
         } catch (error) {
@@ -122,7 +122,9 @@ const Sales = () => {
     const updatePrice = async() => {
         try {
             const {data} = await axios.patch('http://localhost:4000/api/sale/updatePrice', {id : saleId, price : newPrice})
-            console.log(data)
+            if (data.message === 'Price updated') {
+                setPriceModify(!priceModify)
+            }
         } catch (error) {
             console.log(error)
         }
