@@ -19,8 +19,9 @@ const Sales = () => {
     const [totalPaid, setTotalPaid] = useState(0)
     const [firstDate, setFirstDate] = useState(null)
     const [editPriceModal, setEditPriceModal] = useState(false)
-    const [price, setPrice] = useState(0)
+    const [newPrice, setNewPrice] = useState(0)
     const [saleId, setSaleId] = useState("")
+    const [price, setPrice] = useState(0)
 
     const [showedPeriod, setShowedPeriod] = useState("Current month costs")
 
@@ -76,6 +77,14 @@ const Sales = () => {
         setTotalPaid(additionPaid)
     }, [filteredSales])
 
+    useEffect(() => {
+        if (price !== newPrice) {
+            updatePrice();
+        }
+        // eslint-disable-next-line
+    }, [newPrice])
+    
+
 
     const handleGetSales = async(startDate, endDate) => {
         try {
@@ -105,8 +114,18 @@ const Sales = () => {
 
     const editPrice = (price, _id) => {
         setPrice(price)
-        setSaleId(_id)
+        setNewPrice(price)
         setEditPriceModal(true)
+        setSaleId(_id)
+    }
+
+    const updatePrice = async() => {
+        try {
+            const {data} = await axios.patch('http://localhost:4000/api/sale/updatePrice', {id : saleId, price : newPrice})
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -211,8 +230,8 @@ const Sales = () => {
         <PriceChange
             show={editPriceModal}
             setShow={setEditPriceModal}
-            setPrice={setPrice}
-            price={price}
+            setPrice={setNewPrice}
+            price={newPrice}
         />
     
     </div>
