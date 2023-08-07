@@ -28,7 +28,7 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/statusInformation")}>Information status</Button>
-                    <Button variant='secondary' as={Link} to="/login">barrel per client</Button>
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>barrel per client</Button>
                 </ButtonGroup>
             </div>
         </div>
@@ -51,7 +51,7 @@ const Main = () => {
                     <Button variant='secondary' onClick={()=>moveTo("/costDetails")}>Spents details</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/addCost")}>Add a new Spent</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/productsCostsgit")}>Production Costs</Button>                  
-                    <Button variant='secondary' as={Link} to="/login">other</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>other</Button>                  
                 </ButtonGroup>
             </div>
         </div>
@@ -68,7 +68,7 @@ const Main = () => {
             <h3>Results</h3>
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
-                    <Button variant='secondary' onClick={()=>moveTo("/")}>Information</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Information</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/stock")}>Stock</Button>                  
                 </ButtonGroup>
             </div>

@@ -24,6 +24,7 @@ import IngredientsPrices from '../pages/products/ingredients/IngredientsPrices';
 import ProductsCosts from '../pages/costs/productsCosts/ProductsCosts';
 import Stock from '../pages/others/ingredients/Stock';
 import Error404 from '../pages/404/Error404';
+import Working from '../pages/workingPage/Working';
 
 
 const Router = () => {
@@ -35,6 +36,7 @@ const Router = () => {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/unauthorized" element={<Unauthorized/>}/>
+                <Route path="/workingPage" element={<Working/>}/>
                 
                 <Route element={<RequireAuth allowedRoles={['delivery', 'admin']} />}>
                   <Route path="/barrels" element={<Barrels/>}/>
