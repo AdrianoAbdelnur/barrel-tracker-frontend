@@ -23,6 +23,7 @@ import AddSupplier from '../pages/others/suppliers/AddSupplier';
 import IngredientsPrices from '../pages/products/ingredients/IngredientsPrices';
 import ProductsCosts from '../pages/costs/productsCosts/ProductsCosts';
 import Stock from '../pages/others/ingredients/Stock';
+import Error404 from '../pages/404/Error404';
 
 
 const Router = () => {
@@ -58,7 +59,7 @@ const Router = () => {
                   <Route path="/stock" element={<Stock/>}/>
                 </Route>
 
-                <Route path="*" element={<div>404</div>} />
+                <Route path="*" element={<Error404/>} />
             </Routes>
         </Layout>
     </BrowserRouter>
