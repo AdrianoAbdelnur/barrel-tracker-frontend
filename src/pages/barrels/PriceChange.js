@@ -1,19 +1,25 @@
-import React, {useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import { Button, Modal,Form } from 'react-bootstrap'
 import './barrels.css'
 
-const PriceChange = ({show, setShow, barrel, setPrice, price}) => {
+const PriceChange = ({show, setShow, setPrice, price}) => {
     const [disableRadio, setDisableRadio] = useState(false)
     const [newPrice, setNewPrice] = useState(price)
 
+    useEffect(() => {
+        if (show) {
+            setNewPrice(price)
+        }
+        // eslint-disable-next-line
+    }, [show])
+    
+
     const handleClose = () => {
-        setPrice(barrel.style.price)
         setShow(false)
     }
     
     const handleSetPrice = (e) => {
         e.preventDefault()
-        console.log(newPrice)
         setPrice(newPrice)
     }
   return (
@@ -23,7 +29,8 @@ const PriceChange = ({show, setShow, barrel, setPrice, price}) => {
             </Modal.Header>
             <Form onSubmit={handleSetPrice}>
                 <Modal.Body>
-                    <h5>Select an option or set the price</h5>
+                    <h4>Select an option or set the price</h4>
+                    <h5>Current Price: {price} / liter</h5>
                     <div className='d-flex flex-row'>
                         <div key={"discount"} className="m-3">
                             <Form.Check
@@ -66,7 +73,7 @@ const PriceChange = ({show, setShow, barrel, setPrice, price}) => {
                         {!disableRadio && <div className='priceNumber'> <b> $ {newPrice} per liter</b></div>}
                     </div>
                     <Form.Group className="mb-3" controlId="setPrice">
-                        <Form.Label>New price</Form.Label>
+                        <Form.Label>New price / liter</Form.Label>
                         <Form.Control
                             type="number" 
                             placeholder="enter the new price" 
