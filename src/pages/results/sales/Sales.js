@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import { Button, ButtonGroup, Dropdown, DropdownButton, Form, InputGroup, Table } from 'react-bootstrap'
 import { addDays, isWithinInterval, startOfMonth, subMonths } from 'date-fns'
 import Search from '../../../assets/icons/Search';
+import EditIcon from '../../../assets/icons/EditIcon';
+import PriceChange from '../../barrels/PriceChange';
 
 const Sales = () => {
     const [sales, setSales] = useState([])
@@ -16,6 +18,11 @@ const Sales = () => {
     const [totalPrices, setTotalPrices] = useState(0)
     const [totalPaid, setTotalPaid] = useState(0)
     const [firstDate, setFirstDate] = useState(null)
+    const [editPriceModal, setEditPriceModal] = useState(false)
+    const [newPrice, setNewPrice] = useState(0)
+    const [saleId, setSaleId] = useState("")
+    const [price, setPrice] = useState(0)
+    const [priceModify, setPriceModify] = useState(false)
 
     const [showedPeriod, setShowedPeriod] = useState("Current month costs")
 
@@ -45,7 +52,7 @@ const Sales = () => {
         }
         setFirstDate(startDate)
         handleGetSales(startDate, endDate)
-    }, [showedPeriod])
+    }, [showedPeriod, priceModify])
 
     useEffect(() => {
         salesFilter()
@@ -71,6 +78,14 @@ const Sales = () => {
         setTotalPaid(additionPaid)
     }, [filteredSales])
 
+    useEffect(() => {
+        if (price !== newPrice) {
+            updatePrice();
+        }
+        // eslint-disable-next-line
+    }, [newPrice])
+    
+
 
     const handleGetSales = async(startDate, endDate) => {
         try {
@@ -95,6 +110,24 @@ const Sales = () => {
         (sale?.customer.barName.toLowerCase()?.includes(keyword?.toLocaleLowerCase()))
         )
         setFilteredSales(salesFound)
+    }
+
+    const editPrice = (price, _id) => {
+        setPrice(price)
+        setNewPrice(price)
+        setEditPriceModal(true)
+        setSaleId(_id)
+    }
+
+    const updatePrice = async() => {
+        try {
+            const {data} = await axios.patch('http://localhost:4000/api/sale/updatePrice', {id : saleId, price : newPrice})
+            if (data.message === 'Price updated') {
+                setPriceModify(!priceModify)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -184,7 +217,7 @@ const Sales = () => {
                             <td>{sale?.style.name}</td>
                             <td>{sale?.volume} liters</td>
                             <td>{sale?.customer.barName}</td>
-                            <td>{sale?.price}</td>
+                            <td className='d-flex justify-content-around'><div>{sale?.price}</div> <Button disabled={sale.paid!==0} variant='secondary' className='EditButton' onClick={()=>editPrice(sale.price, sale._id)}><EditIcon/></Button></td>
                             <td>{sale?.paid}</td>
                             <td>{sale.paidComplete? <>Complete</>:<>Pending: {sale.price-sale.paid}</>}</td>
                             
@@ -195,6 +228,14 @@ const Sales = () => {
                 </tbody>
             </Table>
         </div>
+    
+        <PriceChange
+            show={editPriceModal}
+            setShow={setEditPriceModal}
+            setPrice={setNewPrice}
+            price={newPrice}
+        />
+    
     </div>
   )
 }
