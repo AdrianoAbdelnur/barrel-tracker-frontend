@@ -4,25 +4,31 @@ import "./header.css"
 import logo from "./../../assets/img/barrel.png"
 import { useNavigate } from 'react-router-dom'
 import axios from '../../api/axios'
+import useAuth from '../../hooks/useAuth'
 
 
 const Header = () => {
+  const {auth}=useAuth();
   const [loggedUser, setLoggedUser] = useState({})
   let navigate = useNavigate();
 
+    useEffect(() => {
+      getUserData();
+      // eslint-disable-next-line
+    }, [])
+    
 
     useEffect(() => {
-      const token = localStorage.getItem("jwtoken");
-      if(token) {
-        handleGetUser(token);
+      if (auth) {
+        getUserData();
       }
       // eslint-disable-next-line
-    }, []);
+    }, [auth]);
     
-  const handleGetUser = async (token) => {
+  const getUserData = async () => {
     try {
       if (loggedUser.name) return;
-      const {data} = await axios.get("/user/userData", {headers: {Authorization: token}})
+      const {data} = await axios.get("/user/userData")
       setLoggedUser(data?.userFound)
     } catch (error) {
       navigate("login")
