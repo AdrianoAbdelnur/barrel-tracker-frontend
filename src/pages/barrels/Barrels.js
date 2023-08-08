@@ -6,8 +6,11 @@ import NewBarrel from './NewBarrel';
 import PriceChange from './PriceChange';
 import "./barrels.css"
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
+import useAuth from '../../hooks/useAuth';
 
 const Barrels = () => {
+    const {auth} = useAuth()
+    console.log(auth)
     const [newBarrelModal, setNewBarrelModal] = useState(false)
     const [barrel, setBarrel] = useState({})
     const location = useLocation();
@@ -242,7 +245,7 @@ const Barrels = () => {
                 <li>status: <b>{barrel.statusBarrel} </b> </li>
                 {barrel.statusBarrel !== "empty in factory" && <li>style: <b>{barrel.style.name}</b></li>}
                 {(barrel.statusBarrel === "delivered to customer")  && <li>customer: <b>{barrel?.customer?.barName}</b></li>}
-                {(barrel.statusBarrel === "delivered to customer" && !confirmSale )  && <li>  
+                {(barrel.statusBarrel === "delivered to customer" && !confirmSale && auth.role === "admin")  && <li>  
                     price: <b>$ {price} per liter</b> <Button variant='primary' className='changePriceButton' onClick={()=>setPriceModal(true)}>Change price</Button>
                 </li>}
             </ul>
