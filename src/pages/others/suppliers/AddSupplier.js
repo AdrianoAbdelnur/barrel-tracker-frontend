@@ -46,7 +46,7 @@ const AddSupplier = () => {
   return (
     <div className='supplier_container'>
         <Form className='form_container_supplier' onSubmit={handleAddSupplier}>
-            <h2>Suppliers</h2>
+            <h2>Add a New Supplier</h2>
             {
                 error && <Alert variant='danger'>{error}</Alert>
             }
