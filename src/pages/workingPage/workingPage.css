@@ -22,3 +22,7 @@
     align-items: center;
     height: fit-content;
 }
+
+.workingImage {
+    width: 15rem
+}
