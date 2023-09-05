@@ -77,7 +77,7 @@ const Pay = () => {
     const handleGetSales = async() => {
         try {
             const {data} = await axios("/sale/getSales")
-            setSales(data.salesFound.reverse())
+            setSales(data.filteredSales.reverse())
         } catch (error) {
             console.log(error)
         }
@@ -86,8 +86,10 @@ const Pay = () => {
 
     const payOperation = ()=> {
             let paid = pay.pay;
-            const salesFiltered = sales.filter(sale=> sale.customer._id === pay.customer && sale.paidComplete === false)
+            console.log(sales)
+            const salesFiltered = sales?.filter(sale=> sale.customer._id === pay.customer && sale.paidComplete === false)
             for (const sale of salesFiltered.reverse()) {
+                console.log(sale, paid)
                     if (paid > (sale.price - sale?.paid)) {
                         const payload = {
                             paid: sale.price,
