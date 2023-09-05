@@ -1,7 +1,7 @@
 import React from 'react'
 import './main.css'
 import { Button, ButtonGroup } from 'react-bootstrap'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Main = () => {
@@ -50,7 +50,7 @@ const Main = () => {
                     <Button variant='secondary' onClick={()=>moveTo("/sales")}>Sales details</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/costDetails")}>Spents details</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/addCost")}>Add a new Spent</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/productsCostsgit")}>Production Costs</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Production Costs</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>other</Button>                  
                 </ButtonGroup>
             </div>
@@ -60,7 +60,7 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/suppliers")}>Add Suppliers</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/stock")}>Stock</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Stock</Button>                  
                 </ButtonGroup>
             </div>
         </div>
@@ -69,7 +69,7 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Information</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/stock")}>Stock</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Stock</Button>                  
                 </ButtonGroup>
             </div>
         </div>

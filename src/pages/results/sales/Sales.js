@@ -216,8 +216,8 @@ const Sales = () => {
                             </td>
                             <td>{sale?.style.name}</td>
                             <td>{sale?.volume} liters</td>
-                            <td>{sale?.customer.barName}</td>
-                            <td className='d-flex justify-content-around'><div>{sale?.price}</div> <Button disabled={sale.paid!==0} variant='secondary' className='EditButton' onClick={()=>editPrice(sale.price, sale._id)}><EditIcon/></Button></td>
+                            <td>{sale?.customer?.barName}</td>
+                            <td className='d-flex justify-content-around'><div>{sale?.price}</div> <Button disabled={sale?.paid!==0} variant='secondary' className='EditButton' onClick={()=>editPrice(sale.price, sale._id)}><EditIcon/></Button></td>
                             <td>{sale?.paid}</td>
                             <td>{sale.paidComplete? <>Complete</>:<>Pending: {sale.price-sale.paid}</>}</td>
                             
