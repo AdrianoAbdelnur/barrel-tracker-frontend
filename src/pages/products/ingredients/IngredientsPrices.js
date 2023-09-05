@@ -66,7 +66,10 @@ const IngredientsPrices = () => {
   return (
     <div className='prices_container'>
         <Form className='form_container_prices' onSubmit={handlePrices}>
-        <h2>Prices</h2>
+        <div className='title_container'>
+            <h2>Prices</h2>
+            <Button>Add New Prices List</Button>
+        </div>
         <h5>Malts</h5>
             <div className='ingredientsList'>   
                 {

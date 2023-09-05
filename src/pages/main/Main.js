@@ -39,7 +39,6 @@ const Main = () => {
                     <Button variant='secondary' onClick={()=>moveTo("/styles")}>Styles</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/prices")}>Prices</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/addStyle")}>Add new style</Button>
-                    <Button variant='secondary' onClick={()=>moveTo("/ingredientsPrices")}>Ingredients Prices</Button>
                 </ButtonGroup>
             </div>
         </div>
@@ -60,6 +59,7 @@ const Main = () => {
             <div className='buttons_container'>
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/suppliers")}>Add Suppliers</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/ingredientsPrices")}>Ingredient Prices</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Stock</Button>                  
                 </ButtonGroup>
             </div>
