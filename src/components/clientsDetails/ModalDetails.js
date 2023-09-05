@@ -12,6 +12,7 @@ const ModalDetails = ({show, setShow, client}) => {
         <Modal.Body>
             <ul>
                 <li>Manager: {client.barManager}</li>
+                <li>Owner: {client.owner}</li>
                 <li>Location: {client.location}</li>
                 <li>email:{client.email}</li>
             </ul>
