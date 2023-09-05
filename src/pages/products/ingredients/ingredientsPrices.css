@@ -1,3 +1,10 @@
 .ingredientsList {
     margin-left: 2rem;
 }
+
+.title_container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}

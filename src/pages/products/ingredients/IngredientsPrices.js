@@ -2,6 +2,7 @@ import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import './ingredientsPrices.css'
+import FileButton from '../../../components/File/FileButton'
 
 const IngredientsPrices = () => {
     const [malts, setMalts] = useState([])
@@ -10,15 +11,25 @@ const IngredientsPrices = () => {
     const [others, setOthers] = useState([])
     const [cleanings, setCleanings] = useState([])
     const [prices, setPrices] = useState({})
+    const [file, setFile] = useState()
 
     useEffect(() => {
       getIngredients()
     }, [])
 
     useEffect(() => {
-        updatePrices();
+        updatePrices(prices);
         // eslint-disable-next-line
     }, [prices])
+
+    useEffect(() => {
+        if(file) {
+            console.log(file)
+            updatePricesByFile();
+        }
+        // eslint-disable-next-line
+    }, [file])
+    
     
     const getIngredients = async() => {
         try {
@@ -34,11 +45,21 @@ const IngredientsPrices = () => {
         }
     }
 
-    const updatePrices = async() => {
+    const updatePrices = async(prices) => {
         try {
-            console.log(prices)
             for (let i = 0; i < prices.length; i++) {
                 await axios.patch("/ingredient/updatePrices", prices[i])
+            }
+            getIngredients()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const updatePricesByFile = async() => {
+        try {
+            for (let i = 0; i < file.length; i++) {
+                await axios.patch("/ingredient/updatePricesByFile", file[i])
             }
             getIngredients()
         } catch (error) {
@@ -66,7 +87,12 @@ const IngredientsPrices = () => {
   return (
     <div className='prices_container'>
         <Form className='form_container_prices' onSubmit={handlePrices}>
-        <h2>Prices</h2>
+        <div className='title_container'>
+            <h2>Prices</h2>
+            <FileButton 
+                setFile = {setFile}
+            />
+        </div>
         <h5>Malts</h5>
             <div className='ingredientsList'>   
                 {
@@ -76,7 +102,7 @@ const IngredientsPrices = () => {
                             <Col xs={7}><Form.Label className='w-100' >
                                 <Row>
                                     <Col xs={5}><b>{malt.name}</b></Col>
-                                    <Col xs={7}>Price / {malt.units} : <b>$ {malt.price||"add price"}</b></Col>
+                                    <Col xs={7}>Price / {malt.units} : <b>$ {malt.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
                             <Col xs={5}><Form.Control type="number" name={malt._id} placeholder="Enter new price" /></Col>
@@ -94,7 +120,7 @@ const IngredientsPrices = () => {
                             <Col xs={7}><Form.Label className='w-100' >
                                 <Row>
                                     <Col xs={5}><b>{hop.name}</b></Col>
-                                    <Col xs={7}>Price / {hop.units} : <b>$ {hop.price||"add price"}</b></Col>
+                                    <Col xs={7}>Price / {hop.units} : <b>$ {hop.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
                             <Col xs={5}><Form.Control type="number" name={hop._id} placeholder="Enter new price" /></Col>
@@ -112,7 +138,7 @@ const IngredientsPrices = () => {
                             <Col xs={7}><Form.Label className='w-100' >
                                 <Row>
                                     <Col xs={5}><b>{yeast.name}</b></Col>
-                                    <Col xs={7}>Price/ {yeast.units} : <b>$ {yeast.price||"add price"}</b></Col>
+                                    <Col xs={7}>Price/ {yeast.units} : <b>$ {yeast.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
                             <Col xs={5}><Form.Control type="number" name={yeast._id} placeholder="Enter new price" /></Col>
