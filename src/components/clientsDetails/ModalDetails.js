@@ -17,11 +17,8 @@ const ModalDetails = ({show, setShow, client}) => {
             </ul>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShow(false)}>
-                Close
-            </Button>
             <Button variant="primary" onClick={() => setShow(false)}>
-                Save Changes
+                ok
             </Button>
         </Modal.Footer>
   </Modal>
