@@ -12,16 +12,14 @@ const ModalDetails = ({show, setShow, client}) => {
         <Modal.Body>
             <ul>
                 <li>Manager: {client.barManager}</li>
+                <li>Owner: {client.owner}</li>
                 <li>Location: {client.location}</li>
                 <li>email:{client.email}</li>
             </ul>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShow(false)}>
-                Close
-            </Button>
             <Button variant="primary" onClick={() => setShow(false)}>
-                Save Changes
+                ok
             </Button>
         </Modal.Footer>
   </Modal>
