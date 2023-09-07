@@ -60,7 +60,7 @@ const Main = () => {
                 <ButtonGroup vertical className='w-75'>
                     <Button variant='secondary' onClick={()=>moveTo("/suppliers")}>Add Suppliers</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/ingredientsPrices")}>Ingredient Prices</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Stock</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/stock")}>Ingredients Stock</Button>                  
                 </ButtonGroup>
             </div>
         </div>

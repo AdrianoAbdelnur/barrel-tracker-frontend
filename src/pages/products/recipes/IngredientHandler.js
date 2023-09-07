@@ -24,11 +24,6 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
         // eslint-disable-next-line
     }, [ingredientsData])
     
-    useEffect(() => {
-        console.log(ingredients)
-    }, [ingredients])
-    
-    
     const changeInput =(data) => {
         setIngredient(data)
     }
