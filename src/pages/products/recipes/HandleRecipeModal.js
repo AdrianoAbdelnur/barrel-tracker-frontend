@@ -46,11 +46,11 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
     
     useEffect(() => {
         if (recipe?.name) {
-            setMalts(recipe?.malts?.map(malt=> {return {id: malt.item._id, item: malt.item.name, quantity: malt.quantity, units: malt.item.units}}))
-            setHops(recipe?.hops?.map(hop=> {return {id: hop.item._id, item: hop.item.name, quantity: hop.quantity, units: hop.item.units}}))
-            setYeasts(recipe?.yeasts?.map(yeast=> {return {id: yeast.item._id, item: yeast.item.name, quantity: yeast.quantity, units: yeast.item.units }}))
-            setOthers(recipe?.others?.map(other=> {return {id: other.item._id, item: other.item.name, quantity: other.quantity, units: other.item.units}}))
-            setCleanings(recipe?.cleanings?.map(cleaning=> {return {id: cleaning.item._id, item: cleaning.item.name, quantity: cleaning.quantity, units: cleaning.item.units}})) 
+            setMalts(recipe?.malts?.map(malt=> {return {id: malt?.item?._id, item: malt?.item?.name, quantity: malt?.quantity, units: malt?.item?.units}}))
+            setHops(recipe?.hops?.map(hop=> {return {id: hop?.item?._id, item: hop?.item?.name, quantity: hop?.quantity, units: hop?.item?.units}}))
+            setYeasts(recipe?.yeasts?.map(yeast=> {return {id: yeast?.item?._id, item: yeast?.item?.name, quantity: yeast?.quantity, units: yeast?.item?.units }}))
+            setOthers(recipe?.others?.map(other=> {return {id: other?.item?._id, item: other?.item?.name, quantity: other?.quantity, units: other?.item?.units}}))
+            setCleanings(recipe?.cleanings?.map(cleaning=> {return {id: cleaning?.item?._id, item: cleaning?.item?.name, quantity: cleaning?.quantity, units: cleaning?.item?.units}})) 
         }
     }, [recipe])
     
@@ -83,8 +83,8 @@ const HandleRecipeModal = ({show, setShow, style, setStyle}) => {
                 name: style.name,
                 malts: malts.map(malt => {return {quantity: malt.quantity, item: malt.id, units: malt.units}}),
                 hops: hops.map(hop => {return {quantity: hop.quantity, item: hop.id, units: hop.units}}),
-                yeasts:yeasts.map(yeast => {return {quantity:yeast.quantity, item:yeast.id, units: yeast.units}}),
-                others: others.map(other => {return {quantity:other.quantity, item:other.id, units: other.units}}),
+                yeasts: yeasts.map(yeast => {return {quantity:yeast.quantity, item:yeast.id, units: yeast.units}}),
+                others: others.map(other => {return {quantity: other.quantity, item: other.id, units: other.units}}),
                 cleanings: cleanings.map(cleaning => {return {quantity:cleaning.quantity, item:cleaning.id, units: cleaning.units}})
             }
             const {data} =await axios.post("/recipe/newRecipe", payload)   
@@ -152,7 +152,7 @@ return (
                     setNewIngredient={setNewIngredient}
                 />
                 <IngredientHandler
-                    ingredientType={"Other"}
+                    ingredientType={"Others"}
                     ingredients={others}
                     setIngredients={setOthers}
                     ingredientsData={ingredientsData}

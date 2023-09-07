@@ -37,8 +37,7 @@ const IngredientsPrices = () => {
             setMalts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Malt"))
             setHops(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Hop"))
             setYeasts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Yeast"))
-            setOthers(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Other"))
-            setOthers(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Other"))
+            setOthers(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Others"))
             setCleanings(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Cleaning"))
         } catch (error) {
             console.log(error)
