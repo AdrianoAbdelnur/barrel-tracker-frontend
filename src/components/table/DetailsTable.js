@@ -22,8 +22,7 @@ const DetailsTable = ({styles, barrels}) => {
             <tbody>
                 {styles?.map((style, index )=> {
                     return(
-
-                        <tr>
+                        <tr key={style._id}>
                             <td className='text-center'>{index}</td>
                             <td>{style.name}</td>
                             <td className='text-center'>{barrels.filter(barrel=> barrel.statusBarrel === 'full in factory' && barrel.capacity === 50 && barrel.style._id === style._id).length }</td>
