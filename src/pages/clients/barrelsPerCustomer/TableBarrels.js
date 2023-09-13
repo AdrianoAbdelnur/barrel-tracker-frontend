@@ -10,8 +10,6 @@ const TableBarrels = ({customersData, barrels}) => {
 
     useEffect(() => {
         crossInfo()
-        console.log(customersData)
-        console.log(barrels)
         // eslint-disable-next-line
     }, [])
 
@@ -44,14 +42,14 @@ const TableBarrels = ({customersData, barrels}) => {
             <Table striped bordered hover size="sm" className='detailsTable'>
                 <thead>
                     <tr>
-                    <th>#</th>
-                    <th>Customer</th>
-                    <th className='text-center'>50 liters</th>
-                    <th className='text-center'>30 liters</th>
-                    <th className='text-center'>20 liters</th>
-                    <th className='text-center'>10 liters</th>
-                    <th className='text-center'>5 liters  </th>
-                    <th className='text-center'>details</th>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th className='text-center'>50 liters</th>
+                        <th className='text-center'>30 liters</th>
+                        <th className='text-center'>20 liters</th>
+                        <th className='text-center'>10 liters</th>
+                        <th className='text-center'>5 liters  </th>
+                        <th className='text-center'>details</th>
                     </tr>
                 </thead>
                 <tbody>
