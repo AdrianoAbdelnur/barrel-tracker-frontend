@@ -79,7 +79,7 @@ const PriceChange = ({show, setShow, setPrice, price}) => {
                             placeholder="enter the new price" 
                             onFocus={()=>setDisableRadio(true)} 
                             onBlur={(e)=>setDisableRadio(false)}
-                            onChange={(e)=>setNewPrice(e.target.value)}
+                            onChange={(e)=>setNewPrice(e.target.value * 50)}
                         />
                     </Form.Group>
                 </Modal.Body>
