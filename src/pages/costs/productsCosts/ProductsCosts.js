@@ -1,132 +1,79 @@
 import axios from './../../../api/axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import AddCostModal from './AddCostModal'
+import { Col, Row } from 'react-bootstrap'
+import './productCosts.css'
+
 
 const ProductsCosts = () => {
-    const [variables, setVariables] = useState([])
-    const [fixed, setFixed] = useState([])
-    const [costs, setCosts] = useState({})
-    const [showAddCostModal, setShowAddCostModal] = useState(false)
-    const [newCost, setNewCost] = useState("")
-    
+    const [costsDetails, setCostsDetails] = useState([])
+    const [recipes, setRecipes] = useState([])
+
     useEffect(() => {
-        getCosts()
+        handleGetRecipe()
     }, [])
 
     useEffect(() => {
-        updateCosts();
-        // eslint-disable-next-line
-    }, [costs])
-
-    useEffect(() => {
-        if (newCost==="Cost registered successfully") { 
-            getCosts()
+        if (recipes) {
+            calculateCosts()
         }
-    }, [newCost])
-    
-    
-    const getCosts = async() => {
+    }, [recipes])
+
+    const handleGetRecipe = async () => {
         try {
-            const {data} = await axios("/productsCosts/getCosts")
-            setFixed(data.costsList.filter(cost=>cost.type==="fixed"))
-            setVariables(data.costsList.filter(cost=>cost.type==="variable"))
+            const { data } = await axios("/recipe/getRecipes/")
+            setRecipes(data.recipesList)
+            console.log(data.recipesList)
         } catch (error) {
             console.log(error)
         }
     }
 
-    const updateCosts = async() => {
-        try {
-            for (let i = 0; i < costs.length; i++) {
-                await axios.patch("/productsCosts/updateCost", costs[i])
+    const calculateCosts = () => {
+        let costsArray = []
+        recipes.map(recipe => {
+            let cost = 0
+            for (const item of recipe.malts) {
+                cost = cost + (item.quantity * item.item.price)
             }
-            getCosts()
-        } catch (error) {
-            console.log(error)
-        }
+            for (const item of recipe.hops) {
+                cost = cost + (item.quantity * item.item.price)
+            }
+            for (const item of recipe.yeasts) {
+                cost = cost + (item.quantity * item.item.price)
+            }
+            for (const item of recipe.cleanings) {
+                cost = cost + (item.quantity * item.item.price)
+            }
+            for (const item of recipe.others) {
+                cost = cost + (item.quantity * item.item.price)
+            }
+            costsArray.push({
+                name: recipe.name,
+                cost: cost.toFixed(2)
+            })
+        })
+        setCostsDetails(costsArray)
     }
 
-    const handleCosts = (e)=> {
-        e.preventDefault();
-        const info= []
-        let cost = 0;
-        let _id = ""
-        for (const target of e.target) {
-            if (target.type==="number") {
-                _id = target.name
-                cost = target.value
-                target.value= ""
-                if (cost !== "") {
-                    info.push({_id, cost})
-                }
-            }
-        }
-        setCosts(info)
-    }
-
-  return (
-    <div className='prices_container'>
-        <Form className='form_container_prices' onSubmit={handleCosts}>
-        <h2>Production Costs</h2>
-        <h5>Fixes Costs</h5>
-            <div className='ingredientsList'>   
-                {
-                    fixed.map((fix,index)=>{return(
-                        <Form.Group className="mb-1" controlId="fixed" key={fix.item+index}>
-                        <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
-                                <Row>
-                                    <Col xs={5}><b>{fix.item}</b></Col>
-                                    <Col xs={7}>cost: <b>$ {fix.cost||"add cost"}</b></Col>
-                                </Row>
-                            </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={fix._id} placeholder="Enter new cost" /></Col>
-                        </Row>
-                        </Form.Group>
-                    )})    
-                }
-            </div>
+    return (
+        <div className='productsCosts_container'>
+            <h2>Production Costs</h2>
             <h5>Variables Costs</h5>
             <div className='ingredientsList'>
                 {
-                    variables.map((variable,index)=>{return(
-                        <Form.Group className="mb-1" controlId="variable" key={variable.item+index}>
-                        <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
-                                <Row>
-                                    <Col xs={5}><b>{variable.item}</b></Col>
-                                    <Col xs={7}>cost : <b>$ {variable.cost||"add price"}</b></Col>
-                                </Row>
-                            </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={variable._id} placeholder="Enter new cost" /></Col>
-                        </Row>
-                        </Form.Group>
-                    )})    
+                    costsDetails.map(cost => {
+                        return (
+                            <Row key={cost.name}>
+                                <Col xs={4}><b>{cost.name}</b></Col>
+                                <Col xs={4}>input costs / batch: <b>$ {cost.cost}</b></Col>
+                                <Col xs={4}>input costs / liter: <b>$ {(cost.cost/230).toFixed(2)}</b></Col>
+                            </Row>
+                        )
+                    })
                 }
             </div>
-            <div className='d-flex justify-content-end m-3'>
-                <Link   
-                    component="button"
-                    onClick={()=>setShowAddCostModal(true)}
-                >
-                    Add new Cost
-                </Link>
-            </div>
-        
-            <Button variant="primary" type="submit">
-                Update costs
-            </Button>
-        </Form>
-        <AddCostModal
-            show={showAddCostModal}
-            setShow={setShowAddCostModal}
-            setNewCost={setNewCost}
-        />
-
-    </div>
-  )
+        </div>
+    )
 }
 
 export default ProductsCosts
