@@ -50,7 +50,7 @@ const Main = () => {
                     <Button variant='secondary' onClick={()=>moveTo("/sales")}>Sales details</Button>
                     <Button variant='secondary' onClick={()=>moveTo("/costDetails")}>Spents details</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/addCost")}>Add a new Spent</Button>                  
-                    <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>Production Costs</Button>                  
+                    <Button variant='secondary' onClick={()=>moveTo("/productsCosts")}>Production Costs</Button>                  
                     <Button variant='secondary' onClick={()=>moveTo("/workingPage")}>other</Button>                  
                 </ButtonGroup>
             </div>
