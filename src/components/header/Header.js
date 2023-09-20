@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Nav, Navbar} from 'react-bootstrap'
+import { Button} from 'react-bootstrap'
 import "./header.css"
-import logo from "./../../assets/img/barrel.png"
-import { useNavigate } from 'react-router-dom'
+import logo from "./../../assets/img/Logo.png"
+import { Link, useNavigate } from 'react-router-dom'
 import axios from '../../api/axios'
 import useAuth from '../../hooks/useAuth'
+import BurgerButton from '../burger/BurgerButton'
 
 
 const Header = () => {
   const {auth}=useAuth();
   const [loggedUser, setLoggedUser] = useState({})
+  const [openedMenu, setOpenedMenu] = useState(false);
   let navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const Header = () => {
       }
       // eslint-disable-next-line
     }, [auth]);
+
     
   const getUserData = async () => {
     try {
@@ -42,35 +45,36 @@ const Header = () => {
     navigate('/login')
   }
 
+  const toggleMenu = () => {
+    setOpenedMenu(!openedMenu);
+  };
+
 
   return (
     <div className='header_container'>
-      <Navbar className='nav' bg="dark" expand="lg" variant='dark'>
-      <Container className='container'>
-        <Navbar.Brand href="/">Home</Navbar.Brand>
-        {
-          loggedUser.name && <Nav className="links">   
-            <Nav.Link href="/main">Main</Nav.Link>
-            <div className='welcome'> 
-                <Button variant='danger' onClick={handleLogout}>log out</Button>
-                <h5 className='welcomeText'>"Welcome {loggedUser.name}"</h5>
-            </div>
-          </Nav> 
-          
-        }
-        <img className="logo" src={logo} alt="" />
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          {
-            !loggedUser.name &&
-            <Nav className="me-auto">   
-                  <Nav.Link href="/login">login</Nav.Link>
-                  <Nav.Link href="/register">Register</Nav.Link>
-            </Nav>
-          }
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      <div className='responsive_container'>
+        <div className='brand_container'>
+          <img className="logo" src={logo} alt="logo"/>
+          <div className='brand'>Beer-Tech</div>
+        </div>
+        <BurgerButton className='burgerButton' onClick={toggleMenu} />
+      </div>
+      {
+        !loggedUser.name && <div className={`menu ${openedMenu? 'open' : ''}`}>
+          <div className='options_container'>
+            <Link to="/login" className='optionButton' onClick={()=>setOpenedMenu(false)}>Login</Link>
+            <Link to="/register" className='optionButton' onClick={()=>setOpenedMenu(false)}>Register</Link>  
+          </div>
+        </div>
+      }
+      {
+        loggedUser.name && <div className={`menu ${openedMenu? 'open' : ''}`}>
+          <div className='options_container'>
+            <div className='welcome'>Welcome {loggedUser.name}</div>
+            <Button variant='danger' onClick={handleLogout} className='logOutButton'>log out</Button>  
+          </div>
+        </div>
+      }
     </div>
   )
 }
