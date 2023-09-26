@@ -3,11 +3,15 @@ import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
 import './addClient.css'
 import axios from './../../../api/axios'
 import { useNavigate } from 'react-router-dom'
+import AutocompletePlaces from '../../../components/placesAutocomplete/AutocompletePlaces'
+
 
 const AddClient = () => {
     let navigate = useNavigate();
     const [error, setError] = useState("")
     const [clientData, setClientData] = useState()
+    const [address, setAddress] = useState("")
+    const [coordinates, setCoordinates] = useState({lat: null, lng: null})
 
     useEffect(() => {
         setTimeout(() => {
@@ -34,6 +38,9 @@ const AddClient = () => {
                 target.value = "";
             }
         }
+        clientData.coordinates = coordinates;
+        setAddress("")
+        setCoordinates({lat: null, lng: null})
         try {
             const { data } = await axios.post('/client/addClient', clientData)
             setClientData(data)
@@ -41,6 +48,7 @@ const AddClient = () => {
             setError(error?.response?.data?.message)
         }
     }
+
     return (
         <div className='addClients_container'>
             <Form className='form_container_client' onSubmit={handelAddClient}>
@@ -86,7 +94,14 @@ const AddClient = () => {
                         </Form.Group>
                     </Col>
                     <Col lg="6">
-                        <Form.Group className="mb-3" controlId="location">
+                            <div className='mb-2'>Address (required)</div>
+                            <AutocompletePlaces
+                                address={address}
+                                setAddress={setAddress}
+                                setCoordinates={setCoordinates}
+                            />
+                        
+                        {/* <Form.Group className="mb-3" controlId="location">
                             <Form.Label>Address (required)</Form.Label>
                             <Form.Control
                                 type="text"
@@ -94,7 +109,7 @@ const AddClient = () => {
                                 required
                                 name="location"
                             />
-                        </Form.Group>
+                        </Form.Group> */}
                     </Col>
                 </Row>
                 <Row>
@@ -104,7 +119,6 @@ const AddClient = () => {
                             <Form.Control
                                 type="email"
                                 placeholder="Enter email"
-                                required
                                 name="email"
                             />
                         </Form.Group>
