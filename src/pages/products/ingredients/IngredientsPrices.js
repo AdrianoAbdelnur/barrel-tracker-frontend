@@ -98,13 +98,13 @@ const IngredientsPrices = () => {
                     malts.map((malt,index)=>{return(
                         <Form.Group className="mb-1" controlId="formBasicEmail" key={malt.name+index}>
                         <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
+                            <Col xs={9}><Form.Label className='w-100' >
                                 <Row>
-                                    <Col xs={5}><b>{malt.name}</b></Col>
-                                    <Col xs={7}>Price / {malt.units} : <b>$ {malt.price.toFixed(2)||"add price"}</b></Col>
+                                    <Col xs={8}><b>{malt.name}</b></Col>
+                                    <Col xs={4}>Price / {malt.units} : <b>$ {malt.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={malt._id} placeholder="Enter new price" /></Col>
+                            <Col xs={3}><Form.Control type="number" name={malt._id} placeholder="Enter new price" /></Col>
                         </Row>
                         </Form.Group>
                     )})    
@@ -116,13 +116,13 @@ const IngredientsPrices = () => {
                     hops.map((hop,index)=>{return(
                         <Form.Group className="mb-1" controlId="formBasicEmail" key={hop.name+index}>
                         <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
+                            <Col xs={9}><Form.Label className='w-100' >
                                 <Row>
-                                    <Col xs={5}><b>{hop.name}</b></Col>
-                                    <Col xs={7}>Price / {hop.units} : <b>$ {hop.price.toFixed(2)||"add price"}</b></Col>
+                                    <Col xs={8}><b>{hop.name}</b></Col>
+                                    <Col xs={4}>Price / {hop.units} : <b>$ {hop.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={hop._id} placeholder="Enter new price" /></Col>
+                            <Col xs={3}><Form.Control type="number" name={hop._id} placeholder="Enter new price" /></Col>
                         </Row>
                         </Form.Group>
                     )})    
@@ -134,13 +134,13 @@ const IngredientsPrices = () => {
                     yeasts.map((yeast,index)=>{return(
                         <Form.Group className="mb-1" controlId="formBasicEmail" key={yeast.name+index}>
                         <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
+                            <Col xs={9}><Form.Label className='w-100' >
                                 <Row>
-                                    <Col xs={5}><b>{yeast.name}</b></Col>
-                                    <Col xs={7}>Price/ {yeast.units} : <b>$ {yeast.price.toFixed(2)||"add price"}</b></Col>
+                                    <Col xs={8}><b>{yeast.name}</b></Col>
+                                    <Col xs={4}>Price/ {yeast.units} : <b>$ {yeast.price.toFixed(2)||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={yeast._id} placeholder="Enter new price" /></Col>
+                            <Col xs={3}><Form.Control type="number" name={yeast._id} placeholder="Enter new price" /></Col>
                         </Row>
                         </Form.Group>
                     )})    
@@ -152,13 +152,13 @@ const IngredientsPrices = () => {
                     others.map((other,index)=>{return(
                         <Form.Group className="mb-1" controlId="formBasicEmail" key={other.name+index}>
                         <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
+                            <Col xs={9}><Form.Label className='w-100' >
                                 <Row>
-                                    <Col xs={5}><b>{other.name}</b></Col>
-                                    <Col xs={7}>Price/ {other.units} : <b>$ {other.price||"add price"}</b></Col>
+                                    <Col xs={8}><b>{other.name}</b></Col>
+                                    <Col xs={4}>Price/ {other.units} : <b>$ {other.price||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={other._id} placeholder="Enter new price" /></Col>
+                            <Col xs={3}><Form.Control type="number" name={other._id} placeholder="Enter new price" /></Col>
                         </Row>
                         </Form.Group>
                     )})    
@@ -170,13 +170,13 @@ const IngredientsPrices = () => {
                     cleanings.map((cleaning,index)=>{return(
                         <Form.Group className="mb-1" controlId="formBasicEmail" key={cleaning.name+index}>
                         <Row>
-                            <Col xs={7}><Form.Label className='w-100' >
+                            <Col xs={9}><Form.Label className='w-100' >
                                 <Row>
-                                    <Col xs={5}><b>{cleaning.name}</b></Col>
-                                    <Col xs={7}>Price/ {cleaning.units} : <b>$ {cleaning.price||"add price"}</b></Col>
+                                    <Col xs={8}><b>{cleaning.name}</b></Col>
+                                    <Col xs={4}>Price/ {cleaning.units} : <b>$ {cleaning.price||"add price"}</b></Col>
                                 </Row>
                             </Form.Label></Col>
-                            <Col xs={5}><Form.Control type="number" name={cleaning._id} placeholder="Enter new price" /></Col>
+                            <Col xs={3}><Form.Control type="number" name={cleaning._id} placeholder="Enter new price" /></Col>
                         </Row>
                         </Form.Group>
                     )})    

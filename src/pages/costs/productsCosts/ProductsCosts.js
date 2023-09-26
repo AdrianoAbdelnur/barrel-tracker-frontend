@@ -16,13 +16,13 @@ const ProductsCosts = () => {
         if (recipes) {
             calculateCosts()
         }
+        // eslint-disable-next-line
     }, [recipes])
 
     const handleGetRecipe = async () => {
         try {
             const { data } = await axios("/recipe/getRecipes/")
             setRecipes(data.recipesList)
-            console.log(data.recipesList)
         } catch (error) {
             console.log(error)
         }
@@ -30,7 +30,7 @@ const ProductsCosts = () => {
 
     const calculateCosts = () => {
         let costsArray = []
-        recipes.map(recipe => {
+        for (const recipe of recipes) {
             let cost = 0
             for (const item of recipe.malts) {
                 cost = cost + (item.quantity * item.item.price)
@@ -51,7 +51,7 @@ const ProductsCosts = () => {
                 name: recipe.name,
                 cost: cost.toFixed(2)
             })
-        })
+        }
         setCostsDetails(costsArray)
     }
 

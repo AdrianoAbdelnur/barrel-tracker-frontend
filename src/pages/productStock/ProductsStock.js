@@ -16,13 +16,11 @@ const ProductsStock = () => {
     const getbarrels = async () => {
         try {
             const { data } = await axios("/barrel/getBarrels")
-            console.log(data.barrelsFound)
             let styles = []
-            data.barrelsFound.map(barrel => {
+            for (const barrel of data.barrelsFound) {
                 if (barrel.statusBarrel === "full in factory")
                     styles.push(barrel)
-            })
-            console.log(styles)
+            }
             setBarrels(styles)
         } catch (error) {
             console.log(error)

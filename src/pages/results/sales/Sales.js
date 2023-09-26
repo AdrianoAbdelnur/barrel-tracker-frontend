@@ -106,7 +106,7 @@ const Sales = () => {
             })) 
         } else salesDateFound = sales;
         const  salesFound = salesDateFound.filter((sale) => 
-        (sale?.style.name.toLowerCase()?.includes(keyword?.toLocaleLowerCase()))||
+        (sale?.style?.name.toLowerCase()?.includes(keyword?.toLocaleLowerCase()))||
         (sale?.customer.barName.toLowerCase()?.includes(keyword?.toLocaleLowerCase()))
         )
         setFilteredSales(salesFound)
@@ -187,47 +187,51 @@ const Sales = () => {
                 </div>
             </div>
         }
-        <div className='table_container'>
-            <Table striped bordered hover size="sm" className='salesTable'>
-                <thead>
-                    <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Style</th>
-                    <th>Volume</th>
-                    <th>Customer</th>
-                    <th>Price</th>
-                    <th>Paid</th>
-                    <th>status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    filteredSales?.map((sale, index)=> {        
-                        return(
-                        <tr key={sale._id}>
-                            <td>{index+1}</td>
-                            <td>{new Date(sale.date).toLocaleDateString('en-us', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            })
-                        }
-                            </td>
-                            <td>{sale?.style?.name}</td>
-                            <td>{sale?.volume} liters</td>
-                            <td>{sale?.customer?.barName}</td>
-                            <td className='d-flex justify-content-around'><div>{sale?.price}</div> <Button disabled={sale?.paid!==0} variant='secondary' className='EditButton' onClick={()=>editPrice(sale.price, sale._id)}><EditIcon/></Button></td>
-                            <td>{sale?.paid}</td>
-                            <td>{sale.paidComplete? <>Complete</>:<>Pending: {sale.price-sale.paid}</>}</td>
-                            
+        {
+            filteredSales.length !== 0?
+            <div className='table_container'>
+                <Table striped bordered hover size="sm" className='salesTable'>
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Style</th>
+                        <th>Volume</th>
+                        <th>Customer</th>
+                        <th>Price</th>
+                        <th>Paid</th>
+                        <th>status</th>
                         </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </Table>
-        </div>
+                    </thead>
+                    <tbody>
+                    {
+                        filteredSales?.map((sale, index)=> {        
+                            return(
+                            <tr key={sale?._id}>
+                                <td>{index+1}</td>
+                                <td>{new Date(sale?.date).toLocaleDateString('en-us', {
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                })
+                            }
+                                </td>
+                                <td>{sale?.style?.name}</td>
+                                <td>{sale?.volume} liters</td>
+                                <td>{sale?.customer?.barName}</td>
+                                <td className='d-flex justify-content-around'><div>{sale?.price}</div> <Button disabled={sale?.paid!==0} variant='secondary' className='EditButton' onClick={()=>editPrice(sale?.price, sale?._id)}><EditIcon/></Button></td>
+                                <td>{sale?.paid}</td>
+                                <td>{sale.paidComplete? <>Complete</>:<>Pending: {sale.price-sale.paid}</>}</td>
+                                
+                            </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </Table>
+            </div> :
+            <div className='noSales'>There is no sales in this period</div>
+        }
     
         <PriceChange
             show={editPriceModal}

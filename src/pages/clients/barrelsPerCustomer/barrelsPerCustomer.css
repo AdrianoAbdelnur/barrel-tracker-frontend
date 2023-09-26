@@ -6,7 +6,7 @@
 }
 
 .detailsTable{
-    background-color: aliceblue;
+    background-color: rgb(138, 136, 136) !important;
     margin: 2rem;
     max-width: 90%;
 }

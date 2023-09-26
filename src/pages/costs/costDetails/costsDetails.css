@@ -3,15 +3,17 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .input_container{
     margin: 0 10rem 1rem;
     padding: 0.5rem 2rem;
     border-radius: 2rem;
-    background-color: rgb(216, 229, 240);
+    background-color: rgb(138, 136, 136);
     display: flex;
     align-items: center;
+    width: 55%;
     justify-content: space-evenly;
 }
 
@@ -27,7 +29,7 @@
 }
 
 .costsTable{
-    background-color: aliceblue;
+    background-color: rgb(138, 136, 136);
     height: fit-content;
     overflow: scroll;
     margin: 0 2rem;
@@ -78,4 +80,13 @@
 
 .periodOptions {
     height: 3rem;
+}
+
+.noCosts {
+    background-color: gray;
+    width: 80%;
+    height: 4rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-weight: 500;
 }

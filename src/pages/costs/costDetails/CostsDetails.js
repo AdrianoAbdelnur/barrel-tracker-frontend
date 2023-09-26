@@ -148,37 +148,40 @@ const CostsDetails = () => {
                 </div>
             </div>
         }
-        <div className='table_container'>
-            <Table striped bordered hover size="sm" className='costsTable'>
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Item</th>
-                        <th>Supplier</th>
-                        <th>Cost Center</th>
-                        <th>Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {       
-                        filteredCosts.map((cost, index)=> {
-                            return(
-                            <tr key={cost._id}>
-                                <td>{index+1}</td>
-                                <td>{format(new Date(cost.date), 'MM/dd/yyyy')}
-                                </td>
-                                <td>{cost.item}</td>
-                                <td>{cost.supplier}</td>
-                                <td>{cost.costCenter}</td>
-                                <td>$ {cost.cost}</td>
+        {filteredCosts.length!==0?
+            <div className='table_container'>
+                <Table striped bordered hover size="sm" className='costsTable'>
+                        <thead>
+                            <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Item</th>
+                            <th>Supplier</th>
+                            <th>Cost Center</th>
+                            <th>Cost</th>
                             </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </Table>
-        </div>
+                        </thead>
+                        <tbody>
+                        {       
+                            filteredCosts.map((cost, index)=> {
+                                return(
+                                    <tr key={cost._id}>
+                                    <td>{index+1}</td>
+                                    <td>{format(new Date(cost.date), 'MM/dd/yyyy')}
+                                    </td>
+                                    <td>{cost.item}</td>
+                                    <td>{cost.supplier}</td>
+                                    <td>{cost.costCenter}</td>
+                                    <td>$ {cost.cost}</td>
+                                </tr>
+                                )
+                            })
+                        }
+                        </tbody>
+                    </Table>
+            </div> :
+            <div className='noCosts'>There is no cost in this period</div>
+        }
     </div>
   )
 }
