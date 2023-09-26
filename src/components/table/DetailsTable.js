@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Table } from 'react-bootstrap'
 
 const DetailsTable = ({styles, barrels}) => {
-    useEffect(() => {
-        console.log(styles)
-    }, [styles])
     
     return (
         <Table striped bordered hover>
