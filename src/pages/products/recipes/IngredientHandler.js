@@ -73,16 +73,16 @@ const IngredientHandler = ({ingredientType, ingredients, setIngredients, ingredi
             ingredients?.length?
             <ul>
                 <Row>
-                    <Col xs={3}><b>{ingredientType}</b></Col>
-                    <Col><b>quantity</b></Col>
+                    <Col xs={6}><b>{ingredientType}</b></Col>
+                    <Col xs={6}><b>quantity</b></Col>
                 </Row>
                     {
                     ingredients?.map((ingredient, index) => {
                         return(
                             <li key={index}>
                                 <Row>   
-                                    <Col xs={3}>{ingredient.item}</Col>  
-                                    <Col xs={3}>{ingredient.quantity} {ingredient.units}</Col> 
+                                    <Col xs={6}>{ingredient.item}</Col>  
+                                    <Col xs={6}>{ingredient.quantity} {ingredient.units}</Col> 
                                     {
                                         !hasRecipe &&
                                         <Col >
