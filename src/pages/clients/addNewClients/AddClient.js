@@ -27,7 +27,6 @@ const AddClient = () => {
         // eslint-disable-next-line
     }, [clientData])
 
-
     const handelAddClient = async (e) => {
         e.preventDefault();
         const clientData = {};
@@ -101,7 +100,7 @@ const AddClient = () => {
                             name='location'
                             placeholder='Address'
                             className='form-control'
-                            apiKey={process.env.API_KEY_GOOGLE}
+                            apiKey={process.env.REACT_APP_API_KEY}
                             onPlaceSelected={(place) => handleAddress(place)}
                             options={{
                                 types: ["address"],

@@ -212,7 +212,7 @@ const Register = () => {
               controlid='email'
               autoComplete='off'
               onChange={(e) => {setEmail(e.target.value)}}
-              maxLength="24"
+              maxLength="40"
               required
               aria-invalid= {validEmail? "false" : "true"}
               aria-describedby="emailnote"

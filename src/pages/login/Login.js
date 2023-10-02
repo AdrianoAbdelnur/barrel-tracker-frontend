@@ -86,7 +86,7 @@ export const Login = () => {
               autoComplete='off'
               onChange={(e)=>{setEmail(e.target.value)}}
               value={email}
-              maxLength="24"
+              maxLength="42"
               aria-invalid={validEmail ? 'false' : 'true'}
               aria-describedby="emailnote"
               onFocus={() => setEmailFocus(true)}
