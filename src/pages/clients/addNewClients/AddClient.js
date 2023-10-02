@@ -3,15 +3,14 @@ import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
 import './addClient.css'
 import axios from './../../../api/axios'
 import { useNavigate } from 'react-router-dom'
-import AutocompletePlaces from '../../../components/placesAutocomplete/AutocompletePlaces'
+import Autocomplete from "react-google-autocomplete";
 
 
 const AddClient = () => {
     let navigate = useNavigate();
     const [error, setError] = useState("")
     const [clientData, setClientData] = useState()
-    const [address, setAddress] = useState("")
-    const [coordinates, setCoordinates] = useState({lat: null, lng: null})
+    const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
 
     useEffect(() => {
         setTimeout(() => {
@@ -39,14 +38,17 @@ const AddClient = () => {
             }
         }
         clientData.coordinates = coordinates;
-        setAddress("")
-        setCoordinates({lat: null, lng: null})
+        setCoordinates({ lat: null, lng: null })
         try {
             const { data } = await axios.post('/client/addClient', clientData)
             setClientData(data)
         } catch (error) {
             setError(error?.response?.data?.message)
         }
+    }
+
+    const handleAddress = (place) => {
+        setCoordinates({lat: place.geometry.location.lat() , lng: place.geometry.location.lng()})
     }
 
     return (
@@ -94,22 +96,18 @@ const AddClient = () => {
                         </Form.Group>
                     </Col>
                     <Col lg="6">
-                            <div className='mb-2'>Address (required)</div>
-                            <AutocompletePlaces
-                                address={address}
-                                setAddress={setAddress}
-                                setCoordinates={setCoordinates}
-                            />
-                        
-                        {/* <Form.Group className="mb-3" controlId="location">
-                            <Form.Label>Address (required)</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="location"
-                                required
-                                name="location"
-                            />
-                        </Form.Group> */}
+                        <div className='mb-2'>Address (required)</div>
+                        <Autocomplete
+                            name='location'
+                            placeholder='Address'
+                            className='form-control'
+                            apiKey={process.env.API_KEY_GOOGLE}
+                            onPlaceSelected={(place) => handleAddress(place)}
+                            options={{
+                                types: ["address"],
+                                componentRestrictions: { country: "ar" },
+                            }}
+                        />
                     </Col>
                 </Row>
                 <Row>
