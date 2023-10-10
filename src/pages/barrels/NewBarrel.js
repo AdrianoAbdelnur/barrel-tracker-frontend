@@ -50,7 +50,7 @@ const NewBarrel = ({show, setShow}) => {
           <Form onSubmit={handleAddBarrel}>
         <Modal.Body>
             <div>Barrel id: {id}</div>
-            <FormSelect id="slcAutos" required>
+            <FormSelect id="capacity" required>
               <option>Select a capacity</option>
               <option value="50">50 liters</option>
               <option value="30">30 liters</option>
