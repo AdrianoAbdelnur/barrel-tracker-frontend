@@ -1,0 +1,29 @@
+.productions_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.addProductionButton_container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addProductionButton {
+    margin: 1rem;
+}
+
+.tableProductions_conatainer {
+    width: 100%;
+    display: flex;
+}
+
+.productionsTable {
+    background-color: rgb(138, 136, 136);
+    height: fit-content;
+    overflow: scroll;
+    margin: 0 2rem;
+    
+}
