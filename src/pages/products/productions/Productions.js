@@ -43,6 +43,7 @@ const Productions = () => {
         }
         setFirstDate(startDate)
         handleGetProductions(startDate, endDate)
+        // eslint-disable-next-line
     }, [showedPeriod])
 
     useEffect(() => {
