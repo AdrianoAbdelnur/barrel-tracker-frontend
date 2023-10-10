@@ -3,7 +3,7 @@ import './productions.css'
 import { Button, Dropdown, DropdownButton, Table, ButtonGroup, InputGroup, Form } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import Search from '../../../assets/icons/Search';
-import { addDays, format, startOfMonth, subMonths } from 'date-fns';
+import { addDays, compareAsc, format, isWithinInterval, parseISO, startOfMonth, subMonths } from 'date-fns';
 import axios from './../../../api/axios';
 import AddProductionModal from './AddProductionModal';
 
@@ -45,17 +45,43 @@ const Productions = () => {
         handleGetProductions(startDate, endDate)
     }, [showedPeriod])
 
+    useEffect(() => {
+        productionsFilter()
+        // eslint-disable-next-line
+    }, [endDate, keyword])
+
     const handleGetProductions = async(startDate, endDate) => {
             try {
                 const {data} = await axios("/production/getProductions",{params : {startDate, endDate}})
-                console.log(data)
-                setProductions(data.filteredProduction.reverse())
-                setFilteredProductions(data.filteredProduction.reverse())
+                orderByDate(data.filteredProduction)
             } catch (error) {
                 console.log(error)
             }
         }
     
+    const productionsFilter = () => {
+        let productionDateFound = []
+        if (endDate) {
+            productionDateFound = productions.filter((production) => isWithinInterval(new Date(production.date), {
+                start: startDate,
+                end: addDays(endDate, 1)
+            })) 
+        } else productionDateFound = productions
+        const  productionFound = productionDateFound.filter((production) => 
+        (production?.style?.name?.toLowerCase()?.includes(keyword.toLocaleLowerCase()))
+        )
+        setFilteredProductions(productionFound)
+    }
+
+    const orderByDate = (data) => {
+        const datesOrdered = ([...data].sort((a, b) => {
+            const dateA = parseISO(a.date);
+            const dateB = parseISO(b.date);
+            return compareAsc(dateA, dateB);
+          }))
+        setProductions(datesOrdered)
+        setFilteredProductions(datesOrdered);
+      };
 
   return (
     <div className='productions_container'>
@@ -136,7 +162,7 @@ const Productions = () => {
                         </tbody>
                     </Table>
             </div> :
-            <div className='noCosts'>There is no cost in this period</div>
+            <div className='noCosts'>There is no Productions in this period</div>
         }
             <AddProductionModal
             show={showAddProductionModal}
