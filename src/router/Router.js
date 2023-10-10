@@ -26,6 +26,7 @@ import Stock from '../pages/others/ingredients/Stock';
 import Error404 from '../pages/404/Error404';
 import Working from '../pages/workingPage/Working';
 import ProductsStock from '../pages/productStock/ProductsStock';
+import Productions from '../pages/products/productions/Productions';
 
 
 const Router = () => {
@@ -61,6 +62,7 @@ const Router = () => {
                   <Route path="/productsCosts" element={<ProductsCosts/>}/>
                   <Route path="/stock" element={<Stock/>}/>
                   <Route path="/productsStock" element={<ProductsStock/>}/>
+                  <Route path="/productions" element={<Productions/>}/>
                 </Route>
 
                 <Route path="*" element={<Error404/>} />
