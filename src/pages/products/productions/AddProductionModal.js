@@ -4,7 +4,7 @@ import axios from '../../../api/axios'
 import DatePicker from "react-datepicker";
 import './productions.css'
 
-const AddProductionModal = ({ show, setShow }) => {
+const AddProductionModal = ({ show, setShow, setNewProduction }) => {
     const [styles, setStyles] = useState([])
     const [startDate, setStartDate] = useState(new Date())
 
@@ -34,9 +34,10 @@ const AddProductionModal = ({ show, setShow }) => {
             style: e.target[1].value,
             date: startDate
         }
-        console.log(payload)
         const { data } = await axios.post("/production/newProduction", payload)
-        console.log(data)
+        if (data.message === 'Production added successfully') {
+            setNewProduction(data.newProduction)
+        }
     }
 
     return (
