@@ -48,7 +48,7 @@ const Productions = () => {
     }, [showedPeriod])
 
     useEffect(() => {
-        if (newProduction) {
+        if (newProduction.style) {
             handleGetProductions()
             updateStock()
         }
@@ -101,11 +101,9 @@ const Productions = () => {
     }
 
     const getStyle = async() => {
-        let styleName = ""
         try {
             const {data} = await axios("/styles/getstyle/"+newProduction.style)
-            styleName=data.styleFound[0].name
-            return styleName
+            return data.styleFound[0].name
         } catch (error) {
             console.log(error)
         }
@@ -188,7 +186,7 @@ const Productions = () => {
                             {
                                 filteredProductions.map((production, index) => {
                                     return (
-                                        <tr>
+                                        <tr key={production._id}>
                                             <td>{index}</td>
                                             <td>{format(new Date(production.date), 'MM/dd/yyyy')}</td>
                                             <td>{production.style.name}</td>
