@@ -24,7 +24,6 @@ const Stock = () => {
     const getIngredients = async() => {
         try {
             const {data} = await axios("/ingredient/getIngredients")
-            console.log(data)
             setMalts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Malt"))
             setHops(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Hop"))
             setYeasts(data.ingredientsList.filter(ingredient=>ingredient.ingredientType==="Yeast"))

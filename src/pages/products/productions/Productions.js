@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './productions.css'
-import { Button, Dropdown, DropdownButton, Table, ButtonGroup, InputGroup, Form } from 'react-bootstrap'
+import { Button, Dropdown, DropdownButton, Table, ButtonGroup, InputGroup, Form, Alert } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import Search from '../../../assets/icons/Search';
-import { addDays, compareAsc, format, isWithinInterval, parseISO, startOfMonth, subMonths } from 'date-fns';
+import { addDays, compareDesc, format, isWithinInterval, parseISO, startOfMonth, subMonths } from 'date-fns';
 import axios from './../../../api/axios';
 import AddProductionModal from './AddProductionModal';
 
@@ -18,6 +18,7 @@ const Productions = () => {
     const [filteredProductions, setFilteredProductions] = useState([])
     const [showAddProductionModal, setShowAddProductionModal] = useState(false)
     const [newProduction, setNewProduction] = useState({})
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
         let startDate = "";
@@ -50,7 +51,6 @@ const Productions = () => {
     useEffect(() => {
         if (newProduction.style) {
             handleGetProductions()
-            updateStock()
         }
         // eslint-disable-next-line
     }, [newProduction])
@@ -60,6 +60,14 @@ const Productions = () => {
         productionsFilter()
         // eslint-disable-next-line
     }, [endDate, keyword])
+
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage("")
+            }, 3000);
+        }
+    }, [errorMessage]) 
 
 
     const handleGetProductions = async (startDate, endDate) => {
@@ -89,40 +97,23 @@ const Productions = () => {
         const datesOrdered = ([...data].sort((a, b) => {
             const dateA = parseISO(a.date);
             const dateB = parseISO(b.date);
-            return compareAsc(dateA, dateB);
+            return compareDesc(dateA, dateB);
         }))
         setProductions(datesOrdered)
         setFilteredProductions(datesOrdered);
     };
-
-    const updateStock = async() => {
-        const style = await getStyle()
-        const recipe = await handleGetRecipe(style)    
-    }
-
-    const getStyle = async() => {
-        try {
-            const {data} = await axios("/styles/getstyle/"+newProduction.style)
-            return data.styleFound[0].name
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const handleGetRecipe = async(style) => {
-        try {
-            const {data} = await axios("/recipe/getRecipe/"+style)
-            return data.recipeFound
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     return (
         <div className='productions_container'>
             <div className='addProductionButton_container'>
                 <Button variant='secondary' className='addProductionButton' onClick={() => setShowAddProductionModal(true)}>Add Production</Button>
             </div>
+            {
+                errorMessage && 
+                <div>
+                    <Alert variant='danger'>{errorMessage}</Alert>
+                </div>
+            }
             <div className='bbtn_filters_container'>
                 <Button className='btn_filters' onClick={() => setShowFilters(showFilters ? false : true)}><Search /> Search for a cost</Button>
                 <DropdownButton
@@ -203,6 +194,7 @@ const Productions = () => {
                 show={showAddProductionModal}
                 setShow={setShowAddProductionModal}
                 setNewProduction={setNewProduction}
+                setErrorMessage={setErrorMessage}
             />
         </div>
     )
