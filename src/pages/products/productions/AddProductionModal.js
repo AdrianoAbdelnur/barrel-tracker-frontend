@@ -4,7 +4,7 @@ import axios from '../../../api/axios'
 import DatePicker from "react-datepicker";
 import './productions.css'
 
-const AddProductionModal = ({ show, setShow, setNewProduction }) => {
+const AddProductionModal = ({ show, setShow, setNewProduction, setErrorMessage }) => {
     const [styles, setStyles] = useState([])
     const [startDate, setStartDate] = useState(new Date())
 
@@ -30,20 +30,52 @@ const AddProductionModal = ({ show, setShow, setNewProduction }) => {
 
     const handleAddProduction = async (e) => {
         e.preventDefault()
+        let style = "";
+        for (const option of e.target[1]) {
+            if(option.selected === true) {
+                style = option.label;
+            }
+            
+        }
         const payload = {
             style: e.target[1].value,
             date: startDate
         }
+        console.log(payload)
         const { data } = await axios.post("/production/newProduction", payload)
         if (data.message === 'Production added successfully') {
             setNewProduction(data.newProduction)
+            handleGetRecipe(style)
+        }
+    }
+
+    const handleGetRecipe = async(style) => {
+        try {
+            const {data} = await axios("/recipe/getRecipe/"+style)
+            if (data.recipeFound) {
+                handleStock(data.recipeFound)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleStock = async(recipe) => {
+        try {
+            const {data} = await axios.patch("/ingredient/updateStockByRecipe", recipe)
+            if(data.message !== "Stock updated succesfully") {
+                setErrorMessage("There was an error updating the stock")
+            }
+
+        } catch (error) {
+            console.log(error)
         }
     }
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Add New Production</Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleAddProduction}>
                 <Modal.Body>
@@ -58,7 +90,7 @@ const AddProductionModal = ({ show, setShow, setNewProduction }) => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Style</Form.Label>
-                        <FormSelect id="capacity" required>
+                        <FormSelect id="style" required>
                             <option>Select a Style</option>
                             {styles.map((style) => {
                                 return (
